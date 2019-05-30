@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 2.79.0 commit date:2018-03-22, commit time:14:10, hash:f4dc9f9d68b</authoring_tool>
+    </contributor>
+    <created>2019-04-01T15:54:10</created>
+    <modified>2019-04-01T15:54:10</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_images/>
+  <library_geometries>
+    <geometry id="bbox-back-plane-mesh" name="bbox-back-plane">
+      <mesh>
+        <source id="bbox-back-plane-mesh-positions">
+          <float_array id="bbox-back-plane-mesh-positions-array" count="12">-1 -1 0 1 -1 0 -1 1 0 1 1 0</float_array>
+          <technique_common>
+            <accessor source="#bbox-back-plane-mesh-positions-array" count="4" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="bbox-back-plane-mesh-normals">
+          <float_array id="bbox-back-plane-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#bbox-back-plane-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="bbox-back-plane-mesh-vertices">
+          <input semantic="POSITION" source="#bbox-back-plane-mesh-positions"/>
+        </vertices>
+        <triangles count="2">
+          <input semantic="VERTEX" source="#bbox-back-plane-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#bbox-back-plane-mesh-normals" offset="1"/>
+          <p>1 0 2 0 0 0 1 0 3 0 2 0</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="bbox-right-plane-mesh" name="bbox-right-plane">
+      <mesh>
+        <source id="bbox-right-plane-mesh-positions">
+          <float_array id="bbox-right-plane-mesh-positions-array" count="12">-1 -1 0 1 -1 0 -1 1 0 1 1 0</float_array>
+          <technique_common>
+            <accessor source="#bbox-right-plane-mesh-positions-array" count="4" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="bbox-right-plane-mesh-normals">
+          <float_array id="bbox-right-plane-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#bbox-right-plane-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="bbox-right-plane-mesh-vertices">
+          <input semantic="POSITION" source="#bbox-right-plane-mesh-positions"/>
+        </vertices>
+        <triangles count="2">
+          <input semantic="VERTEX" source="#bbox-right-plane-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#bbox-right-plane-mesh-normals" offset="1"/>
+          <p>1 0 2 0 0 0 1 0 3 0 2 0</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="bbox-left-plane-mesh" name="bbox-left-plane">
+      <mesh>
+        <source id="bbox-left-plane-mesh-positions">
+          <float_array id="bbox-left-plane-mesh-positions-array" count="12">-1 -1 0 1 -1 0 -1 1 0 1 1 0</float_array>
+          <technique_common>
+            <accessor source="#bbox-left-plane-mesh-positions-array" count="4" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="bbox-left-plane-mesh-normals">
+          <float_array id="bbox-left-plane-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#bbox-left-plane-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="bbox-left-plane-mesh-vertices">
+          <input semantic="POSITION" source="#bbox-left-plane-mesh-positions"/>
+        </vertices>
+        <triangles count="2">
+          <input semantic="VERTEX" source="#bbox-left-plane-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#bbox-left-plane-mesh-normals" offset="1"/>
+          <p>1 0 2 0 0 0 1 0 3 0 2 0</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="bbox-top-plane-mesh" name="bbox-top-plane">
+      <mesh>
+        <source id="bbox-top-plane-mesh-positions">
+          <float_array id="bbox-top-plane-mesh-positions-array" count="12">-1 -1 0 1 -1 0 -1 1 0 1 1 0</float_array>
+          <technique_common>
+            <accessor source="#bbox-top-plane-mesh-positions-array" count="4" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="bbox-top-plane-mesh-normals">
+          <float_array id="bbox-top-plane-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#bbox-top-plane-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="bbox-top-plane-mesh-vertices">
+          <input semantic="POSITION" source="#bbox-top-plane-mesh-positions"/>
+        </vertices>
+        <triangles count="2">
+          <input semantic="VERTEX" source="#bbox-top-plane-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#bbox-top-plane-mesh-normals" offset="1"/>
+          <p>1 0 2 0 0 0 1 0 3 0 2 0</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="bbox-bottom-plane-mesh" name="bbox-bottom-plane">
+      <mesh>
+        <source id="bbox-bottom-plane-mesh-positions">
+          <float_array id="bbox-bottom-plane-mesh-positions-array" count="12">-1 -1 0 1 -1 0 -1 1 0 1 1 0</float_array>
+          <technique_common>
+            <accessor source="#bbox-bottom-plane-mesh-positions-array" count="4" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="bbox-bottom-plane-mesh-normals">
+          <float_array id="bbox-bottom-plane-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#bbox-bottom-plane-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="bbox-bottom-plane-mesh-vertices">
+          <input semantic="POSITION" source="#bbox-bottom-plane-mesh-positions"/>
+        </vertices>
+        <triangles count="2">
+          <input semantic="VERTEX" source="#bbox-bottom-plane-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#bbox-bottom-plane-mesh-normals" offset="1"/>
+          <p>1 0 2 0 0 0 1 0 3 0 2 0</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="bbox-front-plane-mesh" name="bbox-front-plane">
+      <mesh>
+        <source id="bbox-front-plane-mesh-positions">
+          <float_array id="bbox-front-plane-mesh-positions-array" count="12">-1 -1 0 1 -1 0 -1 1 0 1 1 0</float_array>
+          <technique_common>
+            <accessor source="#bbox-front-plane-mesh-positions-array" count="4" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="bbox-front-plane-mesh-normals">
+          <float_array id="bbox-front-plane-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#bbox-front-plane-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="bbox-front-plane-mesh-vertices">
+          <input semantic="POSITION" source="#bbox-front-plane-mesh-positions"/>
+        </vertices>
+        <triangles count="2">
+          <input semantic="VERTEX" source="#bbox-front-plane-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#bbox-front-plane-mesh-normals" offset="1"/>
+          <p>1 0 2 0 0 0 1 0 3 0 2 0</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers/>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="bbox-back" name="bbox-back" type="NODE">
+        <matrix sid="transform">0.5 0 0 0 0 0.5 0 0 0 0 1 -0.5 0 0 0 1</matrix>
+        <instance_geometry url="#bbox-back-plane-mesh" name="bbox-back"/>
+      </node>
+      <node id="bbox-right" name="bbox-right" type="NODE">
+        <matrix sid="transform">-2.18557e-8 0 -1 0.5 0 0.5 0 0 0.5 0 -4.37114e-8 0 0 0 0 1</matrix>
+        <instance_geometry url="#bbox-right-plane-mesh" name="bbox-right"/>
+      </node>
+      <node id="bbox-left" name="bbox-left" type="NODE">
+        <matrix sid="transform">-2.18557e-8 0 1 -0.5 0 0.5 0 0 -0.5 0 -4.37114e-8 0 0 0 0 1</matrix>
+        <instance_geometry url="#bbox-left-plane-mesh" name="bbox-left"/>
+      </node>
+      <node id="bbox-top" name="bbox-top" type="NODE">
+        <matrix sid="transform">0.5 0 0 0 0 -2.18557e-8 -1 0.5 0 0.5 -4.37114e-8 0 0 0 0 1</matrix>
+        <instance_geometry url="#bbox-top-plane-mesh" name="bbox-top"/>
+      </node>
+      <node id="bbox-bottom" name="bbox-bottom" type="NODE">
+        <matrix sid="transform">0.5 0 0 0 0 -2.18557e-8 1 -0.5 0 -0.5 -4.37114e-8 0 0 0 0 1</matrix>
+        <instance_geometry url="#bbox-bottom-plane-mesh" name="bbox-bottom"/>
+      </node>
+      <node id="bbox-front" name="bbox-front" type="NODE">
+        <matrix sid="transform">0.5 0 0 0 0 -0.5 8.74228e-8 0 0 -4.37114e-8 -1 0.5 0 0 0 1</matrix>
+        <instance_geometry url="#bbox-front-plane-mesh" name="bbox-front"/>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

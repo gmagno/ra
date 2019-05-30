@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>Goncalo Magno</author>
+      <authoring_tool>Blender 2.79.0 commit date:2018-03-22, commit time:14:10, hash:f4dc9f9d68b</authoring_tool>
+    </contributor>
+    <created>2019-03-28T09:09:55</created>
+    <modified>2019-03-28T09:09:55</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_images/>
+  <library_geometries>
+    <geometry id="back-plane-mesh" name="back-plane">
+      <mesh>
+        <source id="back-plane-mesh-positions">
+          <float_array id="back-plane-mesh-positions-array" count="12">-1 -1 0 1 -1 0 -1 1 0 1 1 0</float_array>
+          <technique_common>
+            <accessor source="#back-plane-mesh-positions-array" count="4" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="back-plane-mesh-normals">
+          <float_array id="back-plane-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#back-plane-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="back-plane-mesh-vertices">
+          <input semantic="POSITION" source="#back-plane-mesh-positions"/>
+        </vertices>
+        <triangles count="2">
+          <input semantic="VERTEX" source="#back-plane-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#back-plane-mesh-normals" offset="1"/>
+          <p>1 0 2 0 0 0 1 0 3 0 2 0</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="right-plane-mesh" name="right-plane">
+      <mesh>
+        <source id="right-plane-mesh-positions">
+          <float_array id="right-plane-mesh-positions-array" count="12">-1 -1 0 1 -1 0 -1 1 0 1 1 0</float_array>
+          <technique_common>
+            <accessor source="#right-plane-mesh-positions-array" count="4" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="right-plane-mesh-normals">
+          <float_array id="right-plane-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#right-plane-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="right-plane-mesh-vertices">
+          <input semantic="POSITION" source="#right-plane-mesh-positions"/>
+        </vertices>
+        <triangles count="2">
+          <input semantic="VERTEX" source="#right-plane-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#right-plane-mesh-normals" offset="1"/>
+          <p>1 0 2 0 0 0 1 0 3 0 2 0</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="left-plane-mesh" name="left-plane">
+      <mesh>
+        <source id="left-plane-mesh-positions">
+          <float_array id="left-plane-mesh-positions-array" count="12">-1 -1 0 1 -1 0 -1 1 0 1 1 0</float_array>
+          <technique_common>
+            <accessor source="#left-plane-mesh-positions-array" count="4" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="left-plane-mesh-normals">
+          <float_array id="left-plane-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#left-plane-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="left-plane-mesh-vertices">
+          <input semantic="POSITION" source="#left-plane-mesh-positions"/>
+        </vertices>
+        <triangles count="2">
+          <input semantic="VERTEX" source="#left-plane-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#left-plane-mesh-normals" offset="1"/>
+          <p>1 0 2 0 0 0 1 0 3 0 2 0</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="top-plane-mesh" name="top-plane">
+      <mesh>
+        <source id="top-plane-mesh-positions">
+          <float_array id="top-plane-mesh-positions-array" count="12">-1 -1 0 1 -1 0 -1 1 0 1 1 0</float_array>
+          <technique_common>
+            <accessor source="#top-plane-mesh-positions-array" count="4" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="top-plane-mesh-normals">
+          <float_array id="top-plane-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#top-plane-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="top-plane-mesh-vertices">
+          <input semantic="POSITION" source="#top-plane-mesh-positions"/>
+        </vertices>
+        <triangles count="2">
+          <input semantic="VERTEX" source="#top-plane-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#top-plane-mesh-normals" offset="1"/>
+          <p>1 0 2 0 0 0 1 0 3 0 2 0</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="bottom-plane-mesh" name="bottom-plane">
+      <mesh>
+        <source id="bottom-plane-mesh-positions">
+          <float_array id="bottom-plane-mesh-positions-array" count="12">-1 -1 0 1 -1 0 -1 1 0 1 1 0</float_array>
+          <technique_common>
+            <accessor source="#bottom-plane-mesh-positions-array" count="4" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="bottom-plane-mesh-normals">
+          <float_array id="bottom-plane-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#bottom-plane-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="bottom-plane-mesh-vertices">
+          <input semantic="POSITION" source="#bottom-plane-mesh-positions"/>
+        </vertices>
+        <triangles count="2">
+          <input semantic="VERTEX" source="#bottom-plane-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#bottom-plane-mesh-normals" offset="1"/>
+          <p>1 0 2 0 0 0 1 0 3 0 2 0</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="front-plane-mesh" name="front-plane">
+      <mesh>
+        <source id="front-plane-mesh-positions">
+          <float_array id="front-plane-mesh-positions-array" count="12">-1 -1 0 1 -1 0 -1 1 0 1 1 0</float_array>
+          <technique_common>
+            <accessor source="#front-plane-mesh-positions-array" count="4" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="front-plane-mesh-normals">
+          <float_array id="front-plane-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#front-plane-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="front-plane-mesh-vertices">
+          <input semantic="POSITION" source="#front-plane-mesh-positions"/>
+        </vertices>
+        <triangles count="2">
+          <input semantic="VERTEX" source="#front-plane-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#front-plane-mesh-normals" offset="1"/>
+          <p>1 0 2 0 0 0 1 0 3 0 2 0</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers/>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="Back" name="Back" type="NODE">
+        <matrix sid="transform">6 0 0 0 0 2 0 2 0 0 1 -3 0 0 0 1</matrix>
+        <instance_geometry url="#back-plane-mesh" name="Back"/>
+      </node>
+      <node id="Right" name="Right" type="NODE">
+        <matrix sid="transform">2.26494e-7 0 -1 6 0 2 0 2 3 0 7.54979e-8 0 0 0 0 1</matrix>
+        <instance_geometry url="#right-plane-mesh" name="Right"/>
+      </node>
+      <node id="Left" name="Left" type="NODE">
+        <matrix sid="transform">2.26494e-7 0 1 -6 0 2 0 2 -3 0 7.54979e-8 0 0 0 0 1</matrix>
+        <instance_geometry url="#left-plane-mesh" name="Left"/>
+      </node>
+      <node id="Top" name="Top" type="NODE">
+        <matrix sid="transform">6 0 0 0 0 -1.31134e-7 -1 4 0 3 -4.37114e-8 0 0 0 0 1</matrix>
+        <instance_geometry url="#top-plane-mesh" name="Top"/>
+      </node>
+      <node id="Bottom" name="Bottom" type="NODE">
+        <matrix sid="transform">6 0 0 0 0 -1.31134e-7 1 0 0 -3 -4.37114e-8 0 0 0 0 1</matrix>
+        <instance_geometry url="#bottom-plane-mesh" name="Bottom"/>
+      </node>
+      <node id="Front" name="Front" type="NODE">
+        <matrix sid="transform">-6 0 -3.25841e-7 0 0 2 0 2 1.95505e-6 0 -1 3 0 0 0 1</matrix>
+        <instance_geometry url="#front-plane-mesh" name="Front"/>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>
