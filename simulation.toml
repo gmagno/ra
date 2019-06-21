@@ -1,7 +1,7 @@
 title = 'Simple configuration'
 
 [[sources]]  # element 0 of an array of sources
-position = [1.0, 2.0, 0.0]
+position = [1.0, 2.0, 1.2]
 
 # [[sources]]  # element 1 of an array of sources
 # position = [10.0, -1.0, 0.0]
@@ -11,16 +11,16 @@ position = [1.0, 2.0, 0.0]
 
 
 [[receivers]]  # element 0 of an array of receivers
-position = [11.0, 1.0, 3.0]
+position = [11.0, 1.0, 1.2]
 
 # [[receivers]]  # element 1 of an array of receivers
 # position = [1.0, 2.0, 3.0]
 
 [geometry]
-room = 'data/rooms/simple/walls_room.dae'
+#room = 'data/rooms/simple/walls_room.dae'
 # room = 'data/rooms/simple/monkey.dae'
 # room = 'data/rooms/simple/long_tube.dae'
 # room = 'data/rooms/simple/cena11_rot.dae'
-# room = 'data/rooms/simple/simple.dae'
+room = 'data/rooms/simple/simple.dae'
 bbox = 'data/rooms/simple/bbox.dae'
 
