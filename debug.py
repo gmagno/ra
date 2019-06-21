@@ -3,12 +3,12 @@ import sys
 from pprint import pprint
 
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
-print('Working dir: {}'.format(os.getcwd()))
-print('sys.path:')
-pprint(sys.path)
+#print('Working dir: {}'.format(os.getcwd()))
+#print('sys.path:')
+#pprint(sys.path)
 
 
-from ra.ra import main
+from ra.ra2 import main
 
 
 main()
