@@ -1,20 +1,22 @@
- #include "geometry.h"
+#include "geometry.h"
 
-//  class Pet
-//     {
-//         public:
-//             Pet(const std::string &name, int hunger) : name(name), hunger(hunger) {}
-//             ~Pet() {}
 
-//             void go_for_a_walk() { hunger++; }
-//             const std::string &get_name() const { return name; }
-//             int get_hunger() const { return hunger; }
+PlaneMat::PlaneMat() {}
 
-//         private:
-//             std::string name;
-//             int hunger;
-//     };
+PlaneMat::PlaneMat(
+    const std::string &name
+    // bool bbox,
+    // Eigen::Ref<Eigen::MatrixXd> vertices,
+    // Eigen::Ref<Eigen::RowVector3d> normal,
+    // Eigen::Ref<Eigen::RowVectorXd> vert_x,
+    // Eigen::Ref<Eigen::RowVectorXd> vert_y,
+    // double area,
+    // Eigen::Ref<Eigen::RowVector3d> centroid,
+    // double s,
+    // Eigen::Ref<Eigen::RowVectorXd> alpha
+) {
 
-// class Plane():
-// normal
-// vertices
+}
+    // ~PlaneMat();
+
+
