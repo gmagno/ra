@@ -10,6 +10,7 @@
 #include "bind_fun_ptinpol.h"
 #include "bind_fun_isleft.h"
 #include "bind_fun_recgrow.h"
+#include "bind_cls_geometry.h"
 
 namespace py = pybind11;
 

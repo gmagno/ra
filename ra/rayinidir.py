@@ -10,8 +10,21 @@ class RayInitialDirections():
         pass
 
     def single_ray(self, direction = [1.0, 0.0, 0.0]):
-        vinit = np.array(direction)
-        self.vinit = vinit / np.linalg.norm(vinit)
+        vinit = []
+        vinit.append(direction)
+        self.vinit = np.array(vinit)
+        self.vinit /= np.linalg.norm(self.vinit)
+        self.Nrays = 1
+        return self.vinit, self.Nrays
+
+    def single_ray_elaz(self, elevation = 0.0, azimuth = 0.0):
+        el = np.deg2rad(elevation)
+        az = np.deg2rad(azimuth)
+        vinit = []
+        direction = [np.cos(az) * np.sin(el), np.sin(az) * np.sin(el), np.cos(el)]
+        vinit.append(direction)
+        self.vinit = np.array(vinit)
+        self.vinit /= np.linalg.norm(self.vinit)  
         self.Nrays = 1
         return self.vinit, self.Nrays
 
@@ -147,8 +160,13 @@ class RayInitialDirections():
         fig = plt.figure()
         ax = fig.gca(projection='3d')
         ax.quiver(0, 0, 0,
-            self.vinit[:,0], self.vinit[:,1], self.vinit[:,2],
-            length=0.1, normalize=True)
+                self.vinit[:,0], self.vinit[:,1], self.vinit[:,2],
+                length=0.1, normalize=True)
+        
+        # for v in self.vinit:
+            
+        #     ax.quiver(0, 0, 0, v[0], v[1], v[2],
+        #         length=0.1, normalize=True)
         ax.set_xlabel('X axis')
         ax.set_ylabel('Y axis')
         ax.set_zlabel('Z axis')
