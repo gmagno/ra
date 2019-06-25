@@ -15,6 +15,8 @@ from ra.source import (
     # SingleRaySource
 )
 
+import ra_cpp
+
 from ra.rayinidir import RayInitialDirections
 # from ra.receivers import Receivers
 from ra.receivers import setup_receivers
@@ -27,7 +29,7 @@ from ra.absorption_database import load_matdata_from_mat
 from ra.absorption_database import get_alpha_s
 from ra.statistics import StatisticalMat
 
-import ra_cpp
+
 
 
 def main():
@@ -57,14 +59,15 @@ def main():
     # geo = Geometry('simulation.toml')
     #geo.plot_dae_room(normals = 'on')
     # for plane in geo.planes:
-    #     print("Plane absorption coefficient: {}.".format(plane.alpha))
-    #     print("Plane scaterring coefficient: {}.".format(plane.s))
+    #     print("Plane area: {}.".format(plane.area))
+        # print("Plane absorption coefficient: {}.".format(plane.alpha))
+        # print("Plane scaterring coefficient: {}.".format(plane.s))
 
-    #     print("Plane name: {}.".format(plane.name))
-    #     print("Plane normal: {}.".format(plane.normal))
-    #     print("Plane vertices: {}.".format(plane.vertices))
-    #     print("Plane v_x: {}. Plane v_y: {}.".format(plane.vert_x, plane.vert_y))
-    #     print("Plane centroid: {}.".format(plane.centroid))
+        # print("Plane name: {}.".format(plane.name))
+        # print("Plane normal: {}.".format(plane.normal))
+        # print("Plane vertices: {}.".format(plane.vertices))
+        # print("Plane v_x: {}. Plane v_y: {}.".format(plane.vert_x, plane.vert_y))
+        # print("Plane centroid: {}.".format(plane.centroid))
     
     # print("The total area is {} m2.".format(geo.total_area))
     # print("The volume is {} m3.".format(geo.volume))
@@ -109,8 +112,8 @@ def main():
 
 
     ############### Some ray tracing in python ##############
-    pet = ra_cpp.Pet('pluto', 5)
-    print(pet.get_name())
+    # pet = ra_cpp.Pet('pluto', 5)
+    # print(pet.get_name())
     # ra_cpp.ray_tracer(air)
     
     # for js, s in enumerate(sources):

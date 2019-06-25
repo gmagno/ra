@@ -17,7 +17,7 @@ PYBIND11_MODULE(ra_cpp, m)
     bind_isleft(m);
     bind_recgrow(m);
     bind_cls_pet(m);
-        
+    bind_cls_planemat(m);
 
 #ifdef VERSION_INFO
     m.attr("__version__") = VERSION_INFO;

@@ -13,5 +13,5 @@
 namespace py = pybind11;
 
 void bind_cls_pet(py::module &m);
-
+void bind_cls_planemat(py::module &m);
 #endif /* BIND_CLS_GEOMETRY_H */

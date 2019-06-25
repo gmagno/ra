@@ -7,6 +7,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 import matplotlib.pyplot as plt
 import scipy.io as spio
+import ra_cpp
 
 class GeometryMat():
     def __init__(self, config_file, alpha, s):
@@ -20,26 +21,28 @@ class GeometryMat():
             struct_as_record = True)
 
         vertcoord = np.array(mat['geometry']['vertcoord'][0][0])
-        
         self.planes = []
         planes = mat['geometry']['plane'][0][0][0]
-        
         for jp, p in enumerate(planes):
             name = 'nameless matlab plane'
             vertices = []
             for v in p[0][0]:
                 vertices.append(vertcoord[v-1])
-            normal = p[1][0]
+            vertices  = np.array(vertices)
+            normal = np.float32(p[1][0])
+            vert_x, vert_y = vert_2d(normal, vertices)
             area = p[2][0]
-            centroid = p[3][0]
-        
-            
-            plane = PlaneMat(name, vertices, normal, area, 
-                centroid, alpha[jp], s[jp])
+            centroid = np.float32(p[3][0])
+            alpha_v = np.float32(alpha[jp])
+            plane = ra_cpp.PlaneMat(name, False, vertices, normal,
+                vert_x, vert_y, area, centroid, alpha_v, s[jp])
+            # plane = PyPlaneMat(name, vertices, normal, area,
+            #     centroid, alpha[jp], s[jp])
             self.planes.append(plane)
-  
         self.total_area = np.array(mat['geometry']['TotalArea'])
         self.volume = np.array(mat['geometry']['Volume'])
+        pet = ra_cpp.Pet('pluto', 5)
+        print(pet.get_name())
 
     def plot_mat_room(self, normals='off'):
         '''
@@ -73,7 +76,7 @@ class GeometryMat():
         ax.set_zlabel('Z axis')
         plt.show()    
 
-class PlaneMat():
+class PyPlaneMat():
 
     '''
     A class to define a single plane object with the following att:

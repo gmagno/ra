@@ -25,33 +25,33 @@ private:
 class PlaneMat
 {
 public:
-    PlaneMat();
+    // PlaneMat();
     PlaneMat(
-        const std::string &name
-        // bool bbox,
-        // Eigen::Ref<Eigen::MatrixXd> vertices,
-        // Eigen::Ref<Eigen::RowVector3d> normal,
-        // Eigen::Ref<Eigen::RowVectorXd> vert_x,
-        // Eigen::Ref<Eigen::RowVectorXd> vert_y,
-        // double area,
-        // Eigen::Ref<Eigen::RowVector3d> centroid,
-        // double s,
-        // Eigen::Ref<Eigen::RowVectorXd> alpha
-    );
-    ~PlaneMat();
+        const std::string &name,
+        bool bbox,
+        Eigen::MatrixXd vertices,
+        Eigen::RowVector3d normal,
+        Eigen::RowVectorXd vert_x,
+        Eigen::RowVectorXd vert_y,
+        double area,
+        Eigen::RowVector3d centroid,
+        Eigen::RowVectorXd alpha,
+        double s
+    ) {}
+    ~PlaneMat() {}
 
 
 private:
     std::string name;
     bool bbox;
-    Eigen::Ref<Eigen::MatrixXd> vertices;
-    Eigen::Ref<Eigen::RowVector3d> normal;
-    Eigen::Ref<Eigen::RowVectorXd> vert_x;
-    Eigen::Ref<Eigen::RowVectorXd> vert_y;
+    Eigen::MatrixXd vertices;
+    Eigen::RowVector3d normal;
+    Eigen::RowVectorXd vert_x;
+    Eigen::RowVectorXd vert_y;
     double area;
-    Eigen::Ref<Eigen::RowVector3d> centroid;
+    Eigen::RowVector3d centroid;
+    Eigen::RowVectorXd alpha;
     double s;
-    Eigen::Ref<Eigen::RowVectorXd> alpha;
 };
 
 
