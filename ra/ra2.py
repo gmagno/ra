@@ -50,16 +50,26 @@ def main():
     # print(air.m)
 
     ##### Test materials #############
-    alpha_list = load_matdata_from_mat('simulation.toml')  
+    alpha_list = load_matdata_from_mat('simulation.toml')
     alpha, s = get_alpha_s('surface_mat_id.toml', alpha_list)
-    
     ##### Test Geometry ###########
     geo = GeometryMat('simulation.toml', alpha, s)
     # geo.plot_mat_room(normals = 'on')
     # geo = Geometry('simulation.toml')
     #geo.plot_dae_room(normals = 'on')
-    # for plane in geo.planes:
-    #     print("Plane area: {}.".format(plane.area))
+
+    ## Let us test a single plane interception
+    v_in = np.array([0., 0., 1.])#np.array([0.7236, -0.5257, 0.4472])
+    ray_origin = np.array([3.0, 2.333, 1.2])
+    for jplane, plane in enumerate(geo.planes):
+        Rp = plane.refpoint3d(ray_origin, v_in)
+        wn = plane.test_single_plane(ray_origin, v_in, Rp)
+        if wn != 0:
+            print("Reflection point is: {}.".format(Rp))
+            print("Plane {} instersection is: {}. 0 is out"
+                .format(jplane+1, wn))
+
+        # print("Plane area: {}.".format(plane.get_area()))
         # print("Plane absorption coefficient: {}.".format(plane.alpha))
         # print("Plane scaterring coefficient: {}.".format(plane.s))
 

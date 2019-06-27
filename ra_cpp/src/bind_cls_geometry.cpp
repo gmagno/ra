@@ -17,9 +17,14 @@ void bind_cls_planemat(py::module &m){
         Eigen::RowVector3d,
         Eigen::RowVectorXd,
         Eigen::RowVectorXd,
+        Eigen::RowVector2i,
         double,
         Eigen::RowVector3d,
         Eigen::RowVectorXd,
         double
-        >());
+        >())
+        .def("get_pname", &PlaneMat::get_pname)
+        .def("get_area", &PlaneMat::get_area)
+        .def("refpoint3d", &PlaneMat::refpoint3d)
+        .def("test_single_plane", &PlaneMat::test_single_plane);
 }

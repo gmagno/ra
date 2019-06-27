@@ -1,5 +1,5 @@
-#ifndef BIND_FUN_LAMBDADIST_H
-#define BIND_FUN_LAMBDADIST_H
+#ifndef BIND_FUN_WHICHSIDE_H
+#define BIND_FUN_WHICHSIDE_H
 
 #include <iostream>
 
@@ -8,10 +8,10 @@
 #include "pybind11/numpy.h"
 #include "pybind11/pybind11.h"
 #include "unsupported/Eigen/Polynomials"
-#include "lambdadist.h"
+#include "whichside.h"
 
 namespace py = pybind11;
 
-void bind_lambdadist(py::module &m);
+void bind_whichside(py::module &m);
 
-#endif /* BIND_FUN_LAMBDADIST_H */
+#endif /* BIND_FUN_WHICHSIDE_H */

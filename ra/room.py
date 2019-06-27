@@ -30,19 +30,26 @@ class GeometryMat():
                 vertices.append(vertcoord[v-1])
             vertices  = np.array(vertices)
             normal = np.float32(p[1][0])
-            vert_x, vert_y = vert_2d(normal, vertices)
-            area = p[2][0]
+            vert_x, vert_y, normal_nig = vert_2d(normal, vertices)
+            area = np.float64(p[2][0])
             centroid = np.float32(p[3][0])
             alpha_v = np.float32(alpha[jp])
+            ################### cpp plane class #################
+            # print("Plane area in Py before c++: {}.".format(area))
+            # print(type(area))
             plane = ra_cpp.PlaneMat(name, False, vertices, normal,
-                vert_x, vert_y, area, centroid, alpha_v, s[jp])
+                vert_x, vert_y, normal_nig, area, centroid,
+                alpha_v, s[jp])
+            # print(plane.get_area())
+            # print(plane.get_pname())
+            ###################################################
             # plane = PyPlaneMat(name, vertices, normal, area,
             #     centroid, alpha[jp], s[jp])
             self.planes.append(plane)
         self.total_area = np.array(mat['geometry']['TotalArea'])
         self.volume = np.array(mat['geometry']['Volume'])
-        pet = ra_cpp.Pet('pluto', 5)
-        print(pet.get_name())
+        # pet = ra_cpp.Pet('pluto', 5)
+        # print(pet.get_name())
 
     def plot_mat_room(self, normals='off'):
         '''
@@ -97,7 +104,7 @@ class PyPlaneMat():
         # Calculate the centroiud of a polygon
         self.centroid = np.float32(centroid)
         # The acoustical properties of the plane
-        self.s = s 
+        self.s = s
         self.alpha = np.array(alpha, np.float32)
 
 class Geometry():
@@ -189,13 +196,14 @@ def vert_2d(normal, vertcoord):
     '''
     Function to transform the 3D plane to 2D.
     Input: normal of the plane
-           3D vertex coordinates of the plane (array of 1x3 arrays)
+    3D vertex coordinates of the plane (array of 1x3 arrays)
     Output: vert_x: a numpy array of x-coordinates of vertexes
             vert_y: a numpy array of y-coordinates of vertexes 
     '''
     # Find biggest component of the normal - component to ignore
     normal_abs = np.absolute(normal)
     normal_id = np.where(normal_abs == normal_abs.max())
+    normal_nig = np.where(normal_abs != normal_abs.max())
 
     vert_x = []
     vert_y = []
@@ -205,24 +213,25 @@ def vert_2d(normal, vertcoord):
             v = np.delete(row, normal_id)
         else:
             normal_id2 = np.delete(normal_id, 0)
-            v = np.delete(row, normal_id2) 
- 
+            v = np.delete(row, normal_id2)
+
         vert_x.append(v[0])
         vert_y.append(v[1])
-    
+
     # append the first vertex to the end of the list (circular)
     if len(normal_id[0]) == 1:
         v = np.delete(vertcoord[0], normal_id)
     else:
         normal_id2 = np.delete(normal_id, 0)
-        v = np.delete(vertcoord[0], normal_id2) 
+        v = np.delete(vertcoord[0], normal_id2)
     vert_x.append(v[0])
     vert_y.append(v[1])
 
     # Transform in numpy array
     vert_x = np.array(vert_x)
     vert_y = np.array(vert_y)
-    return vert_x, vert_y
+    normal_nig = np.intc(normal_nig[0])
+    return vert_x, vert_y, normal_nig
 
 def triangle_area(vertices):
     ab = vertices[1] - vertices[0]

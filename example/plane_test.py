@@ -38,13 +38,13 @@ def rp_2d(normal, ref_point):
     '''
     Function to transform the 3D rp to 2D.
     Input: normal of the plane
-           ref_point (array 1x3)
+    ref_point (array 1x3)
     Output: ref_point2d: a numpy array of 1x2 of 2D reflection point
     '''
     # Find biggest component of the normal - component to ignore
     normal_abs = np.absolute(normal)
     normal_id = np.where(normal_abs == normal_abs.max())
-    
+    print(normal_id)
     # ref_point2D
     ref_point2d = np.delete(ref_point, normal_id)
     return ref_point2d
@@ -63,9 +63,9 @@ def main():
     # print('The reflection point back to python is {}.'.format(Rp))
     # Test lambda and distance
     # Rp = np.array([0.57, -0.23, 0.0])
-    lam = ra_cpp._lambdadist(ray_origin, v_in, Rp)
-    print('Lambda back to python is {}.'.format(lam[0][0]))
-    print('dist back to python is {}.'.format(lam[0][1]))
+    lam = ra_cpp._whichside(ray_origin, v_in, Rp)
+    print('Lambda back to python is {}.'.format(lam))
+    # print('dist back to python is {}.'.format(lam[0][1]))
 
     
     #####  Test point in polygon ######
