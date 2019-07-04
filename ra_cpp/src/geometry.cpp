@@ -1,31 +1,37 @@
 #include "geometry.h"
 
+// Method to calculate reflection point
+Eigen::RowVector3d Planecpp::refpoint3d(
+    Eigen::Ref<Eigen::RowVector3d> ray_origin,
+    Eigen::Ref<Eigen::RowVector3d> v_in){
+    Eigen::RowVector3d ref_point;
+    Eigen::RowVector3d vertex = vertices.row(2);
+    // Calculate reflection point
+    ref_point = refpoint(ray_origin, v_in, normal, vertex);
+    return ref_point;
+}
 
-// PlaneMat::PlaneMat() {}
-
-// PlaneMat::PlaneMat(
-//     const std::string &name,
-//     bool bbox,
-//     Eigen::MatrixXd vertices,
-//     Eigen::RowVector3d normal,
-//     Eigen::RowVectorXd vert_x,
-//     Eigen::RowVectorXd vert_y,
-//     double area,
-//     Eigen::RowVector3d centroid,
-//     double s,
-//     Eigen::RowVectorXd alpha
-// ) {
-//     this->name = name;
-//     this->bbox = bbox;
-//     this->vertices = vertices;
-//     this->normal = normal;
-//     this->vert_x = vert_x;
-//     this->vert_y = vert_y;
-//     this->area = area;
-//     this->centroid = centroid;
-//     this->s = s;
-//     this->alpha = alpha;
-// }
-//     // ~PlaneMat();
+// For point in polygon test
+int Planecpp::test_single_plane(Eigen::Ref<Eigen::RowVector3d> ray_origin,
+    Eigen::Ref<Eigen::RowVector3d> v_in,
+    Eigen::Ref<Eigen::RowVector3d> ref_point){
+    // Calculate if the ray goes towards the plane
+    // (whichside>0) or not
+    double whichside = v_in.dot(ref_point) - v_in.dot(ray_origin);
+    // Calculate the distance from ray_origin to ref_point
+    double distance = (ref_point - ray_origin).norm();
+    // Initialize winding number (wn) por pt in pol test
+    int wn = 0; // wn = 0 means rp is outside of the plane
+    // Things will be calculated only if the ray goes towards the plane
+    if (whichside > 0.0){
+        // Get the reflection point in 2D for pt in polygon test
+        Eigen::RowVector2d ref_point2d;
+        ref_point2d(0) = ref_point(nig(0));
+        ref_point2d(1) = ref_point(nig(1));
+        // Point in polygon test
+        wn = ptinpol(vert_x, vert_y, ref_point2d);
+    }
+    return wn;
+}
 
 

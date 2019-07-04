@@ -8,8 +8,8 @@ void bind_cls_pet(py::module &m){
         .def("get_name", &Pet::get_name);
 }
 
-void bind_cls_planemat(py::module &m){
-    py::class_<PlaneMat>(m, "PlaneMat")
+void bind_cls_planecpp(py::module &m){
+    py::class_<Planecpp>(m, "Planecpp")
         .def(py::init<
         const std::string &,
         bool,
@@ -23,8 +23,17 @@ void bind_cls_planemat(py::module &m){
         Eigen::RowVectorXd,
         double
         >())
-        .def("get_pname", &PlaneMat::get_pname)
-        .def("get_area", &PlaneMat::get_area)
-        .def("refpoint3d", &PlaneMat::refpoint3d)
-        .def("test_single_plane", &PlaneMat::test_single_plane);
+        .def("refpoint3d", &Planecpp::refpoint3d)
+        .def("test_single_plane", &Planecpp::test_single_plane)
+        .def_readwrite("name", &Planecpp::name)
+        .def_readwrite("bbox", &Planecpp::bbox)
+        .def_readwrite("vertices", &Planecpp::vertices)
+        .def_readwrite("normal", &Planecpp::normal)
+        .def_readwrite("vert_x", &Planecpp::vert_x)
+        .def_readwrite("vert_y", &Planecpp::vert_y)
+        .def_readwrite("nig", &Planecpp::nig)
+        .def_readwrite("area", &Planecpp::area)
+        .def_readwrite("centroid", &Planecpp::centroid)
+        .def_readwrite("alpha", &Planecpp::alpha)
+        .def_readwrite("s", &Planecpp::s);
 }

@@ -13,17 +13,32 @@ class GeometryMat():
     def __init__(self, config_file, alpha, s):
         '''
         Set up the room geometry from the .mat file
+        Geometry consists of: Volume, Total ara and an
+        array of plane objects. Each plane object will be
+        processed in a c++ class and have the following att:
+        - name (string)
+        - bounding box (bool)
+        - list of vertices (Eigen<double> - Nvert x 3)
+        - normal (Eigen<double> - 1 x 3)
+        - vert_x - 2D polygon x coord (Eigen<double> - 1 x Nvert)
+        - vert_y - 2D polygon y coord (Eigen<double> - 1 x Nvert)
+        - nig - 2D normal components index (Eigen<int> - 1 x 2)
+        - area (double)
+        - centroid (Eigen<double> - 1 x 3)
+        - alpha - absorption coefficient (Eigen<double> - 1 x Nfreq)
+        - s - scattering coefficient (double)
         '''
+        # toml file and matlab data
         config = load_cfg(config_file)
-        # print(config['geometry']['room'])
-        # print(type('ODEON_Ex_geometry.mat'))
         mat = spio.loadmat(config['geometry']['room'],
             struct_as_record = True)
-
+        # mat = spio.loadmat(config['geometry']['room'], struct_as_record = True)
         vertcoord = np.array(mat['geometry']['vertcoord'][0][0])
+        # Load an array of plane objects
         self.planes = []
         planes = mat['geometry']['plane'][0][0][0]
         for jp, p in enumerate(planes):
+            # Get things from matlab data
             name = 'nameless matlab plane'
             vertices = []
             for v in p[0][0]:
@@ -35,106 +50,106 @@ class GeometryMat():
             centroid = np.float32(p[3][0])
             alpha_v = np.float32(alpha[jp])
             ################### cpp plane class #################
-            # print("Plane area in Py before c++: {}.".format(area))
-            # print(type(area))
-            plane = ra_cpp.PlaneMat(name, False, vertices, normal,
+            plane = ra_cpp.Planecpp(name, False, vertices, normal,
                 vert_x, vert_y, normal_nig, area, centroid,
                 alpha_v, s[jp])
-            # print(plane.get_area())
-            # print(plane.get_pname())
-            ###################################################
-            # plane = PyPlaneMat(name, vertices, normal, area,
-            #     centroid, alpha[jp], s[jp])
+            ################### py plane class ################
+            # plane = PyPlane(name, False, vertices, normal,
+            #     vert_x, vert_y, normal_nig, area, centroid,
+            #     alpha[jp], s[jp])
+            # Append plane object
             self.planes.append(plane)
-        self.total_area = np.array(mat['geometry']['TotalArea'])
-        self.volume = np.array(mat['geometry']['Volume'])
+        # total area and volume
+        self.total_area = np.array(mat['geometry']['TotalArea'][0][0][0][0])
+        self.volume = np.array(mat['geometry']['Volume'][0][0][0][0])
+        # The pet class was used for self instruction
         # pet = ra_cpp.Pet('pluto', 5)
         # print(pet.get_name())
 
     def plot_mat_room(self, normals='off'):
         '''
-        a simple plot of the room - not redered
+        a simple plot of the room using matplotlib - not redered
         '''
         fig = plt.figure()
         ax = fig.gca(projection='3d')
-        
+        # loop through plane objects
         for plane in self.planes:
-                ax.scatter(plane.vertices[:,0], plane.vertices[:,1],
-                    plane.vertices[:,2], color='blue')
-                
-                verts = [list(zip(plane.vertices[:,0], 
-                    plane.vertices[:,1], plane.vertices[:,2]))]
-                
-                collection = Poly3DCollection(verts,
-                    linewidths=1, alpha=0.5, edgecolor = 'gray')
-                face_color = 'silver' # alternative: matplotlib.colors.rgb2hex([0.5, 0.5, 1])
-                collection.set_facecolor(face_color)
-                ax.add_collection3d(collection)
-
-                if normals == 'on':
-                    ax.quiver(plane.centroid[0], plane.centroid[1], 
-                    plane.centroid[2], plane.normal[0],
-                    plane.normal[1], plane.normal[2],
-                    length=1, color = 'red', normalize=True)
-                    
-
+            # vertexes plot
+            ax.scatter(plane.vertices[:,0], plane.vertices[:,1],
+                plane.vertices[:,2], color='blue')
+            verts = [list(zip(plane.vertices[:,0],
+                plane.vertices[:,1], plane.vertices[:,2]))]
+            # patch plot
+            collection = Poly3DCollection(verts,
+                linewidths=1, alpha=0.5, edgecolor = 'gray')
+            face_color = 'silver' # alternative: matplotlib.colors.rgb2hex([0.5, 0.5, 1])
+            collection.set_facecolor(face_color)
+            ax.add_collection3d(collection)
+            # plot the normals if the user wants to
+            if normals == 'on':
+                ax.quiver(plane.centroid[0], plane.centroid[1],
+                plane.centroid[2], plane.normal[0],
+                plane.normal[1], plane.normal[2],
+                length=1, color = 'red', normalize=True)
+        # set axis labels
         ax.set_xlabel('X axis')
         ax.set_ylabel('Y axis')
         ax.set_zlabel('Z axis')
-        plt.show()    
-
-class PyPlaneMat():
-
-    '''
-    A class to define a single plane object with the following att:
-    name = Name of the object. Default = 'none'
-    vertices = the list of 3, 3D vertices - from .dae
-    normal = the normal of the plane - from .dae
-    '''
-    def __init__(self, name, vertices, normal, area, centroid, alpha, s):
-        self.name = name
-        self.bbox = False  # by default a plane is part of the room geometry
-        self.vertices = np.array(vertices, np.float32)
-        self.normal = np.float32(normal)
-        # For point in polygon test we can do it in 2D
-        # It is better to return a list of 2D vertexes once and for all   
-        self.vert_x, self.vert_y = vert_2d(self.normal, self.vertices)
-        # Calculate the area of each polygon
-        self.area = area
-        # Calculate the centroiud of a polygon
-        self.centroid = np.float32(centroid)
-        # The acoustical properties of the plane
-        self.s = s
-        self.alpha = np.array(alpha, np.float32)
+        plt.show() # show plot
 
 class Geometry():
-    def __init__(self, config_file):
+    def __init__(self, config_file, alpha, s):
         '''
         Set up the room geometry from the .dae file
+        Geometry consists of: Volume, Total ara and an
+        array of plane objects. Each plane object will be
+        processed in a c++ class and have the following att:
+        - name (string)
+        - bounding box (bool)
+        - list of vertices (Eigen<double> - Nvert x 3)
+        - normal (Eigen<double> - 1 x 3)
+        - vert_x - 2D polygon x coord (Eigen<double> - 1 x Nvert)
+        - vert_y - 2D polygon y coord (Eigen<double> - 1 x Nvert)
+        - nig - 2D normal components index (Eigen<int> - 1 x 2)
+        - area (double)
+        - centroid (Eigen<double> - 1 x 3)
+        - alpha - absorption coefficient (Eigen<double> - 1 x Nfreq)
+        - s - scattering coefficient (double)
         '''
+        # toml file
         config = load_cfg(config_file)          # config. file
         daepath=config['geometry']['room']      # path to .dae
-
+        # Load an array of plane objects
         self.planes = []    # A list of planes (object with attributes)
         mesh = co.Collada(daepath)
-        
         for obj in mesh.scene.objects('geometry'): #loop every obj
-            for triset in obj.primitives():
-                # First if excludes the triangles
+            for triset in obj.primitives():        #loop every primitives
+                # First if excludes the non-triangles objects
                 if type(triset) != co.triangleset.BoundTriangleSet:
                     print('Warning: non-supported primitive ignored!')
                     continue
                 # Loop trhough all triangles
-                for i, tri in enumerate(triset):
-                    # Define a single plane object  
-                    plane = Plane(
-                        name='{}-{}'.format(obj.original.name, i),
-                        vertices=tri.vertices,
-                        normal=tri.normals[0] / np.linalg.norm(tri.normals[0])
-                    )
-
-                    # Append the plane object to a list of planes
+                for jp, tri in enumerate(triset):
+                    # Define a single plane object
+                    name='{}-{}'.format(obj.original.name, jp)
+                    vertices=np.array(tri.vertices)
+                    normal=np.float32(tri.normals[0] /
+                        np.linalg.norm(tri.normals[0]))
+                    vert_x, vert_y, normal_nig = vert_2d(normal, vertices)
+                    area = np.float64(triangle_area(vertices))
+                    centroid = np.float32(triangle_centroid(vertices))
+                    alpha_v = np.float32(alpha[jp])
+                    ################### cpp plane class #################
+                    plane = ra_cpp.Planecpp(name, False, vertices, normal,
+                        vert_x, vert_y, normal_nig, area, centroid,
+                        alpha_v, s[jp])
+                    ################### py plane class ################
+                    # plane = PyPlane(name, False, vertices, normal,
+                    #     vert_x, vert_y, normal_nig, area, centroid,
+                    #     alpha[jp], s[jp])
+                    # Append plane object
                     self.planes.append(plane)
+        # total area and volume
         self.total_area = total_area(self.planes)
         self.volume = volume(self.planes)
 
@@ -144,53 +159,63 @@ class Geometry():
         '''
         fig = plt.figure()
         ax = fig.gca(projection='3d')
-        
         for plane in self.planes:
-                ax.scatter(plane.vertices[:,0], plane.vertices[:,1],
-                    plane.vertices[:,2], color='blue')
-                
-                verts = [list(zip(plane.vertices[:,0], 
-                    plane.vertices[:,1], plane.vertices[:,2]))]
-                
-                collection = Poly3DCollection(verts,
-                    linewidths=1, alpha=0.5, edgecolor = 'gray')
-                face_color = 'silver' # alternative: matplotlib.colors.rgb2hex([0.5, 0.5, 1])
-                collection.set_facecolor(face_color)
-                ax.add_collection3d(collection)
-
-                if normals == 'on':
-                    ax.quiver(plane.centroid[0], plane.centroid[1], 
-                    plane.centroid[2], plane.normal[0],
-                    plane.normal[1], plane.normal[2],
-                    length=1, color = 'red', normalize=True)
-                    
-
+            # vertexes plot
+            ax.scatter(plane.vertices[:,0], plane.vertices[:,1],
+                plane.vertices[:,2], color='blue')
+            # patch plot
+            verts = [list(zip(plane.vertices[:,0],
+                plane.vertices[:,1], plane.vertices[:,2]))]
+            collection = Poly3DCollection(verts,
+                linewidths=1, alpha=0.5, edgecolor = 'gray')
+            face_color = 'silver' # alternative: matplotlib.colors.rgb2hex([0.5, 0.5, 1])
+            collection.set_facecolor(face_color)
+            ax.add_collection3d(collection)
+            # plot the normals if the user wants to
+            if normals == 'on':
+                ax.quiver(plane.centroid[0], plane.centroid[1],
+                plane.centroid[2], plane.normal[0],
+                plane.normal[1], plane.normal[2],
+                length=1, color = 'red', normalize=True)
+        # set axis labels
         ax.set_xlabel('X axis')
         ax.set_ylabel('Y axis')
         ax.set_zlabel('Z axis')
-        plt.show()
+        plt.show() # show plot
 
-
-class Plane():
+class PyPlane():
     '''
     A class to define a single plane object with the following att:
-    name = Name of the object. Default = 'none'
-    vertices = the list of 3, 3D vertices - from .dae
-    normal = the normal of the plane - from .dae
+    - name (string)
+    - bounding box (bool)
+    - list of vertices (Eigen<double> - Nvert x 3)
+    - normal (Eigen<double> - 1 x 3)
+    - vert_x - 2D polygon x coord (Eigen<double> - 1 x Nvert)
+    - vert_y - 2D polygon y coord (Eigen<double> - 1 x Nvert)
+    - nig - 2D normal components index (Eigen<int> - 1 x 2)
+    - area (double)
+    - centroid (Eigen<double> - 1 x 3)
+    - alpha - absorption coefficient (Eigen<double> - 1 x Nfreq)
+    - s - scattering coefficient (double)
     '''
-    def __init__(self, name, vertices, normal):
-        self.name = name
-        self.bbox = False  # by default a plane is part of the room geometry
-        self.vertices = np.array(vertices, np.float32)
-        self.normal = np.float32(normal)
+    def __init__(self, name, bbox, vertices, normal,
+        vert_x, vert_y, nig, area, centroid, alpha, s):
+        self.name = name   # plane name 'default = matlab nameless plane
+        self.bbox = bbox  # by default a plane is part of the room geometry
+        self.vertices = vertices
+        self.normal = normal
         # For point in polygon test we can do it in 2D
-        # It is better to return a list of 2D vertexes once and for all   
-        self.vert_x, self.vert_y = vert_2d(self.normal, self.vertices)
-        # Calculate the area of each polygon
-        self.area = triangle_area(self.vertices)
-        # Calculate the centroiud of a polygon
-        self.centroid = triangle_centroid(self.vertices)
-
+        # It is better to return a list of 2D vertexes once and for all
+        self.vert_x = vert_x
+        self.vert_y = vert_y
+        self.nig = nig
+        # area of each polygon
+        self.area = area
+        # centroid of a polygon
+        self.centroid = centroid
+        # The acoustical properties of the plane
+        self.alpha = np.array(alpha, np.float32)
+        self.s = s
 
 def vert_2d(normal, vertcoord):
     '''
@@ -198,42 +223,49 @@ def vert_2d(normal, vertcoord):
     Input: normal of the plane
     3D vertex coordinates of the plane (array of 1x3 arrays)
     Output: vert_x: a numpy array of x-coordinates of vertexes
-            vert_y: a numpy array of y-coordinates of vertexes 
+            vert_y: a numpy array of y-coordinates of vertexes
+            normal_nig: the index of the normal components used
+            (this will be used when converting the reflection
+            point from 3D to 2D)
     '''
-    # Find biggest component of the normal - component to ignore
+    # Find biggest component of the normal - the component to ignore
     normal_abs = np.absolute(normal)
     normal_id = np.where(normal_abs == normal_abs.max())
+    # Find the index of the normal which are not ignored
     normal_nig = np.where(normal_abs != normal_abs.max())
-
+    # Empty lists of x and y vertex coord
     vert_x = []
     vert_y = []
     for row in vertcoord:
-        # v = np.delete(row, normal_id)
-        if len(normal_id[0]) == 1:
+        if len(normal_id[0]) == 1: # for 3 different normal components
             v = np.delete(row, normal_id)
-        else:
+        else: # normal has equal components
             normal_id2 = np.delete(normal_id, 0)
             v = np.delete(row, normal_id2)
-
+        # append to vert_x and vert_y
         vert_x.append(v[0])
         vert_y.append(v[1])
-
     # append the first vertex to the end of the list (circular)
-    if len(normal_id[0]) == 1:
+    if len(normal_id[0]) == 1: # for 3 different normal components
         v = np.delete(vertcoord[0], normal_id)
-    else:
+    else: # normal has equal components
         normal_id2 = np.delete(normal_id, 0)
         v = np.delete(vertcoord[0], normal_id2)
+    # append to vert_x and vert_y
     vert_x.append(v[0])
     vert_y.append(v[1])
-
     # Transform in numpy array
-    vert_x = np.array(vert_x)
-    vert_y = np.array(vert_y)
-    normal_nig = np.intc(normal_nig[0])
+    vert_x = np.array(vert_x) # doubles
+    vert_y = np.array(vert_y) # doubles
+    normal_nig = np.intc(normal_nig[0]) # integers (index)
     return vert_x, vert_y, normal_nig
 
 def triangle_area(vertices):
+    '''
+    This function is used to calculate the area of a triagle
+    Input: the vertices of a triangle
+    Output: the area
+    '''
     ab = vertices[1] - vertices[0]
     ab_norm = np.linalg.norm(ab)
     ac = vertices[2] - vertices[0]
@@ -243,19 +275,34 @@ def triangle_area(vertices):
     return area_tri
 
 def triangle_centroid(vertices):
+    '''
+    This function is used to calculate the centroid of a triagle
+    Input: the vertices of a triangle
+    Output: the centroid (1 x 3)
+    '''
     return (vertices[0] + vertices[1] + vertices[2])/3
 
 def total_area(planes):
+    '''
+    This function is used to calculate the total area of the room
+    Input: a list of planes
+    Output: the total area of the room
+    '''
     total_area = 0.0
     for p in planes:
         total_area += p.area
     return total_area
 
 def volume(planes):
-    vertex_list = [] 
+    '''
+    This function is used to calculate the volume of the room
+    using scipy convexhull
+    Input: a list of planes
+    Output: the total area of the room
+    '''
+    vertex_list = []
     for p in planes:
         for v in p.vertices:
             vertex_list.append(v)
-    
     volume = ConvexHull(vertex_list).volume
     return volume

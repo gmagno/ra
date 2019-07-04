@@ -24,7 +24,7 @@ class RayInitialDirections():
         direction = [np.cos(az) * np.sin(el), np.sin(az) * np.sin(el), np.cos(el)]
         vinit.append(direction)
         self.vinit = np.array(vinit)
-        self.vinit /= np.linalg.norm(self.vinit)  
+        self.vinit /= np.linalg.norm(self.vinit)
         self.Nrays = 1
         return self.vinit, self.Nrays
 
@@ -37,7 +37,7 @@ class RayInitialDirections():
         self.vinit[:,1] = np.sin(elevation) * np.sin(azimuth)
         self.vinit[:,2] = np.cos(azimuth)
 
-        self.vinit /= np.linalg.norm(self.vinit)
+        self.vinit /= np.linalg.norm(self.vinit, axis = 1)[:,None]
         self.Nrays = Nrays
         return self.vinit, self.Nrays
 
@@ -47,7 +47,7 @@ class RayInitialDirections():
             # depth=depth
         )
         self.vinit, self.indices = tess.sphere
-        self.vinit /= np.linalg.norm(self.vinit)
+        self.vinit /= np.linalg.norm(self.vinit, axis = 1)[:,None]
         self.Nrays = self.vinit.shape[0]
         # print(self.Nrays)
         return self.vinit, self.Nrays
@@ -58,7 +58,7 @@ class RayInitialDirections():
         self.vinit = np.ones((Nrays, 3), dtype=np.float32)
         self.vinit[:, 1] = r * np.sin(a)
         self.vinit[:, 2] = r * np.cos(a)
-        self.vinit /= np.linalg.norm(self.vinit)
+        self.vinit /= np.linalg.norm(self.vinit, axis = 1)[:,None]
 
         direction = np.array(direction, dtype=np.float32)
         direction /= np.linalg.norm(direction)
@@ -74,8 +74,7 @@ class RayInitialDirections():
             q = q.normalized()
         rotmat = qua.as_rotation_matrix(q)
         self.vinit = self.vinit.dot(rotmat.T)
-
-        self.vinit /= np.linalg.norm(self.vinit)
+        self.vinit /= np.linalg.norm(self.vinit, axis = 1)[:,None]
         self.Nrays = Nrays
         return self.vinit, self.Nrays
 
@@ -85,7 +84,6 @@ class RayInitialDirections():
         self.vinit = np.zeros((Nrays, 3), dtype=np.float32)
         self.vinit[:,0] = np.cos(theta)
         self.vinit[:,1] = np.sin(theta)
-        
         direction = np.array(direction, dtype=np.float32)
         direction /= np.linalg.norm(direction)
         dot = np.dot([1, 0, 0], direction)
@@ -100,8 +98,7 @@ class RayInitialDirections():
             q = q.normalized()
         rotmat = qua.as_rotation_matrix(q)
         self.vinit = self.vinit.dot(rotmat.T)
-        
-        self.vinit /= np.linalg.norm(self.vinit)
+        self.vinit /= np.linalg.norm(self.vinit, axis = 1)[:,None]
         self.Nrays = Nrays
         return self.vinit, self.Nrays
 
@@ -110,7 +107,6 @@ class RayInitialDirections():
         self.vinit = np.zeros((Nrays, 3), dtype=np.float32)
         self.vinit[:,0] = np.cos(theta)
         self.vinit[:,2] = np.sin(theta)
-
         direction = np.array(direction, dtype=np.float32)
         direction /= np.linalg.norm(direction)
         dot = np.dot([1, 0, 0], direction)
@@ -125,8 +121,7 @@ class RayInitialDirections():
             q = q.normalized()
         rotmat = qua.as_rotation_matrix(q)
         self.vinit = self.vinit.dot(rotmat.T)
-
-        self.vinit /= np.linalg.norm(self.vinit)
+        self.vinit /= np.linalg.norm(self.vinit, axis = 1)[:,None]
         self.Nrays = Nrays
         return self.vinit, self.Nrays
 
@@ -135,8 +130,7 @@ class RayInitialDirections():
         self.vinit = np.zeros((Nrays, 3), dtype=np.float32)
         self.vinit[:,1] = np.cos(theta)
         self.vinit[:,2] = np.sin(theta)
-        self.vinit /= np.linalg.norm(self.vinit)
-
+        self.vinit /= np.linalg.norm(self.vinit, axis = 1)[:,None]
         direction = np.array(direction, dtype=np.float32)
         direction /= np.linalg.norm(direction)
         dot = np.dot([1, 0, 0], direction)
@@ -151,7 +145,6 @@ class RayInitialDirections():
             q = q.normalized()
         rotmat = qua.as_rotation_matrix(q)
         self.vinit = self.vinit.dot(rotmat.T)
-
         self.Nrays = Nrays
         return self.vinit, self.Nrays
 
@@ -162,11 +155,6 @@ class RayInitialDirections():
         ax.quiver(0, 0, 0,
                 self.vinit[:,0], self.vinit[:,1], self.vinit[:,2],
                 length=0.1, normalize=True)
-        
-        # for v in self.vinit:
-            
-        #     ax.quiver(0, 0, 0, v[0], v[1], v[2],
-        #         length=0.1, normalize=True)
         ax.set_xlabel('X axis')
         ax.set_ylabel('Y axis')
         ax.set_zlabel('Z axis')

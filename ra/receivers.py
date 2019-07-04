@@ -1,6 +1,7 @@
 import numpy as np
 import toml
 from ra.controlsair import load_cfg
+import ra_cpp
 
 def setup_receivers(config_file):
     '''
@@ -8,28 +9,29 @@ def setup_receivers(config_file):
     '''
     receivers = [] # An array of empty receiver objects
     config = load_cfg(config_file) # toml file
-    for r in config['sources']:
-        coord = r['position']
-        orientation = r['orientation']
-        # Append the receiver object
-        receivers.append(Receiver(coord, orientation)) 
+    for r in config['receivers']:
+        coord = np.array(r['position'])
+        orientation = np.array(r['orientation'])
+        ################### cpp receiver class #################
+        receivers.append(ra_cpp.Receivercpp(coord, orientation)) # Append the source object
+        ################### py source class ################
+        # receivers.append(Receiver(coord, orientation))
     return receivers
-            
+
+# class Receiver from python side
 class Receiver():
     '''
     A receiver class to initialize the following
     receiver properties:
     cood - 3D coordinates of a sound source
     orientation - where the source points to
-    
-    For later we could implement: 
+    For later we could implement:
     point to a given sound source
-
     '''
     def __init__(self, coord, orientation):
-        self.coord = np.array(coord)
-        self.orientation = np.array(orientation)
-    
+        self.coord = coord
+        self.orientation = orientation
+    # point receiver to a given sound source
     def point_to_source(self, sourceid = 0):
         '''
         Point the receiver towards a sound source

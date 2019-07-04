@@ -1,5 +1,5 @@
-#ifndef BIND_CLS_GEOMETRY_H
-#define BIND_CLS_GEOMETRY_H
+#ifndef BIND_CLS_RECEIVER_H
+#define BIND_CLS_RECEIVER_H
 
 #include <iostream>
 
@@ -8,10 +8,9 @@
 #include "pybind11/numpy.h"
 #include "pybind11/pybind11.h"
 #include "unsupported/Eigen/Polynomials"
-#include "geometry.h"
+#include "receiver.h"
 
 namespace py = pybind11;
 
-void bind_cls_pet(py::module &m);
-void bind_cls_planecpp(py::module &m);
-#endif /* BIND_CLS_GEOMETRY_H */
+void bind_cls_receivercpp(py::module &m);
+#endif /* BIND_CLS_RECEIVER_H */

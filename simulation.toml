@@ -1,20 +1,20 @@
 title = 'Simple configuration'
 
 ##################### algorithm controls ######################################
-[controls]  
+[controls]
 freq = [63.0, 125.0, 250.0, 500.0, 1000.0, 2000.0, 4000.0, 8000.0]
 Nrays = 100                 # Number of rays
 ht_length = 3.0             # Length of the impulse response
 Dt = 0.001                  # Histogram time resolution
-allow_scattering = 1        # Allow scattering or not
+allow_scattering = 0        # Allow scattering or not
 transition_order = 2        # Transition order
 rec_radius_init = 0.1       # Initial receiver radius
 alow_growth = 1             # Allow receiver growth or not
 rec_radius_final = 0.5      # Final receiver radius
 
 ################### Air properties ############################
-[air]  
-Temperature = 20.0          # Temperature in C 
+[air]
+Temperature = 20.0          # Temperature in C
 hr = 50.0                   # Relative humidity %
 p_atm = 101325.0            # Atmosferic air pressure Pa
 
@@ -25,12 +25,14 @@ position = [1.0, 2.0, 1.2]
 orientation = [1.0, 0.0, 0.0]
 power_dB = [80.0, 80.0, 80.0, 80.0, 80.0, 80.0, 80.0, 80.0]
 eq_dB = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+delay = 0.0 # delay in [ms]
 
 [[sources]]  # element 1 of an array of sources
-position = [10.0, -1.0, 0.0]
+position = [10.0, -1.0, 1.0]
 orientation = [1.0, 0.0, 0.0]
 power_dB = [80.0, 80.0, 80.0, 80.0, 80.0, 80.0, 80.0, 80.0]
 eq_dB = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+delay = 0.0 # delay in [ms]
 
 # [[sources]]  # element 2 of an array of sources
 # ...
@@ -50,7 +52,7 @@ orientation = [1.0, 0.0, 0.0]
 # room = 'data/rooms/simple/monkey.dae'
 # room = 'data/rooms/simple/long_tube.dae'
 #room = 'data/rooms/simple/cena11_rot.dae'
-# room = 'data/rooms/simple/simple.dae'
+#room = 'data/rooms/simple/simple.dae'
 #room = 'data/rooms/simple/example_odeon.dae'
 #room = 'data/rooms/simple/masp_cavaletes.dae'
 #room = 'data/rooms/simple/MASP_cavaletes_teto.dae'
