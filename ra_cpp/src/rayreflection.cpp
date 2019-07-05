@@ -13,27 +13,19 @@ Eigen::RowVector3d rayreflection(Eigen::Ref<Eigen::RowVector3d> v_in,
     int s_on_off,
     int trans_order)
 {
-        
     // Chech which normal of the plane to use
     if (v_in.dot(normal) > 0.0) // in this case invert normal
         normal = -normal;
-        
     //std::cout << "normal is (" << normal[0] << "," << normal[1] << ","  << normal[2] << ")" << std::endl;
-    // Define a non-scattering condition 
+    // Define a non-scattering condition
     double sort1 = 2.0; // always bigger than scattering coeff
     // Define a scattering condition
     if (s_on_off == 1 && ref_order > trans_order)
         sort1 = dist(engine); // sorted number to compare to s_s
-    
-
-
     //std::cout << "sort1 is " << sort1 << std::endl;
-
     //Define the direction of reflection
     Eigen::RowVector3d v_out;
-
     //std::cout << "n.v: " << normal.dot(v_in) << std::endl;
-
     if (sort1 > s_s)
         v_out = v_in - 2.0 * normal.dot(v_in) * normal;
         else {
@@ -52,10 +44,7 @@ Eigen::RowVector3d rayreflection(Eigen::Ref<Eigen::RowVector3d> v_in,
         if (normal.dot(v_out) < 0)
             v_out = -v_out;
     }
-    
     // std::cout << "v_out: (" << v_out[0] << "," << v_out[1] << ","  << v_out[2] << ")" << std::endl;
     // std::cout << "v_out norm: " << v_out.norm() << std::endl;
-
     return v_out;
-
 }

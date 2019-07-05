@@ -61,13 +61,13 @@ def main():
     ## Let us test a single plane interception
     v_in = np.array([0., 0., 1.])#np.array([0.7236, -0.5257, 0.4472])
     ray_origin = np.array([3.0, 2.333, 1.2])
-    for jplane, plane in enumerate(geo.planes):
-        Rp = plane.refpoint3d(ray_origin, v_in)
-        wn = plane.test_single_plane(ray_origin, v_in, Rp)
-        if wn != 0:
-            print("Reflection point is: {}.".format(Rp))
-            print("Plane {} instersection is: {}. 0 is out"
-                .format(jplane+1, wn))
+    # for jplane, plane in enumerate(geo.planes):
+    #     Rp = plane.refpoint3d(ray_origin, v_in)
+    #     wn = plane.test_single_plane(ray_origin, v_in, Rp)
+    #     if wn != 0:
+    #         print("Reflection point is: {}.".format(Rp))
+    #         print("Plane {} instersection is: {}. 0 is out"
+    #             .format(jplane+1, wn))
     #     print("Plane name: {}.".format(plane.name))
     #     print("Plane normal: {}.".format(plane.normal))
     #     print("Plane vertices: {}.".format(plane.vertices))
@@ -82,8 +82,14 @@ def main():
 
     ##### Test ray initiation ########
     rays_i_v = RayInitialDirections()
-    rays_i_v.single_ray([0.0, 0.0, 1.0])
-    # rays_i_v.isotropic_rays(100)
+    # rays_i_v.single_ray([1.0, 0.0, 0.0])
+    rays_i_v.isotropic_rays(100000) # 15
+    # rays_i_v.single_ray(rays_i_v.vinit[41])
+    # print(rays_i_v.vinit)
+    print("The number of rays is {}.".format(rays_i_v.Nrays))
+    
+    # rays_i_v.random_rays(5)
+    # rays_i_v.single_ray(rays_i_v.vinit[3]) #([-0.951057, -0.16246, -0.262866])
     # print(rays_i_v.vinit)
     # rays_i_v.plot_arrows()
     # rays_i_v.plot_points()
@@ -119,16 +125,19 @@ def main():
     #### Initializa the ray class ########################
     N_max_ref = math.ceil(1.5 * air.c0 * controls.ht_length * \
         (geo.total_area / (4 * geo.volume)))
-    rays = ray_initializer(rays_i_v.vinit, N_max_ref)
-    # print(rays[0].planes_hist)
+    # N_max_ref = 20
+    # print(rays_i_v.vinit)
+    rays = ray_initializer(rays_i_v, N_max_ref)
+    # print(rays)
+
 
     ############### Some ray tracing in python ##############
     ra_cpp._raytracer_main(controls.ht_length, controls.allow_scattering,
         controls.transition_order, sources, geo.planes, air.c0,
         rays_i_v.vinit, rays)
     # print(a)
-    print("Plane history back to Python")
-    print(rays[0].planes_hist)
+    print("Simulation is over")
+    # print(rays[0].planes_hist)
     # pet = ra_cpp.Pet('pluto', 5)
     # print(pet.get_name())
     # ra_cpp.ray_tracer(air)
