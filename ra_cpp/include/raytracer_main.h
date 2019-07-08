@@ -8,15 +8,19 @@
 #include "pybind11/numpy.h"
 #include "pybind11/pybind11.h"
 #include "pybind11/stl.h"
+// #include "pybind11/stl_bind.h"
+// #include "pybind11/functional.h"
+// #include "pybind11/chrono.h"
 #include "unsupported/Eigen/Polynomials"
 #include <vector>
 #include "geometry.h"
 #include "ray.h"
 #include "source.h"
 
+// PYBIND11_MAKE_OPAQUE(std::vector<Raycpp>);
 namespace py = pybind11;
 
-void raytracer_main(
+std::vector<Raycpp> raytracer_main(
     double ht_length,
     int allow_scattering,
     int transition_order,

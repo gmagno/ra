@@ -2,7 +2,7 @@
 #include "rayreflection.h"
 #include "do_progress.h"
 
-void raytracer_main(
+std::vector<Raycpp> raytracer_main(
     double ht_length,
     int allow_scattering,
     int transition_order,
@@ -29,7 +29,7 @@ void raytracer_main(
                 //std::cout << "ray initial direction: " << v_dir << std::endl;
                 // std::cout << "test ray origin: " << r_origin << std::endl;
                 // while loop
-                while((cum_dist / c0) <= ht_length && ref_order < N_max_ref){ //
+                while(ref_order < N_max_ref){ // (cum_dist / c0) <= ht_length && 
                     // std::cout << "r_o before: " << r_origin << std::endl;
                     // find the intercepted plane
                     v.plane_finder(planes, r_origin, v_dir, plane_detected, dist);
@@ -72,5 +72,9 @@ void raytracer_main(
         // std::cout << "testing ref_pts seq after:" << rays[3].refpts_hist << std::endl;
         // std::cout << "c0:" << c0 << std::endl;
         // std::cout << "rays:" << v_init << std::endl;
-        // // return 2.3;
+        // std::vector<double> rays_cpp;
+        // rays_cpp.push_back(2.2);
+        // rays_cpp.push_back(4.2);
+        // rays_cpp.push_back(5.3);
+        return rays;
 }

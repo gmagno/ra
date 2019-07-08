@@ -83,7 +83,7 @@ def main():
     ##### Test ray initiation ########
     rays_i_v = RayInitialDirections()
     # rays_i_v.single_ray([1.0, 0.0, 0.0])
-    rays_i_v.isotropic_rays(100000) # 15
+    rays_i_v.isotropic_rays(1000) # 15
     # rays_i_v.single_ray(rays_i_v.vinit[41])
     # print(rays_i_v.vinit)
     print("The number of rays is {}.".format(rays_i_v.Nrays))
@@ -128,14 +128,15 @@ def main():
     # N_max_ref = 20
     # print(rays_i_v.vinit)
     rays = ray_initializer(rays_i_v, N_max_ref)
-    # print(rays)
+    # print(rays[0].planes_hist)
 
 
     ############### Some ray tracing in python ##############
-    ra_cpp._raytracer_main(controls.ht_length, controls.allow_scattering,
+    rays = ra_cpp._raytracer_main(controls.ht_length, controls.allow_scattering,
         controls.transition_order, sources, geo.planes, air.c0,
         rays_i_v.vinit, rays)
-    # print(a)
+    # print(rays[0].refpts_hist)
+    geo.plot_raypath(sources[0].coord, rays[0].refpts_hist)
     print("Simulation is over")
     # print(rays[0].planes_hist)
     # pet = ra_cpp.Pet('pluto', 5)
