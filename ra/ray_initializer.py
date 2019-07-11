@@ -12,8 +12,8 @@ def ray_initializer(rays_dir, N_max_ref):
         # print(a)
         rays = [] # An array of empty ray objects
         for jray in np.arange(rays_dir.Nrays):
-                planes = np.zeros(N_max_ref, dtype=int)-10
-                reflection_points = np.zeros((N_max_ref, 3), dtype=float)
+                planes = np.zeros(N_max_ref, dtype=np.uint16)+65535 #npint16
+                reflection_points = np.zeros((N_max_ref, 3), dtype=np.float32)
                 ################### cpp ray class #################
                 rays.append(ra_cpp.Raycpp(planes,
                         reflection_points)) # Append the ray object

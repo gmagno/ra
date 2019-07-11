@@ -13,14 +13,14 @@ void bind_cls_planecpp(py::module &m){
         .def(py::init<
         const std::string &,
         bool,
-        Eigen::MatrixXd,
-        Eigen::RowVector3d,
-        Eigen::RowVectorXd,
-        Eigen::RowVectorXd,
+        Eigen::MatrixXf,
+        Eigen::RowVector3f,
+        Eigen::RowVectorXf,
+        Eigen::RowVectorXf,
         Eigen::RowVector2i,
         double,
-        Eigen::RowVector3d,
-        Eigen::RowVectorXd,
+        Eigen::RowVector3f,
+        Eigen::RowVectorXf,
         double
         >())
         .def("refpoint3d", &Planecpp::refpoint3d)

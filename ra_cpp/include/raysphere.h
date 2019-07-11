@@ -12,9 +12,9 @@
 
 namespace py = pybind11;
 
-double raysphere(Eigen::Ref<Eigen::RowVector3d> ray_origin, 
-    Eigen::Ref<Eigen::RowVector3d> v_dir,
-    Eigen::Ref<Eigen::RowVector3d> rec_coord,
+double raysphere(Eigen::Ref<Eigen::RowVector3f> ray_origin,
+    Eigen::Ref<Eigen::RowVector3f> v_dir,
+    Eigen::Ref<Eigen::RowVector3f> rec_coord,
     double rec_radius,
     double c0,
     double dist_travel);

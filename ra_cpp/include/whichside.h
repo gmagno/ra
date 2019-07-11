@@ -12,8 +12,8 @@
 
 namespace py = pybind11;
 
-double whichside(Eigen::Ref<Eigen::RowVector3d> ray_origin,
-        Eigen::Ref<Eigen::RowVector3d> v_in,
-        Eigen::Ref<Eigen::RowVector3d> ref_point);
+double whichside(Eigen::Ref<Eigen::RowVector3f> ray_origin,
+        Eigen::Ref<Eigen::RowVector3f> v_in,
+        Eigen::Ref<Eigen::RowVector3f> ref_point);
 
 #endif /* WHICHSIDE_H */

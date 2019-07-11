@@ -3,11 +3,11 @@
 void bind_cls_sourcecpp(py::module &m){
     py::class_<Sourcecpp>(m, "Sourcecpp")
         .def(py::init<
-        Eigen::RowVector3d,
-        Eigen::RowVector3d,
-        Eigen::RowVectorXd,
-        Eigen::RowVectorXd,
-        Eigen::RowVectorXd,
+        Eigen::RowVector3f,
+        Eigen::RowVector3f,
+        Eigen::RowVectorXf,
+        Eigen::RowVectorXf,
+        Eigen::RowVectorXf,
         double
         >())
         .def_readwrite("coord", &Sourcecpp::coord)

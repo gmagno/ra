@@ -10,8 +10,8 @@ def setup_receivers(config_file):
     receivers = [] # An array of empty receiver objects
     config = load_cfg(config_file) # toml file
     for r in config['receivers']:
-        coord = np.array(r['position'])
-        orientation = np.array(r['orientation'])
+        coord = np.array(r['position'], dtype=np.float32)
+        orientation = np.array(r['orientation'], dtype=np.float32)
         ################### cpp receiver class #################
         receivers.append(ra_cpp.Receivercpp(coord, orientation)) # Append the source object
         ################### py source class ################

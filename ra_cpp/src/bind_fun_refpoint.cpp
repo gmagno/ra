@@ -7,6 +7,6 @@ void bind_refpoint(py::module &m)
     py::arg("ray_origin").noconvert(),
     py::arg("v_dir").noconvert(),
     py::arg("normal").noconvert(),
-    py::arg("vertcoord").noconvert() 
-    );  
+    py::arg("vertcoord").noconvert()
+    );
 }

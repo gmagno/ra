@@ -2,7 +2,7 @@ import math
 import codecs
 import json
 import time
-
+# import sys
 import collada as co
 import numpy as np
 import toml
@@ -83,7 +83,7 @@ def main():
     ##### Test ray initiation ########
     rays_i_v = RayInitialDirections()
     # rays_i_v.single_ray([1.0, 0.0, 0.0])
-    rays_i_v.isotropic_rays(1000) # 15
+    rays_i_v.isotropic_rays(100000) # 15
     # rays_i_v.single_ray(rays_i_v.vinit[41])
     # print(rays_i_v.vinit)
     print("The number of rays is {}.".format(rays_i_v.Nrays))
@@ -125,18 +125,24 @@ def main():
     #### Initializa the ray class ########################
     N_max_ref = math.ceil(1.5 * air.c0 * controls.ht_length * \
         (geo.total_area / (4 * geo.volume)))
-    # N_max_ref = 20
+    # N_max_ref = 1
     # print(rays_i_v.vinit)
     rays = ray_initializer(rays_i_v, N_max_ref)
     # print(rays[0].planes_hist)
-
+    # print(sys.getsizeof(rays[0].planes_hist))
 
     ############### Some ray tracing in python ##############
     rays = ra_cpp._raytracer_main(controls.ht_length, controls.allow_scattering,
         controls.transition_order, sources, geo.planes, air.c0,
         rays_i_v.vinit, rays)
-    # print(rays[0].refpts_hist)
     geo.plot_raypath(sources[0].coord, rays[0].refpts_hist)
+    print(rays[0].planes_hist)
+    print("Bytes for {} reflections in plane hist is: {}".format(
+        N_max_ref, rays[0].planes_hist.itemsize * rays[0].planes_hist.size))
+    print("Bytes for {} reflections in ref pts hist is: {}".format(
+        N_max_ref, rays[0].refpts_hist.itemsize * rays[0].refpts_hist.size))
+    test = np.zeros((N_max_ref, 3), dtype=np.float64)
+    print(test.itemsize * test.size)
     print("Simulation is over")
     # print(rays[0].planes_hist)
     # pet = ra_cpp.Pet('pluto', 5)

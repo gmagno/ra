@@ -12,12 +12,15 @@
 ray objects which will contain the ray history in the room.
 This will be filled during the ray tracing main function*/
 
+typedef Eigen::Matrix<uint16_t, 1, Eigen::Dynamic > RowVectorXui;
+
 class Raycpp
 {
 public:
     Raycpp(
-        Eigen::RowVectorXi planes_hist,
-        Eigen::MatrixXd refpts_hist
+        // Eigen::RowVectorXi planes_hist,
+        RowVectorXui planes_hist,
+        Eigen::MatrixXf refpts_hist
         ):
     planes_hist(planes_hist), refpts_hist(refpts_hist)
     {}
@@ -25,12 +28,13 @@ public:
     // Method to find the plane and reflection point
     void plane_finder(
         std::vector<Planecpp> &planes,
-        Eigen::RowVector3d &ray_origin,
-        Eigen::Ref<Eigen::RowVector3d> v_in,
-        int &plane_detected,
+        Eigen::RowVector3f &ray_origin,
+        Eigen::Ref<Eigen::RowVector3f> v_in,
+        uint16_t &plane_detected,
         double &dist);
 // Parameters of the Receivercpp class
-Eigen::RowVectorXi planes_hist;
-Eigen::MatrixXd refpts_hist;
+// Eigen::RowVectorXi planes_hist;
+RowVectorXui planes_hist;
+Eigen::MatrixXf refpts_hist;
 };
 #endif /* RAY_H */

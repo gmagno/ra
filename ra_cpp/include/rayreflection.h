@@ -15,8 +15,8 @@
 
 namespace py = pybind11;
 
-Eigen::RowVector3d rayreflection(Eigen::Ref<Eigen::RowVector3d> v_in,
-    Eigen::Ref<Eigen::RowVector3d> normal,
+Eigen::RowVector3f rayreflection(Eigen::Ref<Eigen::RowVector3f> v_in,
+    Eigen::Ref<Eigen::RowVector3f> normal,
     double s_s,
     int ref_order,
     int s_on_off,

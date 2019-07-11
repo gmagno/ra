@@ -2,13 +2,13 @@
 #include "ray.h"
 
 void Raycpp::plane_finder(std::vector<Planecpp> &planes,
-    Eigen::RowVector3d &ray_origin,
-    Eigen::Ref<Eigen::RowVector3d> v_in,
-    int &plane_detected,
+    Eigen::RowVector3f &ray_origin,
+    Eigen::Ref<Eigen::RowVector3f> v_in,
+    uint16_t &plane_detected,
     double &dist){
         int pc = 0; // plane counter
         // initialize vector containers for reflection point, plane_detected, etc
-        std::vector<Eigen::RowVector3d> ref_pt_vec;
+        std::vector<Eigen::RowVector3f> ref_pt_vec;
         std::vector<int> plane_detected_vec;
         std::vector<double> dist_vec;
         for(auto&& pl: planes){
@@ -18,7 +18,7 @@ void Raycpp::plane_finder(std::vector<Planecpp> &planes,
                         continue;
                 }
                 // 2 - Calculate the reflection point for this plane
-                Eigen::RowVector3d ref_pt;
+                Eigen::RowVector3f ref_pt;
                 ref_pt = pl.refpoint3d(ray_origin, v_in);
                 // 3 - Protect against difficult geometry
                 dist = (ref_pt - ray_origin).norm();

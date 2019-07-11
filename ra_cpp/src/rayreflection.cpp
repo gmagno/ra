@@ -6,8 +6,8 @@ std::uniform_real_distribution<double> dist{ 0.0,1.0 };
 #define M_PI 3.14159265358979323846 //Pi
 
 
-Eigen::RowVector3d rayreflection(Eigen::Ref<Eigen::RowVector3d> v_in,
-    Eigen::Ref<Eigen::RowVector3d> normal,
+Eigen::RowVector3f rayreflection(Eigen::Ref<Eigen::RowVector3f> v_in,
+    Eigen::Ref<Eigen::RowVector3f> normal,
     double s_s,
     int ref_order,
     int s_on_off,
@@ -24,7 +24,7 @@ Eigen::RowVector3d rayreflection(Eigen::Ref<Eigen::RowVector3d> v_in,
         sort1 = dist(engine); // sorted number to compare to s_s
     //std::cout << "sort1 is " << sort1 << std::endl;
     //Define the direction of reflection
-    Eigen::RowVector3d v_out;
+    Eigen::RowVector3f v_out;
     //std::cout << "n.v: " << normal.dot(v_in) << std::endl;
     if (sort1 > s_s)
         v_out = v_in - 2.0 * normal.dot(v_in) * normal;

@@ -36,14 +36,14 @@ public:
     Planecpp(
         const std::string &name,
         bool bbox,
-        Eigen::MatrixXd vertices,
-        Eigen::RowVector3d normal,
-        Eigen::RowVectorXd vert_x,
-        Eigen::RowVectorXd vert_y,
+        Eigen::MatrixXf vertices,
+        Eigen::RowVector3f normal,
+        Eigen::RowVectorXf vert_x,
+        Eigen::RowVectorXf vert_y,
         Eigen::RowVector2i nig,
         double area,
-        Eigen::RowVector3d centroid,
-        Eigen::RowVectorXd alpha,
+        Eigen::RowVector3f centroid,
+        Eigen::RowVectorXf alpha,
         double s
     ):
     name(name), bbox(bbox), vertices(vertices),
@@ -54,24 +54,24 @@ public:
     ~Planecpp()  {} // can be automatic later
 
     // Method to calculate reflection point
-    Eigen::RowVector3d refpoint3d(Eigen::Ref<Eigen::RowVector3d> ray_origin,
-        Eigen::Ref<Eigen::RowVector3d> v_in);
+    Eigen::RowVector3f refpoint3d(Eigen::Ref<Eigen::RowVector3f> ray_origin,
+        Eigen::Ref<Eigen::RowVector3f> v_in);
 
     // For point in polygon test
-    int test_single_plane(Eigen::Ref<Eigen::RowVector3d> ray_origin,
-        Eigen::Ref<Eigen::RowVector3d> v_in,
-        Eigen::Ref<Eigen::RowVector3d> ref_point);
+    int test_single_plane(Eigen::Ref<Eigen::RowVector3f> ray_origin,
+        Eigen::Ref<Eigen::RowVector3f> v_in,
+        Eigen::Ref<Eigen::RowVector3f> ref_point);
 // Parameters of the Planecpp class
 std::string name;
 bool bbox;
-Eigen::MatrixXd vertices;
-Eigen::RowVector3d normal;
-Eigen::RowVectorXd vert_x;
-Eigen::RowVectorXd vert_y;
+Eigen::MatrixXf vertices;
+Eigen::RowVector3f normal;
+Eigen::RowVectorXf vert_x;
+Eigen::RowVectorXf vert_y;
 Eigen::RowVector2i nig;
 double area;
-Eigen::RowVector3d centroid;
-Eigen::RowVectorXd alpha;
+Eigen::RowVector3f centroid;
+Eigen::RowVectorXf alpha;
 double s;
 };
 

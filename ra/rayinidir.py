@@ -48,6 +48,7 @@ class RayInitialDirections():
         )
         self.vinit, self.indices = tess.sphere
         self.vinit /= np.linalg.norm(self.vinit, axis = 1)[:,None]
+        self.vinit = np.array(self.vinit, dtype=np.float32)
         self.Nrays = self.vinit.shape[0]
         # print(self.Nrays)
         return self.vinit, self.Nrays

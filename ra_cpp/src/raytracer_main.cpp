@@ -9,7 +9,7 @@ std::vector<Raycpp> raytracer_main(
     std::vector<Sourcecpp> &sources,
     std::vector<Planecpp> &planes,
     double c0,
-    Eigen::MatrixXd &v_init,
+    Eigen::MatrixXf &v_init,
     std::vector<Raycpp> &rays){
         int N_rays = rays.size();
         int N_max_ref = rays[0].planes_hist.size();
@@ -19,17 +19,17 @@ std::vector<Raycpp> raytracer_main(
             int rc = 0; // ray counter
             for(auto&& v: rays){
                 progress_bar(rc, N_rays);
-                int plane_detected = -2; // initialize detected plane
+                uint16_t plane_detected = 65534; // initialize detected plane
                 double dist = 0.0; // initialize distance travelled in ray section
                 double cum_dist = 0.0; // initialize cumulative distance
                 int ref_order = 0; // initialize reflection order
-                Eigen::RowVector3d r_origin;
+                Eigen::RowVector3f r_origin;
                 r_origin = s.coord; // initialize ray origin
-                Eigen::RowVector3d v_dir = v_init.row(rc);
+                Eigen::RowVector3f v_dir = v_init.row(rc);
                 //std::cout << "ray initial direction: " << v_dir << std::endl;
                 // std::cout << "test ray origin: " << r_origin << std::endl;
                 // while loop
-                while(ref_order < N_max_ref){ // (cum_dist / c0) <= ht_length && 
+                while(ref_order < N_max_ref){ //  (cum_dist / c0) <= ht_length && 
                     // std::cout << "r_o before: " << r_origin << std::endl;
                     // find the intercepted plane
                     v.plane_finder(planes, r_origin, v_dir, plane_detected, dist);

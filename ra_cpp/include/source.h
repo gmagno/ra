@@ -14,11 +14,11 @@ class Sourcecpp
 {
 public:
     Sourcecpp(
-        Eigen::RowVector3d coord,
-        Eigen::RowVector3d orientation,
-        Eigen::RowVectorXd power_dB,
-        Eigen::RowVectorXd eq_dB,
-        Eigen::RowVectorXd power_lin,
+        Eigen::RowVector3f coord,
+        Eigen::RowVector3f orientation,
+        Eigen::RowVectorXf power_dB,
+        Eigen::RowVectorXf eq_dB,
+        Eigen::RowVectorXf power_lin,
         double delay
         ):
     coord(coord), orientation(orientation),
@@ -27,11 +27,11 @@ public:
     {}
     ~Sourcecpp()  {} // class destructor - can be automatic later
 // Parameters of the Sourcescpp class
-Eigen::RowVector3d coord;
-Eigen::RowVector3d orientation;
-Eigen::RowVectorXd power_dB;
-Eigen::RowVectorXd eq_dB;
-Eigen::RowVectorXd power_lin;
+Eigen::RowVector3f coord;
+Eigen::RowVector3f orientation;
+Eigen::RowVectorXf power_dB;
+Eigen::RowVectorXf eq_dB;
+Eigen::RowVectorXf power_lin;
 double delay;
 };
 #endif /* SOURCE_H */

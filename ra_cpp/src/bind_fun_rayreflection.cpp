@@ -6,7 +6,7 @@ void bind_rayreflection(py::module &m)
     "Computes the outward direction of ray reflection ",
     py::arg("v_in").noconvert(),
     py::arg("normal").noconvert(),
-    py::arg("s_s"), py::arg("ref_order"), 
-    py::arg("s_on_off"), py::arg("trans_order")  
-    );  
+    py::arg("s_s"), py::arg("ref_order"),
+    py::arg("s_on_off"), py::arg("trans_order")
+    );
 }

@@ -26,7 +26,7 @@ std::vector<Raycpp> raytracer_main(
     int transition_order,
     std::vector<Sourcecpp> &sources,
     std::vector<Planecpp> &planes,
-    double c0, Eigen::MatrixXd &v_init,
+    double c0, Eigen::MatrixXf &v_init,
     std::vector<Raycpp> &rays);
 
 #endif /* RAYTRACER_MAIN */
