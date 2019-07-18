@@ -59,8 +59,8 @@ def main():
     # geo.plot_dae_room(normals = 'on')
 
     ## Let us test a single plane interception
-    v_in = np.array([0., 0., 1.])#np.array([0.7236, -0.5257, 0.4472])
-    ray_origin = np.array([3.0, 2.333, 1.2])
+    # v_in = np.array([0., 0., 1.])#np.array([0.7236, -0.5257, 0.4472])
+    # ray_origin = np.array([3.0, 2.333, 1.2])
     # for jplane, plane in enumerate(geo.planes):
     #     Rp = plane.refpoint3d(ray_origin, v_in)
     #     wn = plane.test_single_plane(ray_origin, v_in, Rp)
@@ -83,19 +83,36 @@ def main():
     ##### Test ray initiation ########
     rays_i_v = RayInitialDirections()
     # rays_i_v.single_ray([1.0, 0.0, 0.0])
-    rays_i_v.isotropic_rays(100000) # 15
+    rays_i_v.isotropic_rays(10000) # 15
     # rays_i_v.single_ray(rays_i_v.vinit[41])
     # print(rays_i_v.vinit)
     print("The number of rays is {}.".format(rays_i_v.Nrays))
-    
     # rays_i_v.random_rays(5)
     # rays_i_v.single_ray(rays_i_v.vinit[3]) #([-0.951057, -0.16246, -0.262866])
     # print(rays_i_v.vinit)
     # rays_i_v.plot_arrows()
     # rays_i_v.plot_points()
     # print("Rays original directions: {}.".format(rays_i_v.vinit))
+
+    ##### Test receiver initiation ########
+    receivers, reccross = setup_receivers('simulation.toml')
+    # for jrec, r in enumerate(receivers):
+    #     print("Receiver {} coord: {}.".format(jrec, r.coord))
+    #     # r.orientation = r.point_to_source(np.array(sources[1].coord))
+    #     print("Receiver {} orientation: {}.".format(jrec, r.orientation))
+
+
+    #### Initializa the ray class ########################
+    N_max_ref = math.ceil(1.5 * air.c0 * controls.ht_length * \
+        (geo.total_area / (4 * geo.volume)))
+    # N_max_ref = 1
+    # print(rays_i_v.vinit)
+    rays = ray_initializer(rays_i_v, N_max_ref, reccross)
+    # print(rays[0].planes_hist)
+    # print(sys.getsizeof(rays[0].planes_hist))
     ##### Test sources initiation ########
-    sources = setup_sources('simulation.toml')
+    sources = setup_sources('simulation.toml', rays)
+
     # for js, s in enumerate(sources):
     #     print("Source {} coord: {}.".format(js, s.coord))
     #     print("Source {} orientation: {}.".format(js, s.orientation))
@@ -104,13 +121,7 @@ def main():
     #     print("Source {} power (linear): {}.".format(js, s.power_lin))
     #     print("Source {} delay: {}. [s]".format(js, s.delay))
 
-    ##### Test receiver initiation ########
-    receivers = setup_receivers('simulation.toml')
-    # for jrec, r in enumerate(receivers):
-    #     print("Receiver {} coord: {}.".format(jrec, r.coord))
-    #     # r.orientation = r.point_to_source(np.array(sources[1].coord))
-    #     print("Receiver {} orientation: {}.".format(jrec, r.orientation))
-
+    
 
     ##### Test statistical theory ############
     # res_stat = StatisticalMat(geo, controls.freq, air.c0, air_m)
@@ -122,28 +133,24 @@ def main():
     # res_stat.t60_milsette()
     # res_stat.plot_t60()
 
-    #### Initializa the ray class ########################
-    N_max_ref = math.ceil(1.5 * air.c0 * controls.ht_length * \
-        (geo.total_area / (4 * geo.volume)))
-    # N_max_ref = 1
-    # print(rays_i_v.vinit)
-    rays = ray_initializer(rays_i_v, N_max_ref)
-    # print(rays[0].planes_hist)
-    # print(sys.getsizeof(rays[0].planes_hist))
+    
 
     ############### Some ray tracing in python ##############
-    rays = ra_cpp._raytracer_main(controls.ht_length, controls.allow_scattering,
-        controls.transition_order, sources, geo.planes, air.c0,
-        rays_i_v.vinit, rays)
-    geo.plot_raypath(sources[0].coord, rays[0].refpts_hist)
-    print(rays[0].planes_hist)
-    print("Bytes for {} reflections in plane hist is: {}".format(
-        N_max_ref, rays[0].planes_hist.itemsize * rays[0].planes_hist.size))
-    print("Bytes for {} reflections in ref pts hist is: {}".format(
-        N_max_ref, rays[0].refpts_hist.itemsize * rays[0].refpts_hist.size))
-    test = np.zeros((N_max_ref, 3), dtype=np.float64)
-    print(test.itemsize * test.size)
-    print("Simulation is over")
+    sources = ra_cpp._raytracer_main(controls.ht_length,
+        controls.allow_scattering, controls.transition_order,
+        sources, receivers, geo.planes, air.c0,
+        rays_i_v.vinit)
+    geo.plot_raypath(sources[1].coord, sources[1].rays[0].refpts_hist)
+    print(sources[0].rays[0].planes_hist)
+    print(sources[1].rays[0].recs[0].time_cross)
+
+    # print("Bytes for {} reflections in plane hist is: {}".format(
+    #     N_max_ref, rays[0].planes_hist.itemsize * rays[0].planes_hist.size))
+    # print("Bytes for {} reflections in ref pts hist is: {}".format(
+    #     N_max_ref, rays[0].refpts_hist.itemsize * rays[0].refpts_hist.size))
+    # test = np.zeros((N_max_ref, 3), dtype=np.float64)
+    # print(test.itemsize * test.size)
+    # print("Simulation is over")
     # print(rays[0].planes_hist)
     # pet = ra_cpp.Pet('pluto', 5)
     # print(pet.get_name())
@@ -151,5 +158,16 @@ def main():
     # for js, s in enumerate(sources):
     #     for jray, ray in enumerate(rays_i_v.vinit)
 
+# test array
+# ar = [[[[0.001, 0.002], [0.0015], [0.01, 0.025, 0.028]],
+#     [[], [0.0017], [0.012, 0.023]]],
+#     [[[], [0.0015], []],
+#     [[], [0.0017], []]]]
+# s1_ray1_rec2 = ar[0][0][1]
+# s1_ray2_rec3 = ar[0][1][0]
+# s2_ray1_rec2 = ar[0][0][1]
+# print(s1_ray1_rec2)
+# print(s1_ray2_rec3)
+# print(s2_ray1_rec2)
 if __name__ == '__main__':
     main()

@@ -1,5 +1,5 @@
-#ifndef BIND_CLS_SOURCE_H
-#define BIND_CLS_SOURCE_H
+#ifndef BIND_CLS_RECCROSS_H
+#define BIND_CLS_RECCROSS_H
 
 #include <iostream>
 
@@ -8,10 +8,9 @@
 #include "pybind11/numpy.h"
 #include "pybind11/pybind11.h"
 #include "unsupported/Eigen/Polynomials"
-#include "source.h"
-#include "ray.h"
+#include "reccross.h"
 
 namespace py = pybind11;
 
-void bind_cls_sourcecpp(py::module &m);
-#endif /* BIND_CLS_SOURCE_H */
+void bind_cls_reccrosscpp(py::module &m);
+#endif /* BIND_CLS_RECCROSS_H */

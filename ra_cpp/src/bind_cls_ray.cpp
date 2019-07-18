@@ -5,9 +5,11 @@ void bind_cls_raycpp(py::module &m){
         .def(py::init<
         // Eigen::RowVectorXi,
         RowVectorXui,
-        Eigen::MatrixXf
+        Eigen::MatrixXf,
+        std::vector<RecCrosscpp>
         >())
         //.def("point_to_source", &Raycpp::point_to_source)
         .def_readwrite("planes_hist", &Raycpp::planes_hist)
-        .def_readwrite("refpts_hist", &Raycpp::refpts_hist);
+        .def_readwrite("refpts_hist", &Raycpp::refpts_hist)
+        .def_readwrite("recs", &Raycpp::recs);
 }

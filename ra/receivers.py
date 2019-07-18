@@ -5,18 +5,36 @@ import ra_cpp
 
 def setup_receivers(config_file):
     '''
-    Set up the sound sources
+    Set up the receivers. There are two arrays of receivers.
+    1: receivers - contains a receiver object with the properties:
+        coord - the 3D position of the receiver.
+        orientation - the orientation of the receiver.
+    2: reccross - this object will contain all source-ray-receiver
+        relative data, such as:
+        time_cross - the time instants for which a receiver is crossed
+        for a given sound source and for a given ray.
+        rad_cross - the receiver radius at the instant a receiver is crossed
+        for a given sound source and for a given ray.
+        ref_order - the reflection order at the instant a receiver is crossed
+        for a given sound source and for a given ray.
+        An std::vector of reccross objects will be passed to each ray
+        object, generating an std::vector of rays. These rays will be
+        passed to each source object. This will generate the dependence
+        source-ray-receiver 
     '''
     receivers = [] # An array of empty receiver objects
+    reccross = [] # An array of empty reccross data objects
     config = load_cfg(config_file) # toml file
     for r in config['receivers']:
         coord = np.array(r['position'], dtype=np.float32)
         orientation = np.array(r['orientation'], dtype=np.float32)
         ################### cpp receiver class #################
         receivers.append(ra_cpp.Receivercpp(coord, orientation)) # Append the source object
+        reccross.append(ra_cpp.RecCrosscpp([], [], [])) # Append the source object
+
         ################### py source class ################
         # receivers.append(Receiver(coord, orientation))
-    return receivers
+    return receivers, reccross
 
 # class Receiver from python side
 class Receiver():
@@ -51,8 +69,4 @@ class Receiver():
 #             orientation.append(r['orientation'])
 #         self.coord = np.array(coord)
 #         self.orientation = np.array(orientation)
-
-    
-   
-
 

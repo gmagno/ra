@@ -96,7 +96,7 @@ class GeometryMat():
         ax.set_ylabel('Y axis')
         ax.set_zlabel('Z axis')
         plt.show() # show plot
-    
+
     def plot_raypath(self, sourcecoord, raypath):
         '''
         a simple plot of the room - not redered
@@ -226,8 +226,6 @@ class Geometry():
         ax.set_ylabel('Y axis')
         ax.set_zlabel('Z axis')
         plt.show() # show plot
-
-    
 
 class PyPlane():
     '''

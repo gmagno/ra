@@ -14,6 +14,7 @@ PYBIND11_MODULE(ra_cpp, m)
     bind_cls_planecpp(m);
     bind_cls_sourcecpp(m);
     bind_cls_receivercpp(m);
+    bind_cls_reccrosscpp(m);
     bind_cls_raycpp(m);
     bind_fun_raytracer_main(m);
 

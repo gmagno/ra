@@ -8,6 +8,7 @@
 #include "pybind11/numpy.h"
 #include "pybind11/stl.h"
 #include "geometry.h"
+#include "reccross.h"
 /* The class raycpp is used to construct a list of
 ray objects which will contain the ray history in the room.
 This will be filled during the ray tracing main function*/
@@ -20,9 +21,11 @@ public:
     Raycpp(
         // Eigen::RowVectorXi planes_hist,
         RowVectorXui planes_hist,
-        Eigen::MatrixXf refpts_hist
+        Eigen::MatrixXf refpts_hist,
+        std::vector<RecCrosscpp> recs
         ):
-    planes_hist(planes_hist), refpts_hist(refpts_hist)
+    planes_hist(planes_hist), refpts_hist(refpts_hist),
+    recs(recs)
     {}
     ~Raycpp()  {} // class destructor - can be automatic later
     // Method to find the plane and reflection point
@@ -36,5 +39,6 @@ public:
 // Eigen::RowVectorXi planes_hist;
 RowVectorXui planes_hist;
 Eigen::MatrixXf refpts_hist;
+std::vector<RecCrosscpp> recs;
 };
 #endif /* RAY_H */

@@ -10,9 +10,9 @@ void bind_fun_raytracer_main(py::module &m)
     py::arg("allow_scattering"),
     py::arg("transition_order"),
     py::arg("sources"),
+    py::arg("receivers"),
     py::arg("geometry"),
     py::arg("c0"),
-    py::arg("v_init"),
-    py::arg("rays")
+    py::arg("v_init")
     );
 }

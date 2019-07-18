@@ -2,25 +2,16 @@
 
 void progress_bar(int rc, int Nrays){
     double progress = double(rc) / double(Nrays);
-    // std::cout << progress << std::endl;
-    // while (progress < 1.0){
-        // std::cout << progress << " %\r";
-        // std::cout.flush();
-
-        int barWidth = 70;
-
-        std::cout << "[";
-        int pos = int(barWidth * progress);
-        for (int i = 0; i < barWidth; ++i) {
-            if (i < pos) std::cout << "=";
-            else if (i == pos) std::cout << ">";
-            else std::cout << " ";
-        }
-        std::cout << "] " << int(progress * 100.0) << " %\r" <<  '\r';
-        std::cout.flush();
-    //     progress += 0.16;
-    // }
-// std::cout << std::endl;
+    int barWidth = 70;
+    std::cout << "[";
+    int pos = int(barWidth * progress);
+    for (int i = 0; i < barWidth; ++i) {
+        if (i < pos) std::cout << "=";
+        else if (i == pos) std::cout << ">";
+        else std::cout << " ";
+    }
+    std::cout << "] " << int(progress * 100.0) << " %\r" <<  '\r';
+    std::cout.flush();
 }
 
 // void progressbar(){

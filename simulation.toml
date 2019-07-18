@@ -27,12 +27,12 @@ power_dB = [80.0, 80.0, 80.0, 80.0, 80.0, 80.0, 80.0, 80.0]
 eq_dB = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 delay = 0.0 # delay in [ms]
 
-#[[sources]]  # element 1 of an array of sources
-#position = [10.0, -1.0, 1.0]
-#orientation = [1.0, 0.0, 0.0]
-#power_dB = [80.0, 80.0, 80.0, 80.0, 80.0, 80.0, 80.0, 80.0]
-#eq_dB = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-#delay = 0.0 # delay in [ms]
+[[sources]]  # element 1 of an array of sources
+position = [3.0, -2.333, 1.2]
+orientation = [1.0, 0.0, 0.0]
+power_dB = [80.0, 80.0, 80.0, 80.0, 80.0, 80.0, 80.0, 80.0]
+eq_dB = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+delay = 0.0 # delay in [ms]
 
 # [[sources]]  # element 2 of an array of sources
 # ...
