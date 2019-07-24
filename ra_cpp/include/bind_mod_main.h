@@ -14,7 +14,9 @@
 #include "bind_cls_source.h"
 #include "bind_cls_receiver.h"
 #include "bind_cls_reccross.h"
+#include "bind_cls_reccrossdir.h"
 #include "bind_cls_ray.h"
+#include "bind_fun_direct_sound.h"
 #include "bind_fun_raytracer_main.h"
 
 namespace py = pybind11;

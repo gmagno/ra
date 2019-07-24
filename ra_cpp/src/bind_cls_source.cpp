@@ -11,7 +11,8 @@ void bind_cls_sourcecpp(py::module &m){
         Eigen::RowVectorXf,
         Eigen::RowVectorXf,
         double,
-        std::vector<Raycpp>
+        std::vector<Raycpp>,
+        std::vector<RecCrossDircpp>
         >())
         .def_readwrite("coord", &Sourcecpp::coord)
         .def_readwrite("orientation", &Sourcecpp::orientation)
@@ -19,5 +20,6 @@ void bind_cls_sourcecpp(py::module &m){
         .def_readwrite("eq_dB", &Sourcecpp::eq_dB)
         .def_readwrite("power_lin", &Sourcecpp::power_lin)
         .def_readwrite("delay", &Sourcecpp::delay)
-        .def_readwrite("rays", &Sourcecpp::rays);
+        .def_readwrite("rays", &Sourcecpp::rays)
+        .def_readwrite("reccrossdir", &Sourcecpp::reccrossdir);
 }

@@ -1,7 +1,6 @@
-#include <algorithm>
-#include "ray.h"
+#include "plane_finder.h"
 
-void Raycpp::plane_finder(std::vector<Planecpp> &planes,
+void plane_finder(std::vector<Planecpp> &planes,
     Eigen::RowVector3f &ray_origin,
     Eigen::Ref<Eigen::RowVector3f> v_in,
     uint16_t &plane_detected,

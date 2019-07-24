@@ -11,8 +11,8 @@
 
 namespace py = pybind11;
 
-double recgrow(int growth_allowed, int trans_order, int ref_order,
-    double rec_init, double rec_max, double rec_current,
-    double dist_cum, int Nrays);
+void recgrow(int alow_growth, int transition_order, int ref_order,
+    double rec_radius_init, double rec_radius_final, double &rec_radius_current,
+    double cum_dist, int N_rays);
 
 #endif /* RECGROW_H */

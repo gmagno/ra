@@ -20,21 +20,26 @@ def setup_receivers(config_file):
         An std::vector of reccross objects will be passed to each ray
         object, generating an std::vector of rays. These rays will be
         passed to each source object. This will generate the dependence
-        source-ray-receiver 
+        source-ray-receiver
     '''
     receivers = [] # An array of empty receiver objects
     reccross = [] # An array of empty reccross data objects
+    reccrossdir = [] # An array of empty reccrossdir data objects
     config = load_cfg(config_file) # toml file
+    # To process reccross
+    # time_cross = np.zeros(1, dtype = np.float32)
+    # rad_cross = np.zeros(1, dtype = np.float32)
+    # ref_order = np.zeros(1, dtype = np.uint16)
     for r in config['receivers']:
         coord = np.array(r['position'], dtype=np.float32)
         orientation = np.array(r['orientation'], dtype=np.float32)
         ################### cpp receiver class #################
         receivers.append(ra_cpp.Receivercpp(coord, orientation)) # Append the source object
         reccross.append(ra_cpp.RecCrosscpp([], [], [])) # Append the source object
-
+        reccrossdir.append(ra_cpp.RecCrossDircpp(0.0, 0))
         ################### py source class ################
         # receivers.append(Receiver(coord, orientation))
-    return receivers, reccross
+    return receivers, reccross, reccrossdir
 
 # class Receiver from python side
 class Receiver():

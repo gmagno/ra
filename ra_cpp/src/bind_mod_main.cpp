@@ -15,7 +15,9 @@ PYBIND11_MODULE(ra_cpp, m)
     bind_cls_sourcecpp(m);
     bind_cls_receivercpp(m);
     bind_cls_reccrosscpp(m);
+    bind_cls_reccrossdircpp(m);
     bind_cls_raycpp(m);
+    bind_fun_direct_sound(m);
     bind_fun_raytracer_main(m);
 
 #ifdef VERSION_INFO

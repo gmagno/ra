@@ -20,9 +20,12 @@ public:
         std::vector<float> time_cross,
         std::vector<float> rad_cross,
         std::vector<uint16_t> ref_order
+        // float t_dir,
+        // uint16_t n_dir_hits
         ):
     time_cross(time_cross), rad_cross(rad_cross),
     ref_order(ref_order)
+    // t_dir(t_dir), n_dir_hits(n_dir_hits)
     {}
     ~RecCrosscpp()  {} // class destructor - can be automatic later
     // Methods
@@ -31,5 +34,7 @@ public:
 std::vector<float> time_cross;
 std::vector<float> rad_cross;
 std::vector<uint16_t> ref_order;
+// float t_dir;
+// uint16_t n_dir_hits;
 };
 #endif /* RECCROSS_H */

@@ -48,8 +48,11 @@ class GeometryMat():
             vert_x, vert_y, normal_nig = vert_2d(normal, vertices)
             area = np.float64(p[2][0])
             centroid = np.float32(p[3][0])
+            # try:
             alpha_v = np.float32(alpha[jp])
             ################### cpp plane class #################
+            # print(jp)
+            # print(normal_nig)
             plane = ra_cpp.Planecpp(name, False, vertices, normal,
                 vert_x, vert_y, normal_nig, area, centroid,
                 alpha_v, s[jp])
@@ -97,7 +100,7 @@ class GeometryMat():
         ax.set_zlabel('Z axis')
         plt.show() # show plot
 
-    def plot_raypath(self, sourcecoord, raypath):
+    def plot_raypath(self, sourcecoord, raypath, receivers):
         '''
         a simple plot of the room - not redered
         '''
@@ -107,7 +110,7 @@ class GeometryMat():
         for plane in self.planes:
             # vertexes plot
             ax.scatter(plane.vertices[:,0], plane.vertices[:,1],
-                plane.vertices[:,2], color='blue')
+                plane.vertices[:,2], color='black', s=5)
             # patch plot
             verts = [list(zip(plane.vertices[:,0],
                 plane.vertices[:,1], plane.vertices[:,2]))]
@@ -119,6 +122,11 @@ class GeometryMat():
         # plot the sound source
         ax.scatter(sourcecoord[0], sourcecoord[1], sourcecoord[2],
             color='black',  marker = "*", s=500)
+        # plot receivers
+        for rec in receivers:
+            ax.scatter(rec.coord[0], rec.coord[1],
+                rec.coord[2], color='blue', s=100)
+
         # plot the ray path
         ray_vec = raypath[0,:]-sourcecoord
         arrow_length = np.linalg.norm(ray_vec)
@@ -133,7 +141,9 @@ class GeometryMat():
             ax.quiver(ray_origin[0], ray_origin[1], ray_origin[2],
                 ray_vec[0], ray_vec[1], ray_vec[2],
                 arrow_length_ratio = 0.006 * arrow_length)
-
+            
+            ax.scatter(raypath[jray,0], raypath[jray,1],
+                raypath[jray,2], color='red', marker = "+")
         # set axis labels
         ax.set_xlabel('X axis')
         ax.set_ylabel('Y axis')
@@ -274,34 +284,55 @@ def vert_2d(normal, vertcoord):
     '''
     # Find biggest component of the normal - the component to ignore
     normal_abs = np.absolute(normal)
-    normal_id = np.where(normal_abs == normal_abs.max())
+    normal_id_equal = np.where(normal_abs == normal_abs.max())
+    normal_id_less = np.where(normal_abs < normal_abs.max())
+    # print(normal_id_less)
+    # print("components with max abs normal")
+    # print(normal_id[0])
     # Find the index of the normal which are not ignored
     normal_nig = np.where(normal_abs != normal_abs.max())
+    
+    # normal_nig = np.intc(normal_nig[0]) # integers (index)
+    if len(normal_id_equal[0]) == 1:
+        normal_nig = np.intc(normal_nig[0]) # integers (index)
+    else:
+        vazio = []
+        normal_id2 = np.delete(normal_id_equal, 0)
+        vazio.append(normal_nig[0][0])
+        vazio.append(normal_id2[0])
+        normal_nig = np.intc(vazio)
     # Empty lists of x and y vertex coord
     vert_x = []
     vert_y = []
     for row in vertcoord:
-        if len(normal_id[0]) == 1: # for 3 different normal components
-            v = np.delete(row, normal_id)
-        else: # normal has equal components
-            normal_id2 = np.delete(normal_id, 0)
-            v = np.delete(row, normal_id2)
+        v = np.take(row, normal_nig)
+        # if len(normal_id_equal[0]) == 1: # for 3 different normal components
+        #     v = np.delete(row, normal_id_equal)
+        #     # print(v)
+        # else: # normal has equal components
+        #     normal_id2 = np.delete(normal_id_equal, 0)
+        #     # print("non deleted component")
+        #     # print(normal_id2)
+        #     v = np.delete(row, normal_id2)
+        #     # print(v)
         # append to vert_x and vert_y
         vert_x.append(v[0])
         vert_y.append(v[1])
     # append the first vertex to the end of the list (circular)
-    if len(normal_id[0]) == 1: # for 3 different normal components
-        v = np.delete(vertcoord[0], normal_id)
-    else: # normal has equal components
-        normal_id2 = np.delete(normal_id, 0)
-        v = np.delete(vertcoord[0], normal_id2)
+    # if len(normal_id_equal[0]) == 1: # for 3 different normal components
+    #     v = np.delete(vertcoord[0], normal_id_equal)
+    # else: # normal has equal components
+    #     normal_id2 = np.delete(normal_id_equal, 0)
+    #     v = np.delete(vertcoord[0], normal_id2)
+    v = np.take(vertcoord[0], normal_nig)
     # append to vert_x and vert_y
     vert_x.append(v[0])
     vert_y.append(v[1])
     # Transform in numpy array
     vert_x = np.array(vert_x) # doubles
     vert_y = np.array(vert_y) # doubles
-    normal_nig = np.intc(normal_nig[0]) # integers (index)
+
+
     return vert_x, vert_y, normal_nig
 
 def triangle_area(vertices):
@@ -350,3 +381,33 @@ def volume(planes):
             vertex_list.append(v)
     volume = ConvexHull(vertex_list).volume
     return volume
+
+
+# # Empty lists of x and y vertex coord
+#     vert_x = []
+#     vert_y = []
+#     for row in vertcoord:
+#         if len(normal_id_equal[0]) == 1: # for 3 different normal components
+#             v = np.delete(row, normal_id_equal)
+#             # print(v)
+#         else: # normal has equal components
+#             normal_id2 = np.delete(normal_id_equal, 0)
+#             # print("non deleted component")
+#             # print(normal_id2)
+#             v = np.delete(row, normal_id2)
+#             # print(v)
+#         # append to vert_x and vert_y
+#         vert_x.append(v[0])
+#         vert_y.append(v[1])
+#     # append the first vertex to the end of the list (circular)
+#     if len(normal_id_equal[0]) == 1: # for 3 different normal components
+#         v = np.delete(vertcoord[0], normal_id_equal)
+#     else: # normal has equal components
+#         normal_id2 = np.delete(normal_id_equal, 0)
+#         v = np.delete(vertcoord[0], normal_id2)
+#     # append to vert_x and vert_y
+#     vert_x.append(v[0])
+#     vert_y.append(v[1])
+#     # Transform in numpy array
+#     vert_x = np.array(vert_x) # doubles
+#     vert_y = np.array(vert_y) # doubles

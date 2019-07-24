@@ -8,8 +8,12 @@ void bind_cls_reccrosscpp(py::module &m){
         std::vector<float>,
         std::vector<float>,
         std::vector<uint16_t>
+        // float,
+        // uint16_t
         >())
         .def_readwrite("time_cross", &RecCrosscpp::time_cross)
         .def_readwrite("rad_cross", &RecCrosscpp::rad_cross)
         .def_readwrite("ref_order", &RecCrosscpp::ref_order);
+        // .def_readwrite("t_dir", &RecCrosscpp::t_dir)
+        // .def_readwrite("n_dir_hits", &RecCrosscpp::n_dir_hits);
 }

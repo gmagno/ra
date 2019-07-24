@@ -22,6 +22,15 @@ public:
     ~Receivercpp()  {} // class destructor - can be automatic later
     // Method to point receiver to a given sound source
     Eigen::RowVector3f point_to_source(Eigen::RowVector3f &source_coord);
+    // Method to calculate if a receiver is intercepted by a ray
+    void raysphere(
+        Eigen::Ref<Eigen::RowVector3f> ray_origin,
+        Eigen::Ref<Eigen::RowVector3f> v_dir,
+        double rec_radius,
+        double c0,
+        double cum_dist,
+        double &time_cross,
+        double &dist_rp_rec);
 // Parameters of the Receivercpp class
 Eigen::RowVector3f coord;
 Eigen::RowVector3f orientation;

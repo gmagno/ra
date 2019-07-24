@@ -3,7 +3,7 @@ import toml
 from ra.controlsair import load_cfg
 import ra_cpp
 
-def setup_sources(config_file, rays):
+def setup_sources(config_file, rays, reccrossdir):
     '''
     Set up the sound sources
     Each sound source object has two main categories of data:
@@ -40,7 +40,7 @@ def setup_sources(config_file, rays):
         delay = s['delay'] / 1000
         ################### cpp source class #################
         sources.append(ra_cpp.Sourcecpp(coord, orientation,
-            power_dB, eq_dB, power_lin, delay, rays)) # Append the source object
+            power_dB, eq_dB, power_lin, delay, rays, reccrossdir)) # Append the source object
         # sources.append([ra_cpp.Sourcecpp(coord, orientation,
         #     power_dB, eq_dB, power_lin, delay),
         #     rays]) # Append the source object
