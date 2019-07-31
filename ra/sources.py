@@ -36,7 +36,7 @@ def setup_sources(config_file, rays, reccrossdir):
         orientation = np.array(s['orientation'], dtype=np.float32)
         power_dB = np.array(s['power_dB'], dtype=np.float32)
         eq_dB = np.array(s['eq_dB'], dtype=np.float32)
-        power_lin = 10.0e-12 * 10**((power_dB + eq_dB) / 10.0)
+        power_lin = (10.0**-12) * 10**((power_dB + eq_dB) / 10.0)
         delay = s['delay'] / 1000
         ################### cpp source class #################
         sources.append(ra_cpp.Sourcecpp(coord, orientation,

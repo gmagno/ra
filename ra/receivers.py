@@ -34,8 +34,8 @@ def setup_receivers(config_file):
         coord = np.array(r['position'], dtype=np.float32)
         orientation = np.array(r['orientation'], dtype=np.float32)
         ################### cpp receiver class #################
-        receivers.append(ra_cpp.Receivercpp(coord, orientation)) # Append the source object
-        reccross.append(ra_cpp.RecCrosscpp([], [], [])) # Append the source object
+        receivers.append(ra_cpp.Receivercpp(coord, orientation)) # Append the receiver object
+        reccross.append(ra_cpp.RecCrosscpp([], [], [])) # Append the reccross object
         reccrossdir.append(ra_cpp.RecCrossDircpp(0.0, 0))
         ################### py source class ################
         # receivers.append(Receiver(coord, orientation))

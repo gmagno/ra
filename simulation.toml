@@ -6,11 +6,11 @@ freq = [63.0, 125.0, 250.0, 500.0, 1000.0, 2000.0, 4000.0, 8000.0]
 Nrays = 100                 # Number of rays
 ht_length = 3.0             # Length of the impulse response
 Dt = 0.001                  # Histogram time resolution
-allow_scattering = 0        # Allow scattering or not
+allow_scattering = 1        # Allow scattering or not
 transition_order = 2        # Transition order
 rec_radius_init = 0.1       # Initial receiver radius
 alow_growth = 1             # Allow receiver growth or not
-rec_radius_final = 0.5      # Final receiver radius
+rec_radius_final = 1.0      # Final receiver radius
 
 ################### Air properties ############################
 [air]
@@ -21,25 +21,25 @@ p_atm = 101325.0            # Atmosferic air pressure Pa
 
 ################################################################
 [[sources]]  # element 0 of an array of sources
-position = [3.0, 2.333, 6.0] #boston [-10.0, 20.0, 5.0] # 
+position = [3.0, 2.333, 1.2] #boston [-10.0, 20.0, 5.0] # 
 orientation = [1.0, 0.0, 0.0]
 power_dB = [80.0, 80.0, 80.0, 80.0, 80.0, 80.0, 80.0, 80.0]
 eq_dB = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 delay = 0.0 # delay in [ms]
 
-#[[sources]]  # element 1 of an array of sources
-#position = [3.0, -2.333, 1.2]
-#orientation = [1.0, 0.0, 0.0]
-#power_dB = [80.0, 80.0, 80.0, 80.0, 80.0, 80.0, 80.0, 80.0]
-#eq_dB = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-#delay = 0.0 # delay in [ms]
+[[sources]]  # element 1 of an array of sources
+position = [3.0, 0.0 , 1.2]
+orientation = [1.0, 0.0, 0.0]
+power_dB = [80.0, 80.0, 80.0, 80.0, 80.0, 80.0, 80.0, 80.0]
+eq_dB = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+delay = 0.0 # delay in [ms]
 
 # [[sources]]  # element 2 of an array of sources
 # ...
 
 ##################################################################
 [[receivers]]  # element 0 of an array of receivers
-position = [6.0, 2.333, 6.0] # [-10.0, 20.0, 8.8] # 
+position = [18.0, -5.0, 3.0] # [-10.0, 20.0, 8.8] # [6.0, 2.333, 6.0]
 orientation = [1.0, 0.0, 0.0]
 
 [[receivers]]  # element 1 of an array of receivers

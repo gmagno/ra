@@ -13,7 +13,8 @@
 ray objects which will contain the ray history in the room.
 This will be filled during the ray tracing main function*/
 
-typedef Eigen::Matrix<uint16_t, 1, Eigen::Dynamic > RowVectorXui;
+// typedef Eigen::Matrix<uint16_t, 1, Eigen::Dynamic > RowVectorXui;
+typedef Eigen::Array<uint16_t, 1, Eigen::Dynamic > RowVectorXui;
 
 class Raycpp
 {

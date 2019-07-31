@@ -62,12 +62,12 @@ std::vector<Sourcecpp> direct_sound(
     Eigen::RowVectorXf m_s;
     // m_s << 0.00002, 0.00002, 0.00003, 0.00003, 0.0008, 0.001, 0.004,
     //     0.008;
-    m_s = sources[0].power_lin;
-    // Eigen::VectorXf i_dir(m_s.size());
-    sources[0].reccrossdir[0].i_dir =
-        sources[0].reccrossdir[0].intensity_dir(
-        sources[0].power_lin, 1, c0, rec_radius, m_s
-    );
+    // m_s = sources[0].power_lin;
+    // // Eigen::VectorXf i_dir(m_s.size());
+    // sources[0].reccrossdir[0].i_dir =
+    //     sources[0].reccrossdir[0].intensity_dir(
+    //     sources[0].power_lin, 1, c0, rec_radius, m_s
+    // );
     // sources[0].reccrossdir[0].i_dir = i_dir;
     // std::cout << "i_dir in direct sound: " << sources[0].reccrossdir[0].i_dir << std::endl;
     return sources;

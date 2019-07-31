@@ -4,8 +4,8 @@ from ra.room import Geometry, GeometryMat
 
 class StatisticalMat():
     def __init__(self,geometry, freq, c0, air_absorption):
-        self.volume = geometry.volume[0][0][0][0]
-        self.total_area = geometry.total_area[0][0][0][0]
+        self.volume = geometry.volume
+        self.total_area = geometry.total_area
         self.freq = freq
         self.c0 = c0
         self.air_absorption = np.array(air_absorption)
@@ -15,7 +15,6 @@ class StatisticalMat():
         no_alphas = len(geometry.planes[0].alpha)
         planes_areas = np.zeros((no_planes,))
         planes_alpha_mtx = np.zeros((no_planes, no_alphas))
-        
         # x, y, z
         dot_normal_x = np.zeros((no_planes,))
         dot_normal_y = np.zeros((no_planes,))
@@ -29,7 +28,8 @@ class StatisticalMat():
             dot_normal_y[jp] = np.abs(np.dot(plane.normal, [0, 1, 0]))
             dot_normal_z[jp] = np.abs(np.dot(plane.normal, [0, 0, 1]))
 
-
+        alphas_mtx_or = np.array(planes_alpha_mtx, dtype = np.float32)
+        self.alphas_mtx = np.transpose(alphas_mtx_or)
         # mean absorption of the whole room
         aisi = planes_areas @ planes_alpha_mtx
         aisiMS = -planes_areas @ np.log(1-planes_alpha_mtx)
