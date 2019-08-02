@@ -19,6 +19,9 @@
 #include "bind_fun_direct_sound.h"
 #include "bind_fun_raytracer_main.h"
 #include "bind_fun_intensity_main.h"
+#include "bind_fun_t_cat.h"
+#include "bind_fun_i_cat.h"
+
 
 namespace py = pybind11;
 

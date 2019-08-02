@@ -20,6 +20,8 @@ PYBIND11_MODULE(ra_cpp, m)
     bind_fun_direct_sound(m);
     bind_fun_raytracer_main(m);
     bind_fun_intensity_main(m);
+    bind_t_cat(m);
+    bind_i_cat(m);
 
 #ifdef VERSION_INFO
     m.attr("__version__") = VERSION_INFO;

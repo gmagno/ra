@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import itertools
+import time
+import ra_cpp
 
 def process_results(Dt, ht_length, freq, sources, receivers):
     print("processing results...")
@@ -42,27 +44,55 @@ def process_results(Dt, ht_length, freq, sources, receivers):
 class RecResults(object):
     def __init__(self, source, jrec, time_bins, freq):
         # concatenate time_crosses - out of order
-        time_cat = np.array(concatenate_tarray(
-            jrec, source.rays, source.reccrossdir[jrec].time_dir), dtype = np.float32)
+        # start_time = time.time()
+        # time_cat = np.array(concatenate_tarray(
+        #     jrec, source.rays, source.reccrossdir[jrec].time_dir), dtype = np.float32)
+        # print(" {} seconds to concatenate time (py).".format(time.time() - start_time))
+        start_time = time.time()
+        time_cat = np.array(ra_cpp._time_cat(
+            source.rays, source.reccrossdir[jrec].time_dir, jrec), dtype = np.float32)
+        print(" {} seconds to concatenate time (c++).".format(time.time() - start_time))
+        # print("Py time: {}".format(time_cat[0:10]))
+        # print("C++ time: {}".format(time_catc[0:10]))
         # sort time vector
         id_sorted_time = np.argsort(time_cat)
         time_sorted = time_cat[id_sorted_time]
         # concatenate sound intensities
-        intensity_cat = np.array(concatenate_iarray(
-            jrec, source.rays, source.reccrossdir[jrec].i_dir), dtype = np.float32)
+        # start_time = time.time()
+        # intensity_cat = np.array(concatenate_iarray(
+        #     jrec, source.rays, source.reccrossdir[jrec].i_dir), dtype = np.float32)
+        # print(" {} seconds to concatenate intensity (py).".format(time.time() - start_time))
+
+        # print(source.reccrossdir[jrec].i_dir.shape)
+        start_time = time.time()
+        intensity_cat = np.array(ra_cpp._intensity_cat(
+            source.rays, source.reccrossdir[jrec].i_dir,
+            jrec, time_cat.size), dtype = np.float32)
+        print(" {} seconds to concatenate intensity (c++).".format(time.time() - start_time))
+        # print("Py intensity: {}".format(intensity_cat[:,0:4]))
+        # print("C++ intensity: {}".format(intensity_catc[:,0:4]))
+        
         # sort intensity
         intensity_sorted = intensity_cat[:, id_sorted_time]
         # reflectogram
         self.reflectogram = reflectogram_hist(time_bins, time_sorted, intensity_sorted)
         self.decay = decay_curve(self.reflectogram)
         # Calculate the direct sound id
-        direct_sound_idarr = np.where(self.reflectogram != 0.0)
+        direct_sound_idarr = np.nonzero(self.reflectogram[0,:])
         id_dir = direct_sound_idarr[0]
-        # print(id_dir[0])
+        # print(np.shape(direct_sound_idarr))
         # T20
+        # print("id of direct sound {}".format(id_dir))
+        # plt.scatter(id_dir, id_dir)
+        # plt.show()
         self.EDT = edt(time_bins, self.decay, id_dir[0], freq)
         self.T20 = t20(time_bins, self.decay, id_dir[0], freq)
         self.T30 = t30(time_bins, self.decay, id_dir[0], freq)
+        self.C80 = c80(time_bins, self.reflectogram, id_dir[0], freq)
+        self.D50 = d50(time_bins, self.reflectogram, id_dir[0], freq)
+        self.Ts = ts(time_bins, self.reflectogram, id_dir[0], freq)
+        self.G = g_db(self.reflectogram, source.power_lin, freq)
+
 
 def reflectogram_hist(time_bins, time_sorted, intensity_sorted):
     bins = np.digitize(time_sorted, time_bins)
@@ -91,9 +121,9 @@ def edt(time, decay, id_dir, freq):
     This function is used to calculate EDT by curve fitting the decay from 0 dB to -10dB
     '''
     ## The next two lines get direct sound without any information from source and receiver
-    EDT = []
+    EDT = np.zeros(freq.size, dtype = np.float32)
     jf = 0
-    for dec in decay:
+    for jdec, dec in enumerate(decay):
         np.seterr(divide = 'ignore')
         decdB = 10 * np.log10(dec[id_dir:]/
             np.amax(dec[id_dir:]))
@@ -101,11 +131,11 @@ def edt(time, decay, id_dir, freq):
         id_to_fit = np.where((decdB < 0.0) & (decdB > -10.0))
         try:
             p = np.polyfit(time[id_to_fit], decdB[id_to_fit], 1)
-            EDT.append(-60 / p[0])
+            EDT[jdec] = -60 / p[0]
         except:
-            print("I could not calculate T20 for the {}\
-                [Hz] frequency band. Try to use more rays or\
-                extend the length of h(t) of the simmulation.".format(freq[jf]))
+            print("I could not calculate EDT for the {}.".format(freq[jf])+
+                "[Hz] frequency band. Try to use more rays or"+
+                "extend the length of h(t) of the simmulation.")
         jf=+1
     return EDT
 
@@ -114,9 +144,9 @@ def t20(time, decay, id_dir, freq):
     This function is used to calculate T20 by curve fitting the decay from -5 dB to -25dB
     '''
     ## The next two lines get direct sound without any information from source and receiver
-    T20 = []
+    T20 = np.zeros(freq.size, dtype = np.float32)
     jf = 0
-    for dec in decay:
+    for jdec, dec in enumerate(decay):
         np.seterr(divide = 'ignore')
         decdB = 10 * np.log10(dec[id_dir:]/
             np.amax(dec[id_dir:]))
@@ -124,11 +154,11 @@ def t20(time, decay, id_dir, freq):
         id_to_fit = np.where((decdB < -5.0) & (decdB > -25.0))
         try:
             p = np.polyfit(time[id_to_fit], decdB[id_to_fit], 1)
-            T20.append(-60 / p[0])
+            T20[jdec] = -60 / p[0]
         except:
-            print("I could not calculate T20 for the {}\
-                [Hz] frequency band. Try to use more rays or\
-                extend the length of h(t) of the simmulation.".format(freq[jf]))
+            print("I could not calculate T20 for the {}.".format(freq[jf])+
+                "[Hz] frequency band. Try to use more rays or"+
+                "extend the length of h(t) of the simmulation.")
         jf=+1
     return T20
 
@@ -137,9 +167,9 @@ def t30(time, decay, id_dir, freq):
     This function is used to calculate T30 by curve fitting the decay from -5 dB to -25dB
     '''
     ## The next two lines get direct sound without any information from source and receiver
-    T30 = []
+    T30 = np.zeros(freq.size, dtype = np.float32)
     jf = 0
-    for dec in decay:
+    for jdec, dec in enumerate(decay):
         np.seterr(divide = 'ignore')
         decdB = 10 * np.log10(dec[id_dir:]/
             np.amax(dec[id_dir:]))
@@ -147,14 +177,88 @@ def t30(time, decay, id_dir, freq):
         id_to_fit = np.where((decdB < -5.0) & (decdB > -35.0))
         try:
             p = np.polyfit(time[id_to_fit], decdB[id_to_fit], 1)
-            T30.append(-60 / p[0])
+            T30[jdec] = -60 / p[0]
         except:
-            print("I could not calculate T20 for the {}\
-                [Hz] frequency band. Try to use more rays or\
-                extend the length of h(t) of the simmulation.".format(freq[jf]))
+            print("I could not calculate T30 for the {}.".format(freq[jf])+
+                "[Hz] frequency band. Try to use more rays or"+
+                "extend the length of h(t) of the simmulation.")
         jf=+1
     return T30
 
+def c80(time, reflectogram, id_dir, freq):
+    '''
+    This function is used to calculate T30 by curve fitting the decay from -5 dB to -25dB
+    '''
+    ## The next two lines get direct sound without any information from source and receiver
+    C80 = np.zeros(freq.size, dtype = np.float32) - np.inf
+    jf = 0
+    for jref, ref in enumerate(reflectogram):
+        np.seterr(divide = 'ignore')
+        try:
+            id_to_sum = np.where(time <= 0.080 + time[id_dir])
+            C80[jref] = 10 * np.log10(np.sum(ref[id_to_sum[0]]) / np.sum(ref[id_to_sum[0][-1]+1:]))
+        except:
+            print("I could not calculate C80 for the {}.".format(freq[jf])+
+                "[Hz] frequency band. Try to use more rays or"+
+                "extend the length of h(t) of the simmulation.")
+        jf=+1
+    return C80
+
+def d50(time, reflectogram, id_dir, freq):
+    '''
+    This function is used to calculate T30 by curve fitting the decay from -5 dB to -25dB
+    '''
+    ## The next two lines get direct sound without any information from source and receiver
+    D50 = np.zeros(freq.size, dtype = np.float32)-0.1
+    jf = 0
+    for jref, ref in enumerate(reflectogram):
+        np.seterr(divide = 'ignore')
+        try:
+            id_to_sum = np.where(time <= 0.050 + time[id_dir])
+            D50[jref] = 100 * np.sum(ref[id_to_sum[0]]) / np.sum(ref)
+        except:
+            print("I could not calculate D50 for the {}.".format(freq[jf])+
+                "[Hz] frequency band. Try to use more rays or"+
+                "extend the length of h(t) of the simmulation.")
+        jf=+1
+    return D50
+
+def ts(time, reflectogram, id_dir, freq):
+    '''
+    This function is used to calculate T30 by curve fitting the decay from -5 dB to -25dB
+    '''
+    ## The next two lines get direct sound without any information from source and receiver
+    Ts = np.zeros(freq.size, dtype = np.float32)
+    jf = 0
+    for jref, ref in enumerate(reflectogram):
+        np.seterr(divide = 'ignore')
+        try:
+            Ts[jref] = np.sum(np.multiply(time, ref))/np.sum(ref) - time[id_dir]
+        except:
+            print("I could not calculate Ts for the {}.".format(freq[jf])+
+                "[Hz] frequency band. Try to use more rays or"+
+                "extend the length of h(t) of the simmulation.")
+        jf=+1
+    return Ts
+
+def g_db(reflectogram, Wlin, freq):
+    '''
+    This function is used to calculate T30 by curve fitting the decay from -5 dB to -25dB
+    '''
+    ## The next two lines get direct sound without any information from source and receiver
+    G = np.zeros(freq.size, dtype = np.float32) - np.inf
+    jf = 0
+    for jref, ref in enumerate(reflectogram):
+        np.seterr(divide = 'ignore')
+        try:
+            G[jref] = 10.0 * np.log10(np.sum(ref)) -\
+                10.0 * np.log10(Wlin[jref] / (4.0 * np.pi * 100.0))
+        except:
+            print("I could not calculate G for the {}.".format(freq[jf])+
+                "[Hz] frequency band. Try to use more rays or"+
+                "extend the length of h(t) of the simmulation.")
+        jf=+1
+    return G
 
 ###########################################################
 def concatenate_tarray(jrec, srays, time_dir):
@@ -230,7 +334,7 @@ class SouResults(object):
 
     def plot_edt(self, ht_max = 3.0):
         '''
-        Plots the T20 for all receivers for a given sound source.
+        Plots the EDT for all receivers for a given sound source.
         outputs: void
         '''
         for jrec, r in enumerate(self.rec):
@@ -266,7 +370,7 @@ class SouResults(object):
 
     def plot_t30(self, ht_max = 3.0):
         '''
-        Plots the T20 for all receivers for a given sound source.
+        Plots the T30 for all receivers for a given sound source.
         outputs: void
         '''
         for jrec, r in enumerate(self.rec):
@@ -280,6 +384,78 @@ class SouResults(object):
         plt.xlabel('Frequency [Hz]')
         plt.ylabel('T30 [s]')
         plt.ylim((0, ht_max))
+        plt.show()
+
+    def plot_c80(self):
+        '''
+        Plots the C80 for all receivers for a given sound source.
+        outputs: void
+        '''
+        for jrec, r in enumerate(self.rec):
+            legend = 'receiver ' + str(jrec+1)
+            plt.plot(self.freq, r.C80, label = legend)
+        plt.grid(linestyle = '--')
+        plt.xscale('log')
+        plt.legend(loc = 'lower right')
+        plt.title('C80')
+        plt.xticks(self.freq, ['63', '125', '250', '500', '1000', '2000', '4000', '8000'])
+        plt.xlabel('Frequency [Hz]')
+        plt.ylabel('C80 [dB]')
+        # plt.ylim((0, ht_max))
+        plt.show()
+
+    def plot_d50(self):
+        '''
+        Plots the T20 for all receivers for a given sound source.
+        outputs: void
+        '''
+        for jrec, r in enumerate(self.rec):
+            legend = 'receiver ' + str(jrec+1)
+            plt.plot(self.freq, r.D50, label = legend)
+        plt.grid(linestyle = '--')
+        plt.xscale('log')
+        plt.legend(loc = 'lower right')
+        plt.title('D50')
+        plt.xticks(self.freq, ['63', '125', '250', '500', '1000', '2000', '4000', '8000'])
+        plt.xlabel('Frequency [Hz]')
+        plt.ylabel('D50 [%]')
+        # plt.ylim((0, ht_max))
+        plt.show()
+
+    def plot_ts(self):
+        '''
+        Plots the Ts for all receivers for a given sound source.
+        outputs: void
+        '''
+        for jrec, r in enumerate(self.rec):
+            legend = 'receiver ' + str(jrec+1)
+            plt.plot(self.freq, 1000 * r.Ts, label = legend)
+        plt.grid(linestyle = '--')
+        plt.xscale('log')
+        plt.legend(loc = 'best')
+        plt.title('Ts')
+        plt.xticks(self.freq, ['63', '125', '250', '500', '1000', '2000', '4000', '8000'])
+        plt.xlabel('Frequency [Hz]')
+        plt.ylabel('Ts [ms]')
+        # plt.ylim((0, ht_max))
+        plt.show()
+
+    def plot_g(self):
+        '''
+        Plots the Ts for all receivers for a given sound source.
+        outputs: void
+        '''
+        for jrec, r in enumerate(self.rec):
+            legend = 'receiver ' + str(jrec+1)
+            plt.plot(self.freq, r.G, label = legend)
+        plt.grid(linestyle = '--')
+        plt.xscale('log')
+        plt.legend(loc = 'best')
+        plt.title('G')
+        plt.xticks(self.freq, ['63', '125', '250', '500', '1000', '2000', '4000', '8000'])
+        plt.xlabel('Frequency [Hz]')
+        plt.ylabel('G [dB]')
+        # plt.ylim((0, ht_max))
         plt.show()
 
 # class SRPairs():

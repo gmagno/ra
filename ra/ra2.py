@@ -238,6 +238,12 @@ def main():
     sou[0].plot_edt()
     sou[0].plot_t20()
     sou[0].plot_t30()
+    sou[0].plot_c80()
+    sou[0].plot_d50()
+    sou[0].plot_ts()
+    sou[0].plot_g()
+
+
 
     # print(rec[0].a)
     # print(sou[0].rec[0].reflectogram.shape)
