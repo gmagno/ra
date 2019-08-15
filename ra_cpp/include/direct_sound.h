@@ -17,6 +17,7 @@
 #include "ray.h"
 #include "source.h"
 #include "visibilitytest.h"
+#include "point_all_recs.h"
 #include "plane_finder.h"
 #include "do_progress.h"
 

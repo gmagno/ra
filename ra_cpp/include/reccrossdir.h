@@ -19,10 +19,13 @@ class RecCrossDircpp
 {
 public:
     RecCrossDircpp(
+        int size_of_time,
         float time_dir,
-        uint16_t hits_dir
+        uint16_t hits_dir,
+        float cos_dir
         ):
-    time_dir(time_dir), hits_dir(hits_dir)
+    size_of_time(size_of_time), time_dir(time_dir),
+    hits_dir(hits_dir), cos_dir(cos_dir)
     {}
     ~RecCrossDircpp()  {} // class destructor - can be automatic later
     // Method to calculate sound intensity at direct sound
@@ -32,8 +35,10 @@ public:
         double rec_radius_init,
         Eigen::RowVectorXf m_s);
 // Parameters of the RecCrossDircpp class
+int size_of_time;
 float time_dir;
 uint16_t hits_dir;
+float cos_dir;
 Eigen::VectorXf i_dir;
 };
 #endif /* RECCROSSDIR_H */

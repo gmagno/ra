@@ -1,7 +1,7 @@
 import numpy as np
 import ra_cpp
 
-def ray_initializer(rays_dir, N_max_ref, reccross):
+def ray_initializer(rays_dir, N_max_ref, trans_order, reccross):
         '''
         Initialize a std::vector of ray objects. Each ray object has
         the following properties:
@@ -21,7 +21,7 @@ def ray_initializer(rays_dir, N_max_ref, reccross):
         rays = [] # An array of empty ray objects
         for jray in np.arange(rays_dir.Nrays):
                 planes = np.zeros(N_max_ref, dtype=np.uint16)+65535 #npint16
-                reflection_points = np.zeros((N_max_ref, 3), dtype=np.float32)
+                reflection_points = np.zeros((trans_order+2, 3), dtype=np.float32)
                 ################### cpp ray class #################
                 rays.append(ra_cpp.Raycpp(planes,
                         reflection_points, reccross)) # Append the ray object

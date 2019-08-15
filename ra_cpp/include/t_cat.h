@@ -13,8 +13,16 @@
 #include "ray.h"
 
 namespace py = pybind11;
+// Eigen
+Eigen::RowVectorXf time_cat(std::vector<Raycpp> &rays,
+    float time_dir, int jrec, int time_size);
 
-std::vector<float> time_cat(std::vector<Raycpp> &rays,
-    float time_dir, int jrec);
+// Original - Dynamic alloc
+// std::vector<float> time_cat(std::vector<Raycpp> &rays,
+//     float time_dir, int jrec);
+
+// std vector - known size
+// std::vector<float> time_cat(std::vector<Raycpp> &rays,
+//     float time_dir, int jrec, int time_size);
 
 #endif /* T_CAT_H */

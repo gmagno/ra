@@ -20,6 +20,11 @@ std::vector<Sourcecpp> raytracer_main(
     for(auto&& s: sources){
         // std::cout << "test" << s.rays[0].planes_hist << std::endl;
         std::cout << "Tracing rays for source: " << sc + 1 << " at: (" << s.coord << ") [m]" << std::endl;
+        // orient toward source (optional) and fig8 mic
+        point_all_receivers(s.coord, receivers);
+        // std::cout << "rec 0 fig 8  in main: " << 
+        //     receivers[0].orientation_fig8 <<
+        //     " for source: " << s.coord << std::endl;
         int rc = 0; // ray counter
         for(auto&& v: s.rays){
             progress_bar(rc, N_rays);
@@ -34,12 +39,14 @@ std::vector<Sourcecpp> raytracer_main(
             Eigen::RowVector3f v_dir = v_init.row(rc);
             // while loop
             bool pop_condition = false;
-            while(ref_order < N_max_ref){ //  (cum_dist / c0) <= ht_length && 
+            while(ref_order < N_max_ref){ //  (cum_dist / c0) <= ht_length &&
                 // find the intercepted plane
                 v.plane_finder(planes, r_origin, v_dir, plane_detected, dist);
-                // fill the plane and ref_pts history in appropriate place
+                // fill the plane in appropriate place
                 v.planes_hist[ref_order] = plane_detected;
-                v.refpts_hist.row(ref_order) = r_origin;
+                // fill the reflection points up to transition order + 2
+                if (ref_order < transition_order + 2)
+                    v.refpts_hist.row(ref_order) = r_origin;
                 // stop loop while if no plane is detected
                 if (plane_detected == 65533)
                     break; // and after fill a invalid_ray seq
@@ -47,6 +54,7 @@ std::vector<Sourcecpp> raytracer_main(
                 visibility_test(sc, rc, pop_condition, sources,
                     receivers, dist_rp_rec, dist);
                 // reflect the ray
+                // int n_spec_ref = 0;
                 v_dir = rayreflection(v_dir,
                 planes[plane_detected].normal,
                 planes[plane_detected].s,

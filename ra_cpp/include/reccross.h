@@ -20,13 +20,11 @@ public:
     RecCrosscpp(
         std::vector<float> time_cross,
         std::vector<float> rad_cross,
-        std::vector<uint16_t> ref_order
-        // float t_dir,
-        // uint16_t n_dir_hits
+        std::vector<uint16_t> ref_order,
+        std::vector<float> cos_cross
         ):
     time_cross(time_cross), rad_cross(rad_cross),
-    ref_order(ref_order)
-    // t_dir(t_dir), n_dir_hits(n_dir_hits)
+    ref_order(ref_order), cos_cross(cos_cross)
     {}
     ~RecCrosscpp()  {} // class destructor - can be automatic later
     // Method to retrieve a sequence of Reflection coefficients
@@ -44,6 +42,7 @@ public:
 std::vector<float> time_cross;
 std::vector<float> rad_cross;
 std::vector<uint16_t> ref_order;
+std::vector<float> cos_cross;
 Eigen::MatrixXf i_cross;
 };
 #endif /* RECCROSS_H */

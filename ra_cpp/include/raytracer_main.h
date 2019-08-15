@@ -20,6 +20,7 @@
 #include "rayreflection.h"
 #include "recgrow.h"
 #include "raysphere_all.h"
+#include "point_all_recs.h"
 #include "visibilitytest.h"
 #include "do_progress.h"
 

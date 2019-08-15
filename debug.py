@@ -8,7 +8,7 @@ os.chdir(os.path.dirname(os.path.realpath(__file__)))
 #pprint(sys.path)
 
 
-from ra.ra2 import main
+from ra.run_simu import main
 
 
 main()

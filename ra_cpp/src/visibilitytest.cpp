@@ -10,6 +10,7 @@ void visibility_test(int sc, int rc,
     if (pop_condition){
         for(auto&& r: receivers){
             if (dist_rp_rec[rec_c] >= dist){
+                sources[sc].reccrossdir[rec_c].size_of_time--;
                 sources[sc].rays[rc].recs[rec_c].time_cross.pop_back();
                 sources[sc].rays[rc].recs[rec_c].rad_cross.pop_back();
                 sources[sc].rays[rc].recs[rec_c].ref_order.pop_back();

@@ -3,9 +3,19 @@
 // Method to point receiver to a given sound source
 Eigen::RowVector3f Receivercpp::point_to_source(
     Eigen::RowVector3f &source_coord){
-    orientation = coord - source_coord;
+    orientation = source_coord - coord;
     orientation = orientation / orientation.norm();
     return orientation;
+}
+
+// Method to point the receiver 90 deg from orientation y -axis
+Eigen::RowVector3f Receivercpp::point_fig8(){
+    Eigen::RowVector3f orientation_z = orientation;
+    orientation_z(2) += 0.2;
+    orientation_z = orientation_z / orientation_z.norm();
+    Eigen::RowVector3f orientation_fig8 =
+        orientation.cross(orientation_z);
+    return orientation_fig8;
 }
 
 // Method to calculate if a receiver is intercepted by a ray

@@ -3,7 +3,7 @@ title = 'Simple configuration'
 ##################### algorithm controls ######################################
 [controls]
 freq = [63.0, 125.0, 250.0, 500.0, 1000.0, 2000.0, 4000.0, 8000.0]
-Nrays = 100                 # Number of rays
+Nrays = 100000               # Number of rays
 ht_length = 3.0             # Length of the impulse response
 Dt = 0.001                  # Histogram time resolution
 allow_scattering = 1        # Allow scattering or not
@@ -56,6 +56,14 @@ orientation = [1.0, 0.0, 0.0]
 
 ###################### Geometry #################################
 [geometry]
+room = 'data/legacy/odeon_ex/ODEON_Ex_geometry.mat'
+#room = 'data/legacy/BostonSH_geometry.mat'
+#room = 'data/legacy/Elmia_geometry.mat'
+#room = 'data/legacy/studioPTB_ph1.mat'
+#room = 'data/legacy/studioPTB_ph2_courtain_closed.mat'
+#room = 'data/legacy/studioPTB_ph2_courtain_open.mat'
+#bbox = 'data/rooms/simple/bbox.dae'
+
 #room = 'data/rooms/simple/walls_room.dae'
 # room = 'data/rooms/simple/monkey.dae'
 # room = 'data/rooms/simple/long_tube.dae'
@@ -65,15 +73,6 @@ orientation = [1.0, 0.0, 0.0]
 #room = 'data/rooms/simple/masp_cavaletes.dae'
 #room = 'data/rooms/simple/MASP_cavaletes_teto.dae'
 #room = 'data/rooms/simple/MASP_sem_cavaletes.dae'
-
-room = 'data/legacy/ODEON_Ex_geometry.mat'
-#room = 'data/legacy/BostonSH_geometry.mat'
-#room = 'data/legacy/Elmia_geometry.mat'
-#room = 'data/legacy/studioPTB_ph1.mat'
-#room = 'data/legacy/studioPTB_ph2_courtain_closed.mat'
-#room = 'data/legacy/studioPTB_ph2_courtain_open.mat'
-#bbox = 'data/rooms/simple/bbox.dae'
-
 ################### Material database ##########################
 [material]
 mat_database = 'data/material/DataBase_Odeon.mat'

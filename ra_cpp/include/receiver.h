@@ -4,6 +4,7 @@
 #include <iostream>
 #include "pybind11/pybind11.h"
 #include "pybind11/eigen.h"
+#include <Eigen/Dense>
 #include "pybind11/numpy.h"
 
 /* The class Raycpp is used to construct a list of
@@ -22,6 +23,8 @@ public:
     ~Receivercpp()  {} // class destructor - can be automatic later
     // Method to point receiver to a given sound source
     Eigen::RowVector3f point_to_source(Eigen::RowVector3f &source_coord);
+    // Method to point the receiver 90 deg from orientation y -axis
+    Eigen::RowVector3f point_fig8();
     // Method to calculate if a receiver is intercepted by a ray
     void raysphere(
         Eigen::Ref<Eigen::RowVector3f> ray_origin,
@@ -34,5 +37,6 @@ public:
 // Parameters of the Receivercpp class
 Eigen::RowVector3f coord;
 Eigen::RowVector3f orientation;
+Eigen::RowVector3f orientation_fig8;
 };
 #endif /* RECEIVER_H */

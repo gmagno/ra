@@ -88,7 +88,7 @@ def main():
     ##### Test ray initiation ########
     rays_i_v = RayInitialDirections()
     # rays_i_v.single_ray([0.0, -1.0, 0.0])#([0.7236, -0.5257, 0.4472])
-    rays_i_v.isotropic_rays(10000) # 15
+    rays_i_v.isotropic_rays(100000) # 15
     # mat = spio.loadmat('ra/vin_matlab.mat')
     # rays_i_v.vinit = mat['vin']
     # rays_i_v.random_rays(1000)

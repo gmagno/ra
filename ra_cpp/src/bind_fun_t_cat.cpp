@@ -6,6 +6,7 @@ void bind_t_cat(py::module &m)
     "Concatenate time vector",
     py::arg("rays").noconvert(),
     py::arg("time_dir").noconvert(),
-    py::arg("jrec").noconvert()
+    py::arg("jrec").noconvert(),
+    py::arg("time_size").noconvert()
     );
 }

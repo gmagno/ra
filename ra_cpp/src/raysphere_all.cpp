@@ -23,9 +23,12 @@ void ray_sphere_all(int sc, int rc,
                 c0, cum_dist, time_cross, dist_rp_rec[rec_c]);
             // sources[sc].rays[rc].recs[rec_c].time_cross.push_back(time_cross);
             if(time_cross != 0.0){
+                sources[sc].reccrossdir[rec_c].size_of_time++;
                 sources[sc].rays[rc].recs[rec_c].time_cross.push_back(time_cross);
                 sources[sc].rays[rc].recs[rec_c].rad_cross.push_back(rec_radius_current);
                 sources[sc].rays[rc].recs[rec_c].ref_order.push_back(ref_order);
+                sources[sc].rays[rc].recs[rec_c].cos_cross.push_back(
+                    v_dir.dot(r.orientation_fig8));
             }
             // std::cout << "receiver: " << rec_c << ", time cross is: " << time_cross << std::endl;
             rec_c++;
