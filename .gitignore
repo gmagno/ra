@@ -1,4 +1,10 @@
 .venv/
-.vscode/
+.vscode/*
+!.vscode/launch.json
 *.pyc
-
+build/
+*.so
+.conda/
+ra.log
+*.pkl
+sim.json

@@ -48,6 +48,7 @@ class Simulation():
     def __init__(self, cfgfile):
         self.config = self.load_cfg(cfgfile)
         self.sources = self.setup_sources(self.config)
+        
         self.receivers = self.setup_receivers(self.config)
         self.room = self.setup_room(self.config)
         self.bbox = self.setup_bounding_box(self.config, scale=100)
@@ -152,6 +153,7 @@ class Simulation():
     def start(self):
         # loop through every single ray
         for src_rays in self.rays:
+            print(src_rays.nrays)
             progress = tqdm(np.ndindex((src_rays.nrays, src_rays.niters)))
             for (rayid, rayit) in progress:
                 if src_rays.length[rayid] != src_rays.niters:

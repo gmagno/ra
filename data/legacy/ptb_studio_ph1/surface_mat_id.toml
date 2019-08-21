@@ -1,0 +1,34 @@
+title = 'Material configuration'
+
+##################### material list #############################
+[[material]]  # element 0 of an array of materials
+id = 10
+s = 0.1
+
+[[material]]  # element 1 of an array of materials
+id = 10
+s = 0.1
+
+[[material]]  # element 2 of an array of materials
+id = 10
+s = 0.1
+
+[[material]]  # element 3 of an array of materials
+id = 10
+s = 0.1
+
+[[material]]  # element 4 of an array of materials
+id = 10
+s = 0.1
+
+[[material]]  # element 5 of an array of materials
+id = 10
+s = 0.1
+
+[[material]]  # element 6 of an array of materials
+id = 10
+s = 0.1
+
+
+
+
