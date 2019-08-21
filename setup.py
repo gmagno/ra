@@ -130,4 +130,12 @@ setup(
     ext_modules=[CMakeExtension('ra_cpp')],
     cmdclass=dict(build_ext=CMakeBuild),
     zip_safe=False,
+    install_requires=[
+        'matplotlib',
+        'numpy',
+        'numpy-quaternion',
+        'pycollada',
+        'scipy',
+        'toml'
+        ]
 )
