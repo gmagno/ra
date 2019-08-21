@@ -1,0 +1,13 @@
+name: ra_env
+channels:
+  - defaults
+  - schrodinger
+  - conda-forge
+dependencies:
+  - python=3.7
+  - numpy
+  - scipy
+  - matplotlib
+  - toml
+  - pycollada
+  - quaternion
