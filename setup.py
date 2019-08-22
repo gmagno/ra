@@ -67,7 +67,7 @@ class CMakeBuild(build_ext):
             build_args += ['--', '/m']
         else:
             cmake_args += ['-DCMAKE_BUILD_TYPE=' + cfg]
-            build_args += ['--', '-j2']
+            build_args += ['--', '-j6']
 
         env = os.environ.copy()
         env['CXXFLAGS'] = '{} -DVERSION_INFO=\\"{}\\"'.format(
@@ -91,7 +91,6 @@ setup(
     version=version,
     description='Room Acoustics',
     long_description=long_description,
-    long_description_content_type="text/markdown",
     url="https://github.com/...",
     author='author',
     author_email='author@gmail.com',
@@ -131,11 +130,11 @@ setup(
     cmdclass=dict(build_ext=CMakeBuild),
     zip_safe=False,
     install_requires=[
-        'matplotlib',
-        'numpy',
-        'numpy-quaternion',
-        'pycollada',
-        'scipy',
-        'toml'
-        ]
+        'matplotlib==3.1.1',
+        'numpy==1.15.0',
+        'numpy-quaternion==2019.7.23.15.26.49',
+        'pycollada==0.6',
+        'scipy==1.3.1',
+        'toml==0.10.0',
+    ],
 )
