@@ -15,6 +15,7 @@ Eigen::RowVector3f Receivercpp::point_fig8(){
     orientation_z = orientation_z / orientation_z.norm();
     Eigen::RowVector3f orientation_fig8 =
         orientation.cross(orientation_z);
+    orientation_fig8 = orientation_fig8 / orientation_fig8.norm();
     return orientation_fig8;
 }
 

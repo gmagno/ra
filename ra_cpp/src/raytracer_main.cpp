@@ -15,7 +15,8 @@ std::vector<Sourcecpp> raytracer_main(
     Eigen::MatrixXf &v_init){
     int N_rays = sources[0].rays.size();
     int N_recs = sources[0].rays[0].recs.size();
-    int N_max_ref = sources[0].rays[0].planes_hist.size();
+    int N_max_ref = sources[0].rays[0].planes_hist.size(); // max ref_order
+    int N_max_ro = sources[0].rays[0].refpts_hist.rows(); // max number of ref points saved
     int sc = 0; // source counter
     for(auto&& s: sources){
         // std::cout << "test" << s.rays[0].planes_hist << std::endl;
@@ -45,7 +46,7 @@ std::vector<Sourcecpp> raytracer_main(
                 // fill the plane in appropriate place
                 v.planes_hist[ref_order] = plane_detected;
                 // fill the reflection points up to transition order + 2
-                if (ref_order < transition_order + 2)
+                if (ref_order < N_max_ro)
                     v.refpts_hist.row(ref_order) = r_origin;
                 // stop loop while if no plane is detected
                 if (plane_detected == 65533)

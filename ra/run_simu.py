@@ -19,17 +19,23 @@ from ra.ray_initializer import ray_initializer
 from ra.results import process_results, SRStats
 
 def main():
-    path = 'data/legacy/odeon_ex/'          # room folder
-    pkl_fname_res = 'odeon_ex'              # simulation results name
+    # path = 'data/legacy/odeon_ex/'          # room folder
+    # pkl_fname_res = 'odeon_ex'              # simulation results name
     # path = 'data/legacy/ptb_studio_ph1/'    # room folder
     # pkl_fname_res = 'ptb_studio_ph1'        # simulation results name
     # path = 'data/legacy/ptb_studio_ph2/'    # room folder
     # pkl_fname_res = 'ptb_studio_ph2_open'        # simulation results name
     # pkl_fname_res = 'ptb_studio_ph2_close'        # simulation results name
-    tml_name_cfg = 'simulation.toml'        # toml configuration file
-    tml_name_mat = 'surface_mat_id.toml'    # toml material file
+    path = 'data/legacy/ptb_studio_ph3/'          # room folder
+    pkl_fname_res = 'ptb_studio_ph3_open'              # simulation results name
+    # pkl_fname_res = 'ptb_studio_ph3_close'              # simulation results name
+    tml_name_cfg = 'simulation_ptb_ph3.toml'        # toml configuration file
+    # tml_name_cfg = 'simulation.toml'        # toml configuration file
+    # tml_name_mat = 'surface_mat_id.toml'    # toml material file
     # tml_name_mat = 'surface_mat_open_id.toml'    # toml material file
     # tml_name_mat = 'surface_mat_close_id.toml'    # toml material file
+    tml_name_mat = 'surface_mat_id_ptb_ph3_o.toml'    # toml material file
+    #tml_name_mat = 'surface_mat_id_ptb_ph3_c.toml'    # toml material file
 
     ##### Setup algorithm controls ########
     controls = AlgControls(path+tml_name_cfg)
@@ -44,7 +50,7 @@ def main():
 
     ##### Setup Geometry ###########
     geo = GeometryMat(path+tml_name_cfg, alpha, s)
-    geo.plot_mat_room(normals = 'on')
+    # geo.plot_mat_room(normals = 'on')
     # geo = Geometry('simulation.toml', alpha, s)
     # geo.plot_dae_room(normals = 'on')
 
@@ -108,14 +114,18 @@ def main():
     sou[0].plot_single_reflecrogram(band = 4, jrec = 1)
     # sou[0].plot_decays()
     # sou[0].plot_edt()
-    # sou[0].plot_t20()
+    sou[0].plot_t20()
     # sou[0].plot_t30()
-    # sou[0].plot_c80()
+    sou[0].plot_c80()
     # sou[0].plot_d50()
     # sou[0].plot_ts()
     # sou[0].plot_g()
+    sou[0].plot_lf()
+    sou[0].plot_lfc()
     # print(sources[0].rays[0].refpts_hist)
-    print(sources[0].reccrossdir[0].cos_dir)
+    # geo.plot_raypath(sources[0].coord, sources[0].rays[1000].refpts_hist,
+    #     receivers)
+    # print(sources[0].reccrossdir[0].cos_dir)
     ############# Save trial #########################
     import pickle
     with open(path+pkl_fname_res+'.pkl', 'wb') as output:
