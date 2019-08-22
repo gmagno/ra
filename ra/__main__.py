@@ -3,7 +3,6 @@ import argparse
 import os
 import sys
 import pathlib
-from pprint import pprint
 import signal
 
 from ra import run_simu

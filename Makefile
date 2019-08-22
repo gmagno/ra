@@ -2,6 +2,8 @@
 clean:
 	find . \( -name __pycache__ \
 		-o -name "*.pyc" \
+		-o -name "*.log" \
+		-o -name "*.pkl" \
 		-o -name .pytest_cache \
 		-o -path "./dist" \
 		-o -path "./ra_cpp.egg-info" \
