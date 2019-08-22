@@ -1,13 +1,16 @@
-import math
+import argparse
 import codecs
 import json
+import math
+import os
+import pathlib
+import sys
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 import scipy.io as spio
 
-import ra_cpp
-
+from ra.log import log
 from ra.rayinidir import RayInitialDirections
 from ra.receivers import setup_receivers
 from ra.sources import setup_sources
@@ -17,10 +20,13 @@ from ra.absorption_database import load_matdata_from_mat, get_alpha_s
 from ra.statistics import StatisticalMat
 from ra.ray_initializer import ray_initializer
 from ra.results import process_results, SRStats
+import ra_cpp
 
-def main():
+
+def run(cfg_dir):
+    path = cfg_dir
     # path = 'data/legacy/odeon_ex/'          # room folder
-    # pkl_fname_res = 'odeon_ex'              # simulation results name
+    pkl_fname_res = 'odeon_ex'              # simulation results name
     # path = 'data/legacy/ptb_studio_ph1/'    # room folder
     # pkl_fname_res = 'ptb_studio_ph1'        # simulation results name
     # path = 'data/legacy/ptb_studio_ph2/'    # room folder
@@ -38,6 +44,7 @@ def main():
     #tml_name_mat = 'surface_mat_id_ptb_ph3_c.toml'    # toml material file
 
     ##### Setup algorithm controls ########
+    # FIXME: use pathlib instead of string concatenation
     controls = AlgControls(path+tml_name_cfg)
 
     ##### Setup air properties ########
@@ -110,8 +117,8 @@ def main():
     ########## Statistics ##########################################################
     stats = SRStats(sou)
     ######## some plotting ##############################
-    sou[0].plot_single_reflecrogram(band = 4, jrec = 2)
-    sou[0].plot_single_reflecrogram(band = 4, jrec = 1)
+    # sou[0].plot_single_reflecrogram(band = 4, jrec = 2)
+    # sou[0].plot_single_reflecrogram(band = 4, jrec = 1)
     # sou[0].plot_decays()
     # sou[0].plot_edt()
     sou[0].plot_t20()
@@ -123,9 +130,11 @@ def main():
     sou[0].plot_lf()
     sou[0].plot_lfc()
     # print(sources[0].rays[0].refpts_hist)
-    # geo.plot_raypath(sources[0].coord, sources[0].rays[1000].refpts_hist,
+
+    # geo.plot_raypath(sources[0].coord, sources[0].rays[0].refpts_hist,
     #     receivers)
-    # print(sources[0].reccrossdir[0].cos_dir)
+
+    print(sources[0].reccrossdir[0].cos_dir)
     ############# Save trial #########################
     import pickle
     with open(path+pkl_fname_res+'.pkl', 'wb') as output:
@@ -137,6 +146,3 @@ def main():
 
         # pickle.dump(sources, output, pickle.HIGHEST_PROTOCOL)
 
-
-if __name__ == '__main__':
-    main()

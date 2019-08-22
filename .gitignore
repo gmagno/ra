@@ -1,8 +1,10 @@
 .venv/
-.vscode/
+.vscode/*
+!.vscode/launch.json
 *.pyc
-build
-eigen
-pybind11
+build/
 *.so
-
+.conda/
+ra.log
+*.pkl
+sim.json
