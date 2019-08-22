@@ -30,6 +30,7 @@ class RecResults(object):
     '''
     def __init__(self, source, jrec, time_bins, freq):
         start_time = time.time()
+        # Time concatenation
         # time_cat = np.array(ra_cpp._time_cat(
         #     source.rays, source.reccrossdir[jrec].time_dir, jrec), dtype = np.float32)
         time_cat = np.array(ra_cpp._time_cat(
@@ -46,6 +47,11 @@ class RecResults(object):
         intensity_cat = np.array(ra_cpp._intensity_cat(
             source.rays, source.reccrossdir[jrec].i_dir,
             jrec, time_cat.size), dtype = np.float32)
+        
+        # Cossine concatenation
+        cos_cat = np.array(ra_cpp._cos_cat(
+            source.rays, source.reccrossdir[jrec].cos_dir, jrec,
+            source.reccrossdir[jrec].size_of_time), dtype = np.float32)
         # print(" {} seconds to concatenate intensity (c++).".format(time.time() - start_time))
         # sort intensity
         # intensity_sorted = intensity_cat[:, id_sorted_time]
@@ -66,6 +72,7 @@ class RecResults(object):
         self.D50 = d50(time_bins, self.reflectogram, id_dir[0], freq)
         self.Ts = ts(time_bins, self.reflectogram, id_dir[0], freq)
         self.G = g_db(self.reflectogram, source.power_lin, freq)
+        self.LF, self.LFC = lf_lfc(time_bins, self.reflectogram, id_dir[0], freq, time_cat, intensity_cat, cos_cat)
 
 def reflectogram_hist(time_bins, time_sorted, intensity_sorted):
     '''
@@ -249,6 +256,42 @@ def g_db(reflectogram, Wlin, freq):
         jf=+1
     return G
 
+def lf_lfc(time, reflectogram, id_dir, freq, time_cat, intensity_cat, cos_cat):
+    '''
+    This function is used to calculate LF and LFC
+    '''
+    # bi-directional intensityes for LF
+    intensity_cos2 = np.multiply(intensity_cat, cos_cat**2)
+    # print(cos_cat**2)
+    reflecto_cos2 = reflectogram_hist(time, time_cat, intensity_cos2)
+    # bi-directional intensityes for LFC
+    intensity_cosabs = np.multiply(intensity_cat, np.abs(cos_cat))
+    reflecto_cosabs = reflectogram_hist(time, time_cat, intensity_cosabs)
+
+    ## The next two lines get direct sound without any information from source and receiver
+    LF = np.zeros(freq.size, dtype = np.float32)
+    LFC = np.zeros(freq.size, dtype = np.float32)
+    jf = 0
+    # print("time dir: {}".format(time[id_dir]))
+    id_0to80 = np.where(time <= 0.080 + time[id_dir])
+    # id_0to800 = np.where(time[id_0to80[0]] >= time[id_0to80[0]])
+    # print("time 0-80: {}".format(time[id_0to800[0]]))
+    id_5to80 = np.where(time[id_0to80[0]] >= 0.005 + time[id_dir])
+    # print("time 5-80: {}".format(time[id_5to80[0]]))
+    for jref, ref in enumerate(reflectogram):
+        np.seterr(divide = 'ignore')
+        try:
+            refcos2 = reflecto_cos2[jf,:]
+            LF[jref] = 100 * np.sum(refcos2[id_5to80[0]]) / np.sum(ref[id_0to80[0]])
+            refcosabs = reflecto_cosabs[jf,:]
+            LFC[jref] = 100 * np.sum(refcosabs[id_5to80[0]]) / np.sum(ref[id_0to80[0]])
+        except:
+            print("I could not calculate LF and LFC for the {}.".format(freq[jf])+
+                "[Hz] frequency band. Try to use more rays or"+
+                "extend the length of h(t) of the simmulation.")
+        jf=+1
+    return LF, LFC
+
 class SRStats(object):
     '''
     This class is used to perform statistical analysis on the acoustical parameters
@@ -273,6 +316,8 @@ class SRStats(object):
         self.d50 = np.zeros((self.Ns*self.Nrec, self.Nf), dtype = np.float32)
         self.ts = np.zeros((self.Ns*self.Nrec, self.Nf), dtype = np.float32)
         self.g_db = np.zeros((self.Ns*self.Nrec, self.Nf), dtype = np.float32)
+        self.lf = np.zeros((self.Ns*self.Nrec, self.Nf), dtype = np.float32)
+        self.lfc = np.zeros((self.Ns*self.Nrec, self.Nf), dtype = np.float32)
         # concatenate each parameter to a numpy array to calculate mean and std
         jc = 0 # counter
         for s in sou:
@@ -284,6 +329,8 @@ class SRStats(object):
                 self.d50[jc, :] = r.D50
                 self.ts[jc, :] = r.Ts
                 self.g_db[jc, :] = r.G
+                self.lf[jc, :] = r.LF
+                self.lfc[jc, :] = r.LFC
                 jc += 1
         self.edt_mean_f = np.mean(self.edt, axis = 0)
         self.edt_std_f = np.std(self.edt, axis = 0)
@@ -299,6 +346,10 @@ class SRStats(object):
         self.ts_std_f = np.std(self.ts, axis = 0)
         self.g_mean_f = np.mean(self.g_db, axis = 0)
         self.g_std_f = np.std(self.g_db, axis = 0)
+        self.lf_mean_f = np.mean(self.lf, axis = 0)
+        self.lf_std_f = np.std(self.lf, axis = 0)
+        self.lfc_mean_f = np.mean(self.lfc, axis = 0)
+        self.lfc_std_f = np.std(self.lfc, axis = 0)
         # print(self.g_mean_f)
         # print(self.g_std_f)
 
@@ -511,6 +562,68 @@ class SRStats(object):
         plt.ylabel('G [dB]')
         # plt.ylim((0, ht_max))
         # plt.show()
+
+    def plot_lf_f(self, color = 'black', plotsr = False):
+        fig = plt.figure()
+        fig.canvas.set_window_title("LF vs. freq")
+        if plotsr:
+            js = 1
+            jrec = 1
+            for row in self.lf:
+                legend = 'S: ' + str(js) + ', R: ' + str(jrec)
+                plt.plot(self.freq, row, label = legend)
+                if jrec < self.Nrec:
+                    jrec += 1
+                else:
+                    jrec = 1
+                    js+=1
+
+        plt.plot(self.freq, self.lf_mean_f, color,
+            label = 'mean vs freq', linewidth = 3)
+        plt.fill_between(self.freq, self.lf_mean_f - self.ci * self.lf_std_f,
+            self.lf_mean_f + self.ci * self.lf_std_f,
+            alpha=0.3, facecolor=color, label = 'confidence interval')
+        plt.grid(linestyle = '--')
+        plt.legend(loc = 'best')
+        plt.xscale('log')
+        plt.title('LF vs. freq.')
+        plt.xticks(self.freq, self.freq_ticks)
+        plt.xlabel('Frequency [Hz]')
+        plt.ylabel('LF [dB]')
+        plt.ylim((0, 100))
+        # plt.show()
+
+    def plot_lfc_f(self, color = 'black', plotsr = False):
+        fig = plt.figure()
+        fig.canvas.set_window_title("LFC vs. freq")
+        if plotsr:
+            js = 1
+            jrec = 1
+            for row in self.lfc:
+                legend = 'S: ' + str(js) + ', R: ' + str(jrec)
+                plt.plot(self.freq, row, label = legend)
+                if jrec < self.Nrec:
+                    jrec += 1
+                else:
+                    jrec = 1
+                    js+=1
+
+        plt.plot(self.freq, self.lfc_mean_f, color,
+            label = 'mean vs freq', linewidth = 3)
+        plt.fill_between(self.freq, self.lfc_mean_f - self.ci * self.lfc_std_f,
+            self.lfc_mean_f + self.ci * self.lfc_std_f,
+            alpha=0.3, facecolor=color, label = 'confidence interval')
+        plt.grid(linestyle = '--')
+        plt.legend(loc = 'best')
+        plt.xscale('log')
+        plt.title('LFC vs. freq.')
+        plt.xticks(self.freq, self.freq_ticks)
+        plt.xlabel('Frequency [Hz]')
+        plt.ylabel('LFC [dB]')
+        plt.ylim((0, 100))
+        # plt.show()
+
+    
 ###########################################################
 def concatenate_tarray(jrec, srays, time_dir):
     time_cat = []
@@ -673,7 +786,7 @@ class SouResults(object):
         plt.xticks(self.freq, ['63', '125', '250', '500', '1000', '2000', '4000', '8000'])
         plt.xlabel('Frequency [Hz]')
         plt.ylabel('D50 [%]')
-        # plt.ylim((0, ht_max))
+        plt.ylim((0, 100))
         plt.show()
 
     def plot_ts(self):
@@ -710,6 +823,42 @@ class SouResults(object):
         plt.xlabel('Frequency [Hz]')
         plt.ylabel('G [dB]')
         # plt.ylim((0, ht_max))
+        plt.show()
+
+    def plot_lf(self):
+        '''
+        Plots the LF for all receivers for a given sound source.
+        outputs: void
+        '''
+        for jrec, r in enumerate(self.rec):
+            legend = 'receiver ' + str(jrec+1)
+            plt.plot(self.freq, r.LF, label = legend)
+        plt.grid(linestyle = '--')
+        plt.xscale('log')
+        plt.legend(loc = 'lower right')
+        plt.title('LF')
+        plt.xticks(self.freq, ['63', '125', '250', '500', '1000', '2000', '4000', '8000'])
+        plt.xlabel('Frequency [Hz]')
+        plt.ylabel('LF [%]')
+        plt.ylim((0, 100))
+        plt.show()
+
+    def plot_lfc(self):
+        '''
+        Plots the LFC for all receivers for a given sound source.
+        outputs: void
+        '''
+        for jrec, r in enumerate(self.rec):
+            legend = 'receiver ' + str(jrec+1)
+            plt.plot(self.freq, r.LFC, label = legend)
+        plt.grid(linestyle = '--')
+        plt.xscale('log')
+        plt.legend(loc = 'lower right')
+        plt.title('LFC')
+        plt.xticks(self.freq, ['63', '125', '250', '500', '1000', '2000', '4000', '8000'])
+        plt.xlabel('Frequency [Hz]')
+        plt.ylabel('LFC [%]')
+        plt.ylim((0, 100))
         plt.show()
 
 # class SRPairs():

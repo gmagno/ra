@@ -29,6 +29,11 @@ void ray_sphere_all(int sc, int rc,
                 sources[sc].rays[rc].recs[rec_c].ref_order.push_back(ref_order);
                 sources[sc].rays[rc].recs[rec_c].cos_cross.push_back(
                     v_dir.dot(r.orientation_fig8));
+                
+                // Eigen::RowVectorXf test =
+                //     Eigen::RowVectorXf::Map(sources[sc].rays[rc].recs[rec_c].cos_cross.data(),
+                //     sources[sc].rays[rc].recs[rec_c].cos_cross.size());
+                // std::cout << "cos test: " << test << std::endl;
             }
             // std::cout << "receiver: " << rec_c << ", time cross is: " << time_cross << std::endl;
             rec_c++;

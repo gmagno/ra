@@ -21,6 +21,7 @@
 #include "bind_fun_intensity_main.h"
 #include "bind_fun_t_cat.h"
 #include "bind_fun_i_cat.h"
+#include "bind_fun_cos_cat.h"
 
 
 namespace py = pybind11;
