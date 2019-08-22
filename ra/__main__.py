@@ -34,4 +34,6 @@ def main():
     signal.signal(signal.SIGINT, sigint_handler)
     run_simu.run(args['cfg_dir'])
 
-main()
+
+if __name__ == '__main__':
+    main()
