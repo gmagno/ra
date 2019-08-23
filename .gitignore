@@ -6,5 +6,6 @@ build/
 *.so
 .conda/
 ra.log
-*.pkl
+**/*.pkl
 sim.json
+wheelhouse/
