@@ -32,15 +32,15 @@ def run(cfg_dir):
     # path = 'data/legacy/ptb_studio_ph2/'    # room folder
     # pkl_fname_res = 'ptb_studio_ph2_open'        # simulation results name
     # pkl_fname_res = 'ptb_studio_ph2_close'        # simulation results name
-    path = 'data/legacy/ptb_studio_ph3/'          # room folder
-    pkl_fname_res = 'ptb_studio_ph3_open'              # simulation results name
+    # path = 'data/legacy/ptb_studio_ph3/'          # room folder
+    # pkl_fname_res = 'ptb_studio_ph3_open'              # simulation results name
     # pkl_fname_res = 'ptb_studio_ph3_close'              # simulation results name
-    tml_name_cfg = 'simulation_ptb_ph3.toml'        # toml configuration file
-    # tml_name_cfg = 'simulation.toml'        # toml configuration file
-    # tml_name_mat = 'surface_mat_id.toml'    # toml material file
+    # tml_name_cfg = 'simulation_ptb_ph3.toml'        # toml configuration file
+    tml_name_cfg = 'simulation.toml'        # toml configuration file
+    tml_name_mat = 'surface_mat_id.toml'    # toml material file
     # tml_name_mat = 'surface_mat_open_id.toml'    # toml material file
     # tml_name_mat = 'surface_mat_close_id.toml'    # toml material file
-    tml_name_mat = 'surface_mat_id_ptb_ph3_o.toml'    # toml material file
+    # tml_name_mat = 'surface_mat_id_ptb_ph3_o.toml'    # toml material file
     #tml_name_mat = 'surface_mat_id_ptb_ph3_c.toml'    # toml material file
 
     ##### Setup algorithm controls ########
@@ -121,14 +121,14 @@ def run(cfg_dir):
     # sou[0].plot_single_reflecrogram(band = 4, jrec = 1)
     # sou[0].plot_decays()
     # sou[0].plot_edt()
-    sou[0].plot_t20()
+    # sou[0].plot_t20()
     # sou[0].plot_t30()
-    sou[0].plot_c80()
+    # sou[0].plot_c80()
     # sou[0].plot_d50()
     # sou[0].plot_ts()
     # sou[0].plot_g()
-    sou[0].plot_lf()
-    sou[0].plot_lfc()
+    # sou[0].plot_lf()
+    # sou[0].plot_lfc()
     # print(sources[0].rays[0].refpts_hist)
 
     # geo.plot_raypath(sources[0].coord, sources[0].rays[0].refpts_hist,
