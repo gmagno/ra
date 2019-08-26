@@ -25,23 +25,44 @@ import ra_cpp
 
 def run(cfg_dir):
     path = cfg_dir
-    # path = 'data/legacy/odeon_ex/'          # room folder
+    ################ ODEON EXAMPLE #####################################
     pkl_fname_res = 'odeon_ex'              # simulation results name
-    # path = 'data/legacy/ptb_studio_ph1/'    # room folder
+    tml_name_cfg = 'simulation.toml'        # toml configuration file
+    tml_name_mat = 'surface_mat_id.toml'    # toml material file
+    ############# PTB phase 1 #########################################
     # pkl_fname_res = 'ptb_studio_ph1'        # simulation results name
-    # path = 'data/legacy/ptb_studio_ph2/'    # room folder
+    # tml_name_cfg = 'simulation.toml'        # toml configuration file
+    # tml_name_mat = 'surface_mat_id.toml'    # toml material file
+    ############### PTB phase 2 #######################################
     # pkl_fname_res = 'ptb_studio_ph2_open'        # simulation results name
     # pkl_fname_res = 'ptb_studio_ph2_close'        # simulation results name
-    # path = 'data/legacy/ptb_studio_ph3/'          # room folder
+    # tml_name_cfg = 'simulation.toml'        # toml configuration file
+    # tml_name_cfg = 'simulation_odeon.toml'        # toml configuration file
+    # tml_name_mat = 'surface_mat_open_id.toml'    # toml material file
+    # tml_name_mat = 'surface_mat_close_id.toml'    # toml material file
+    # tml_name_mat = 'surface_mat_open_id_scte.toml'    # toml material file
+    # tml_name_mat = 'surface_mat_open_id_odeon_scte.toml'    # toml material file
+    ############### PTB phase 3 #######################################
     # pkl_fname_res = 'ptb_studio_ph3_open'              # simulation results name
     # pkl_fname_res = 'ptb_studio_ph3_close'              # simulation results name
     # tml_name_cfg = 'simulation_ptb_ph3.toml'        # toml configuration file
-    tml_name_cfg = 'simulation.toml'        # toml configuration file
-    tml_name_mat = 'surface_mat_id.toml'    # toml material file
+    # tml_name_cfg = 'simulation_ptb_ph3_odeon.toml'        # toml configuration file
+    # pkl_fname_res = 'ptb_studio_ph3_open'              # simulation results name
+    # pkl_fname_res = 'ptb_studio_ph3_close'              # simulation results name
+    # tml_name_cfg = 'simulation_ptb_ph3.toml'        # toml configuration file
     # tml_name_mat = 'surface_mat_open_id.toml'    # toml material file
     # tml_name_mat = 'surface_mat_close_id.toml'    # toml material file
     # tml_name_mat = 'surface_mat_id_ptb_ph3_o.toml'    # toml material file
     #tml_name_mat = 'surface_mat_id_ptb_ph3_c.toml'    # toml material file
+    # tml_name_mat = 'surface_mat_id_ptb_ph3_o_odeon.toml'    # toml material file
+    # tml_name_mat = 'surface_mat_id_ptb_ph3_o_odeon_scte.toml'    # toml material file
+
+    #################### Elmia ##########################################
+    # pkl_fname_res = 'elmia_odeon'        # simulation results name
+    # tml_name_cfg = 'simulation_elmia_odeon.toml'        # toml configuration file
+    # tml_name_cfg = 'simulation_elmia.toml'        # toml configuration file
+    # tml_name_mat = 'surface_mat_id_elmia_odeon.toml'    # toml material file
+    # tml_name_mat = 'surface_mat_id_elmia.toml'    # toml material file
 
     ##### Setup algorithm controls ########
     # FIXME: use pathlib instead of string concatenation
@@ -74,10 +95,10 @@ def run(cfg_dir):
     ##### ray's initial direction ########
     rays_i_v = RayInitialDirections()
     # rays_i_v.single_ray([0.0, -1.0, 0.0])#([0.7236, -0.5257, 0.4472])
-    rays_i_v.isotropic_rays(controls.Nrays) # 15
+    # rays_i_v.isotropic_rays(controls.Nrays) # 15
     # mat = spio.loadmat('ra/vin_matlab.mat')
     # rays_i_v.vinit = mat['vin']
-    # rays_i_v.random_rays(1000)
+    rays_i_v.random_rays(controls.Nrays)
     # rays_i_v.single_ray(rays_i_v.vinit[41])
     print("The number of rays is {}.".format(rays_i_v.Nrays))
 

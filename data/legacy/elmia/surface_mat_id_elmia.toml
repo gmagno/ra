@@ -1,0 +1,1882 @@
+title = 'Material configuration'
+
+##################### material list #############################
+[[material]]  # element 1 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 2 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 3 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 4 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 5 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 6 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 7 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 8 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 9 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 10 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 11 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 12 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 13 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 14 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 15 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 16 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 17 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 18 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 19 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 20 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 21 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 22 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 23 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 24 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 25 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 26 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 27 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 28 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 29 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 30 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 31 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 32 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 33 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 34 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 35 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 36 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 37 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 38 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 39 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 40 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 41 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 42 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 43 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 44 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 45 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 46 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 47 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 48 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 49 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 50 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 51 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 52 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 53 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 54 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 55 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 56 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 57 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 58 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 59 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 60 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 61 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 62 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 63 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 64 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 65 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 66 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 67 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 68 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 69 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 70 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 71 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 72 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 73 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 74 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 75 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 76 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 77 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 78 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 79 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 80 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 81 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 82 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 83 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 84 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 85 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 86 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 87 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 88 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 89 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 90 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 91 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 92 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 93 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 94 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 95 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 96 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 97 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 98 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 99 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 100 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 101 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 102 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 103 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 104 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 105 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 106 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 107 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 108 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 109 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 110 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 111 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 112 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 113 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 114 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 115 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 116 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 117 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 118 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 119 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 120 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 121 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 122 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 123 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 124 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 125 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 126 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 127 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 128 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 129 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 130 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 131 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 132 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 133 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 134 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 135 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 136 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 137 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 138 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 139 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 140 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 141 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 142 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 143 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 144 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 145 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 146 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 147 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 148 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 149 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 150 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 151 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 152 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 153 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 154 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 155 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 156 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 157 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 158 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 159 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 160 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 161 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 162 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 163 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 164 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 165 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 166 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 167 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 168 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 169 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 170 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 171 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 172 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 173 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 174 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 175 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 176 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 177 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 178 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 179 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 180 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 181 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 182 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 183 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 184 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 185 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 186 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 187 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 188 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 189 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 190 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 191 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 192 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 193 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 194 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 195 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 196 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 197 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 198 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 199 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 200 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 201 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 202 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 203 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 204 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 205 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 206 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 207 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 208 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 209 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 210 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 211 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 212 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 213 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 214 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 215 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 216 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 217 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 218 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 219 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 220 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 221 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 222 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 223 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 224 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 225 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 226 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 227 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 228 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 229 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 230 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 231 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 232 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 233 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 234 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 235 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 236 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 237 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 238 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 239 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 240 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 241 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 242 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 243 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 244 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 245 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 246 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 247 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 248 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 249 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 250 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 251 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 252 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 253 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 254 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 255 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 256 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 257 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 258 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 259 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 260 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 261 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 262 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 263 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 264 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 265 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 266 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 267 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 268 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 269 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 270 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 271 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 272 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 273 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 274 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 275 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 276 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 277 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 278 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 279 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 280 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 281 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 282 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 283 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 284 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 285 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 286 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 287 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 288 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 289 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 290 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 291 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 292 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 293 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 294 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 295 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 296 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 297 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 298 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 299 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 300 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 301 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 302 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 303 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 304 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 305 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 306 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 307 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 308 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 309 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 310 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 311 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 312 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 313 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 314 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 315 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 316 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 317 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 318 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 319 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 320 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 321 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 322 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 323 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 324 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 325 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 326 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 327 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 328 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 329 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 330 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 331 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 332 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 333 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 334 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 335 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 336 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 337 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 338 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 339 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 340 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 341 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 342 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 343 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 344 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 345 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 346 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 347 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 348 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 349 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 350 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 351 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 352 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 353 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 354 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 355 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 356 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 357 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 358 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 359 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 360 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 361 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 362 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 363 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 364 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 365 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 366 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 367 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 368 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 369 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 370 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 371 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 372 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 373 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 374 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 375 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 376 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 377 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 378 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 379 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 380 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 381 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 382 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 383 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 384 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 385 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 386 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 387 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 388 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 389 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 390 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 391 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 392 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 393 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 394 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 395 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 396 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 397 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 398 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 399 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 400 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 401 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 402 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 403 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 404 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 405 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 406 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 407 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 408 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 409 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 410 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 411 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 412 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 413 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 414 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 415 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 416 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 417 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 418 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 419 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 420 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 421 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 422 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 423 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 424 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 425 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 426 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 427 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 428 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 429 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 430 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 431 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 432 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 433 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 434 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 435 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 436 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 437 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 438 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 439 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 440 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 441 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 442 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 443 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 444 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 445 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 446 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 447 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 448 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 449 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 450 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 451 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 452 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 453 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 454 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 455 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 456 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 457 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 458 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 459 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 460 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 461 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 462 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 463 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 464 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 465 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 466 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 467 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 468 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 469 of an array of materials
+id = 30000
+s = 0.03
+
+[[material]]  # element 470 of an array of materials
+id = 30000
+s = 0.03
