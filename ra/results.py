@@ -229,7 +229,7 @@ def ts(time, reflectogram, id_dir, freq):
     for jref, ref in enumerate(reflectogram):
         np.seterr(divide = 'ignore')
         try:
-            Ts[jref] = np.sum(np.multiply(time, ref))/np.sum(ref) - time[id_dir]
+            Ts[jref] = 1000 * (np.sum(np.multiply(time[id_dir:], ref[id_dir:]))/np.sum(ref[id_dir:]) - time[id_dir])
         except:
             print("I could not calculate Ts for the {}.".format(freq[jf])+
                 "[Hz] frequency band. Try to use more rays or"+
@@ -440,7 +440,8 @@ class SRStats(object):
             plt.xticks(self.freq, self.freq_ticks)
             plt.xlabel('Frequency [Hz]')
             plt.ylabel('T30 [s]')
-            plt.ylim((0, ht_max))
+            # plt.ylim((0, ht_max))
+            plt.ylim((0.4, 1.4))
             # plt.show()
 
     def plot_c80_f(self, color = 'black', plotsr = False):

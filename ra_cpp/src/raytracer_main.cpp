@@ -40,7 +40,7 @@ std::vector<Sourcecpp> raytracer_main(
             Eigen::RowVector3f v_dir = v_init.row(rc);
             // while loop
             bool pop_condition = false;
-            while(ref_order < N_max_ref){ //  (cum_dist / c0) <= ht_length &&
+            while(ref_order < N_max_ref){ //  (cum_dist / c0) <= ht_length && 
                 // find the intercepted plane
                 v.plane_finder(planes, r_origin, v_dir, plane_detected, dist);
                 // fill the plane in appropriate place

@@ -1,0 +1,274 @@
+title = 'Material configuration'
+
+##################### material list #############################
+[[material]]  # element 0 of an array of materials
+id = 1
+s = 0.03
+
+[[material]]  # element 1 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 2 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 3 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 4 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 5 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 6 of an array of materials
+id = 7
+s = 0.03
+
+[[material]]  # element 7 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 8 of an array of materials
+id = 8
+s = 0.95
+
+[[material]]  # element 9 of an array of materials
+id = 5
+s = 0.03
+
+[[material]]  # element 10 of an array of materials
+id = 5
+s = 0.03
+
+[[material]]  # element 11 of an array of materials
+id = 5
+s = 0.03
+
+[[material]]  # element 12 of an array of materials
+id = 5
+s = 0.03
+
+[[material]]  # element 13 of an array of materials
+id = 5
+s = 0.03
+
+[[material]]  # element 14 of an array of materials
+id = 5
+s = 0.03
+
+[[material]]  # element 15 of an array of materials
+id = 5
+s = 0.03
+
+[[material]]  # element 16 of an array of materials
+id = 5
+s = 0.03
+
+[[material]]  # element 17 of an array of materials
+id = 7
+s = 0.03
+
+[[material]]  # element 18 of an array of materials
+id = 7
+s = 0.03
+
+[[material]]  # element 19 of an array of materials
+id = 7
+s = 0.03
+
+[[material]]  # element 20 of an array of materials
+id = 7
+s = 0.03
+
+[[material]]  # element 21 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 22 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 23 of an array of materials
+id = 9
+s = 0.95
+
+[[material]]  # element 24 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 25 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 26 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 27 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 28 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 29 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 30 of an array of materials
+id = 1
+s = 0.03
+
+[[material]]  # element 31 of an array of materials
+id = 7
+s = 0.03
+
+[[material]]  # element 32 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 33 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 34 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 35 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 36 of an array of materials
+id = 7
+s = 0.03
+
+[[material]]  # element 37 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 38 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 39 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 40 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 41 of an array of materials
+id = 7
+s = 0.03
+
+[[material]]  # element 42 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 43 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 44 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 45 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 46 of an array of materials
+id = 7
+s = 0.03
+
+[[material]]  # element 47 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 48 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 49 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 50 of an array of materials
+id = 6
+s = 0.03
+
+[[material]]  # element 51 of an array of materials
+id = 5
+s = 0.03
+
+[[material]]  # element 52 of an array of materials
+id = 5
+s = 0.03
+
+[[material]]  # element 53 of an array of materials
+id = 5
+s = 0.03
+
+[[material]]  # element 54 of an array of materials
+id = 5
+s = 0.03
+
+[[material]]  # element 55 of an array of materials
+id = 2
+s = 0.03
+
+[[material]]  # element 56 of an array of materials
+id = 2
+s = 0.03
+
+[[material]]  # element 57 of an array of materials
+id = 2
+s = 0.03
+
+[[material]]  # element 58 of an array of materials
+id = 2
+s = 0.03
+
+[[material]]  # element 59 of an array of materials
+id = 2
+s = 0.03
+
+[[material]]  # element 60 of an array of materials
+id = 2
+s = 0.03
+
+[[material]]  # element 61 of an array of materials
+id = 2
+s = 0.03
+
+[[material]]  # element 62 of an array of materials
+id = 4
+s = 0.03
+
+[[material]]  # element 63 of an array of materials
+id = 4
+s = 0.03
+
+[[material]]  # element 64 of an array of materials
+id = 4
+s = 0.03
+
+[[material]]  # element 65 of an array of materials
+id = 4
+s = 0.03
+
+[[material]]  # element 66 of an array of materials
+id = 4
+s = 0.03
+
+[[material]]  # element 67 of an array of materials
+id = 4
+s = 0.03

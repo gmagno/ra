@@ -19,23 +19,44 @@ from ra.ray_initializer import ray_initializer
 from ra.results import process_results, SRStats
 
 def main():
+    ################ ODEON EXAMPLE #####################################
     # path = 'data/legacy/odeon_ex/'          # room folder
     # pkl_fname_res = 'odeon_ex'              # simulation results name
+    # tml_name_cfg = 'simulation.toml'        # toml configuration file
+    # tml_name_mat = 'surface_mat_id.toml'    # toml material file
+    ############# PTB phase 1 #########################################
     # path = 'data/legacy/ptb_studio_ph1/'    # room folder
     # pkl_fname_res = 'ptb_studio_ph1'        # simulation results name
+    # tml_name_cfg = 'simulation.toml'        # toml configuration file
+    # tml_name_mat = 'surface_mat_id.toml'    # toml material file
+    ############### PTB phase 2 #######################################
     # path = 'data/legacy/ptb_studio_ph2/'    # room folder
     # pkl_fname_res = 'ptb_studio_ph2_open'        # simulation results name
     # pkl_fname_res = 'ptb_studio_ph2_close'        # simulation results name
-    path = 'data/legacy/ptb_studio_ph3/'          # room folder
-    pkl_fname_res = 'ptb_studio_ph3_open'              # simulation results name
-    # pkl_fname_res = 'ptb_studio_ph3_close'              # simulation results name
-    tml_name_cfg = 'simulation_ptb_ph3.toml'        # toml configuration file
     # tml_name_cfg = 'simulation.toml'        # toml configuration file
-    # tml_name_mat = 'surface_mat_id.toml'    # toml material file
+    # tml_name_cfg = 'simulation_odeon.toml'        # toml configuration file
     # tml_name_mat = 'surface_mat_open_id.toml'    # toml material file
     # tml_name_mat = 'surface_mat_close_id.toml'    # toml material file
-    tml_name_mat = 'surface_mat_id_ptb_ph3_o.toml'    # toml material file
+    # tml_name_mat = 'surface_mat_open_id_scte.toml'    # toml material file
+    # tml_name_mat = 'surface_mat_open_id_odeon_scte.toml'    # toml material file
+    ############### PTB phase 3 #######################################
+    # path = 'data/legacy/ptb_studio_ph3/'          # room folder
+    # pkl_fname_res = 'ptb_studio_ph3_open'              # simulation results name
+    # pkl_fname_res = 'ptb_studio_ph3_close'              # simulation results name
+    # tml_name_cfg = 'simulation_ptb_ph3.toml'        # toml configuration file
+    # tml_name_cfg = 'simulation_ptb_ph3_odeon.toml'        # toml configuration file
+    # tml_name_mat = 'surface_mat_id_ptb_ph3_o.toml'    # toml material file
     #tml_name_mat = 'surface_mat_id_ptb_ph3_c.toml'    # toml material file
+    # tml_name_mat = 'surface_mat_id_ptb_ph3_o_odeon.toml'    # toml material file
+    # tml_name_mat = 'surface_mat_id_ptb_ph3_o_odeon_scte.toml'    # toml material file
+
+    #################### Elmia ##########################################
+    path = 'data/legacy/elmia/'          # room folder
+    pkl_fname_res = 'elmia_odeon'        # simulation results name
+    tml_name_cfg = 'simulation_elmia_odeon.toml'        # toml configuration file
+    # tml_name_cfg = 'simulation_elmia.toml'        # toml configuration file
+    tml_name_mat = 'surface_mat_id_elmia_odeon.toml'    # toml material file
+    # tml_name_mat = 'surface_mat_id_elmia.toml'    # toml material file
 
     ##### Setup algorithm controls ########
     controls = AlgControls(path+tml_name_cfg)
@@ -67,10 +88,10 @@ def main():
     ##### ray's initial direction ########
     rays_i_v = RayInitialDirections()
     # rays_i_v.single_ray([0.0, -1.0, 0.0])#([0.7236, -0.5257, 0.4472])
-    rays_i_v.isotropic_rays(controls.Nrays) # 15
+    # rays_i_v.isotropic_rays(controls.Nrays) # 15
     # mat = spio.loadmat('ra/vin_matlab.mat')
     # rays_i_v.vinit = mat['vin']
-    # rays_i_v.random_rays(1000)
+    rays_i_v.random_rays(controls.Nrays)
     # rays_i_v.single_ray(rays_i_v.vinit[41])
     print("The number of rays is {}.".format(rays_i_v.Nrays))
 
@@ -111,17 +132,17 @@ def main():
     stats = SRStats(sou)
     ######## some plotting ##############################
     sou[0].plot_single_reflecrogram(band = 4, jrec = 2)
-    sou[0].plot_single_reflecrogram(band = 4, jrec = 1)
+    # sou[0].plot_single_reflecrogram(band = 4, jrec = 1)
     # sou[0].plot_decays()
     # sou[0].plot_edt()
-    sou[0].plot_t20()
+    # sou[0].plot_t20()
     # sou[0].plot_t30()
-    sou[0].plot_c80()
+    # sou[0].plot_c80()
     # sou[0].plot_d50()
     # sou[0].plot_ts()
     # sou[0].plot_g()
-    sou[0].plot_lf()
-    sou[0].plot_lfc()
+    # sou[0].plot_lf()
+    # sou[0].plot_lfc()
     # print(sources[0].rays[0].refpts_hist)
     # geo.plot_raypath(sources[0].coord, sources[0].rays[1000].refpts_hist,
     #     receivers)
