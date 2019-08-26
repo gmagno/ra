@@ -1,0 +1,40 @@
+{% set name = "ra" %}
+{% set version = "0.1.0" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  path: .
+
+build:
+  number: 0
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv "
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - matplotlib
+    - numpy
+    - scipy
+    - toml
+    # - pycollada  # <-- install separately, channel: schrodinger, e.g: `conda install -c schrodinger pycollada`
+    # - quaternion  # <-- install separately, channel: conda-forge, e.g: `conda install -c conda-forge quaternion`
+
+
+about:
+  home: "TBD"
+  license: "PROPRIETARY,"
+  license_family: "PROPRIETARY,"
+  license_file: ""
+  summary: "ra "
+  doc_url: ""
+  dev_url: ""
+
+extra:
+  recipe-maintainers:
+    - https://github.com/...

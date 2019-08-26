@@ -31,3 +31,14 @@ Geometrical Acoutics based on the Ray Tracing Method
     * determine if any of the receivers were crossed and for how long (and
     length)
 
+
+
+Inside Blender
+--------------
+
+BLENDER_INCLUDE=/opt/blender/blender-2.80-linux-glibc217-x86_64/2.80/python/include/python3.7m
+wget -qO- https://www.python.org/ftp/python/3.7.0/Python-3.7.0.tgz | tar --strip-components=2 -C $BLENDER_INCLUDE -zx Python-3.7.0/Include
+.../blender/python3.7m -m ensurepip
+.../blender/python3.7m -m pip install -U pip
+.../blender/python3.7m -m pip install --no-binary=numpy-quaternion ~/Dev/ra/out/ra-0.1.0-cp37-cp37m-manylinux1_x86_64.whl
+
