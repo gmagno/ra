@@ -1,16 +1,17 @@
 import numpy as np
 from scipy.spatial import ConvexHull
-import toml
 import collada as co
-from ra.controlsair import load_cfg
 from mpl_toolkits.mplot3d import Axes3D
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 import matplotlib.pyplot as plt
 import scipy.io as spio
+
+from ra.log import log
 import ra_cpp
 
+
 class GeometryMat():
-    def __init__(self, config_file, alpha, s):
+    def __init__(self, geo_cfg, alpha, s):
         '''
         Set up the room geometry from the .mat file
         Geometry consists of: Volume, Total ara and an
@@ -29,8 +30,7 @@ class GeometryMat():
         - s - scattering coefficient (double)
         '''
         # toml file and matlab data
-        config = load_cfg(config_file)
-        mat = spio.loadmat(config['geometry']['room'],
+        mat = spio.loadmat(geo_cfg['room'],
             struct_as_record = True)
         # mat = spio.loadmat(config['geometry']['room'], struct_as_record = True)
         vertcoord = np.array(mat['geometry']['vertcoord'][0][0])
@@ -51,8 +51,8 @@ class GeometryMat():
             # try:
             alpha_v = np.float32(alpha[jp])
             ################### cpp plane class #################
-            # print(jp)
-            # print(normal_nig)
+            # log.info(jp)
+            # log.info(normal_nig)
             plane = ra_cpp.Planecpp(name, False, vertices, normal,
                 vert_x, vert_y, normal_nig, area, centroid,
                 alpha_v, s[jp])
@@ -67,7 +67,7 @@ class GeometryMat():
         self.volume = np.array(mat['geometry']['Volume'][0][0][0][0])
         # The pet class was used for self instruction
         # pet = ra_cpp.Pet('pluto', 5)
-        # print(pet.get_name())
+        # log.info(pet.get_name())
 
     def plot_mat_room(self, normals='off'):
         '''
@@ -141,7 +141,7 @@ class GeometryMat():
             ax.quiver(ray_origin[0], ray_origin[1], ray_origin[2],
                 ray_vec[0], ray_vec[1], ray_vec[2],
                 arrow_length_ratio = 0.006 * arrow_length)
-            
+
             ax.scatter(raypath[jray,0], raypath[jray,1],
                 raypath[jray,2], color='red', marker = "+")
         # set axis labels
@@ -152,7 +152,7 @@ class GeometryMat():
 
 
 class Geometry():
-    def __init__(self, config_file, alpha, s):
+    def __init__(self, geo_cfg, alpha, s):
         '''
         Set up the room geometry from the .dae file
         Geometry consists of: Volume, Total ara and an
@@ -171,8 +171,7 @@ class Geometry():
         - s - scattering coefficient (double)
         '''
         # toml file
-        config = load_cfg(config_file)          # config. file
-        daepath=config['geometry']['room']      # path to .dae
+        daepath=geo_cfg['room']      # path to .dae
         # Load an array of plane objects
         self.planes = []    # A list of planes (object with attributes)
         mesh = co.Collada(daepath)
@@ -180,7 +179,7 @@ class Geometry():
             for triset in obj.primitives():        #loop every primitives
                 # First if excludes the non-triangles objects
                 if type(triset) != co.triangleset.BoundTriangleSet:
-                    print('Warning: non-supported primitive ignored!')
+                    log.info('Warning: non-supported primitive ignored!')
                     continue
                 # Loop trhough all triangles
                 for jp, tri in enumerate(triset):
@@ -286,9 +285,9 @@ def vert_2d(normal, vertcoord):
     normal_abs = np.absolute(normal)
     normal_id_equal = np.where(normal_abs == normal_abs.max())
     normal_id_less = np.where(normal_abs < normal_abs.max())
-    # print(normal_id_less)
-    # print("components with max abs normal")
-    # print(normal_id[0])
+    # log.info(normal_id_less)
+    # log.info("components with max abs normal")
+    # log.info(normal_id[0])
     # Find the index of the normal which are not ignored
     normal_nig = np.where(normal_abs != normal_abs.max())
     
@@ -308,13 +307,13 @@ def vert_2d(normal, vertcoord):
         v = np.take(row, normal_nig)
         # if len(normal_id_equal[0]) == 1: # for 3 different normal components
         #     v = np.delete(row, normal_id_equal)
-        #     # print(v)
+        #     # log.info(v)
         # else: # normal has equal components
         #     normal_id2 = np.delete(normal_id_equal, 0)
-        #     # print("non deleted component")
-        #     # print(normal_id2)
+        #     # log.info("non deleted component")
+        #     # log.info(normal_id2)
         #     v = np.delete(row, normal_id2)
-        #     # print(v)
+        #     # log.info(v)
         # append to vert_x and vert_y
         vert_x.append(v[0])
         vert_y.append(v[1])
@@ -389,13 +388,13 @@ def volume(planes):
 #     for row in vertcoord:
 #         if len(normal_id_equal[0]) == 1: # for 3 different normal components
 #             v = np.delete(row, normal_id_equal)
-#             # print(v)
+#             # log.info(v)
 #         else: # normal has equal components
 #             normal_id2 = np.delete(normal_id_equal, 0)
-#             # print("non deleted component")
-#             # print(normal_id2)
+#             # log.info("non deleted component")
+#             # log.info(normal_id2)
 #             v = np.delete(row, normal_id2)
-#             # print(v)
+#             # log.info(v)
 #         # append to vert_x and vert_y
 #         vert_x.append(v[0])
 #         vert_y.append(v[1])

@@ -1,9 +1,9 @@
 import numpy as np
 import toml
-from ra.controlsair import load_cfg
 import ra_cpp
 
-def setup_receivers(config_file):
+
+def setup_receivers(receivers_cfg):
     '''
     Set up the receivers. There are two arrays of receivers.
     1: receivers - contains a receiver object with the properties:
@@ -25,12 +25,11 @@ def setup_receivers(config_file):
     receivers = [] # An array of empty receiver objects
     reccross = [] # An array of empty reccross data objects
     reccrossdir = [] # An array of empty reccrossdir data objects
-    config = load_cfg(config_file) # toml file
     # To process reccross
     # time_cross = np.zeros(1, dtype = np.float32)
     # rad_cross = np.zeros(1, dtype = np.float32)
     # ref_order = np.zeros(1, dtype = np.uint16)
-    for r in config['receivers']:
+    for r in receivers_cfg:
         coord = np.array(r['position'], dtype=np.float32)
         orientation = np.array(r['orientation'], dtype=np.float32)
         ################### cpp receiver class #################

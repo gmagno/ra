@@ -6,7 +6,7 @@ clean:
 		-o -name "*.pkl" \
 		-o -name .pytest_cache \
 		-o -path "./dist" \
-		-o -path "./ra_cpp.egg-info" \
+		-o -path "./ra.egg-info" \
 		! -path ".venv/*" \
 	\) -exec rm -rf {} +
 

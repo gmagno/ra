@@ -5,6 +5,7 @@
 # Usage: ./setup_blender.sh -b <BLENDER_DIR> -r <RA_PACKAGE>
 #
 #   BLENDER_DIR: path to blender's root directory
+#
 #   RA_PACKAGE: either path to RA project directory (setup.py)
 #       or path to RA wheel (ra-*.whl)
 #       or git+ssh path (git+ssh://git@github.com/gmagno/ra.git)

@@ -1,9 +1,8 @@
 import numpy as np
 import toml
-from ra.controlsair import load_cfg
 import ra_cpp
 
-def setup_sources(config_file, rays, reccrossdir):
+def setup_sources(sources_cfg, rays, reccrossdir):
     '''
     Set up the sound sources
     Each sound source object has two main categories of data:
@@ -30,8 +29,7 @@ def setup_sources(config_file, rays, reccrossdir):
     This way there is a dependence source-ray-receiver
     '''
     sources = [] # An array of empty souce objects
-    config = load_cfg(config_file) # toml file
-    for s in config['sources']:
+    for s in sources_cfg:
         coord = np.array(s['position'], dtype=np.float32)
         orientation = np.array(s['orientation'], dtype=np.float32)
         power_dB = np.array(s['power_dB'], dtype=np.float32)
