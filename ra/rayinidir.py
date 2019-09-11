@@ -5,6 +5,8 @@ from ra.tessellation import SphereTessellator
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401 unused import
 import matplotlib.pyplot as plt
 
+from ra.log import log
+
 class RayInitialDirections():
     '''
     This class is used to initialize the ray directions. It returns
@@ -70,7 +72,7 @@ class RayInitialDirections():
         self.vinit /= np.linalg.norm(self.vinit, axis = 1)[:,None]
         self.vinit = np.array(self.vinit, dtype=np.float32)
         self.Nrays = self.vinit.shape[0]
-        # print(self.Nrays)
+        # log.info(self.Nrays)
         return self.vinit, self.Nrays
 
     def conical_rays(self, Nrays, radius, direction=(1, 0, 0), tol = 1e-5):

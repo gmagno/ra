@@ -32,7 +32,8 @@ def parse_args():
 def main():
     args = parse_args()
     signal.signal(signal.SIGINT, sigint_handler)
-    run_simu.run(args['cfg_dir'])
+    cfgs = run_simu.setup(args['cfg_dir'])
+    run_simu.run(cfgs)
 
 
 if __name__ == '__main__':

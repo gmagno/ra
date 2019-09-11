@@ -9,6 +9,7 @@
 #include "ptinpol.h"
 #include "isleft.h"
 
+// TODO: remove Pet class and related python scrits
 /* The class Pet is used solely for instructional purposes*/
 class Pet
 {

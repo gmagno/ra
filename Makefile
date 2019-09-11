@@ -6,7 +6,7 @@ clean:
 		-o -name "*.pkl" \
 		-o -name .pytest_cache \
 		-o -path "./dist" \
-		-o -path "./ra_cpp.egg-info" \
+		-o -path "./ra.egg-info" \
 		! -path ".venv/*" \
 	\) -exec rm -rf {} +
 
@@ -45,8 +45,8 @@ test:
 run:
 	PYTHONPATH=./build/ python -W ignore -m ra --cfg-dir data/legacy/odeon_ex/
 
-.PHONY: docker-build-wheels
-docker-build-wheels:
+.PHONY: docker-run-wheels
+docker-run-wheels:
 	docker run --rm -v `pwd`:/io -w /io -ti quay.io/pypa/manylinux1_x86_64 ./build-wheels.sh
 
 .PHONY: docker-run-bash

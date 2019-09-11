@@ -9,6 +9,7 @@ import sys
 import matplotlib.pyplot as plt
 import numpy as np
 import scipy.io as spio
+import toml
 
 from ra.log import log
 from ra.rayinidir import RayInitialDirections
@@ -23,10 +24,18 @@ from ra.results import process_results, SRStats
 import ra_cpp
 
 
-def run(cfg_dir):
-    path = cfg_dir
+def load_cfg(cfgfile):
+    '''
+    Function to load and read the toml file
+    '''
+    with open(cfgfile, 'r') as f:
+        config = toml.loads(f.read())
+    return config
+
+
+def setup(cfg_dir):
     ################ ODEON EXAMPLE #####################################
-    pkl_fname_res = 'odeon_ex'              # simulation results name
+    # pkl_fname_res = 'odeon_ex'              # simulation results name
     tml_name_cfg = 'simulation.toml'        # toml configuration file
     tml_name_mat = 'surface_mat_id.toml'    # toml material file
     ############# PTB phase 1 #########################################
@@ -51,10 +60,10 @@ def run(cfg_dir):
     # pkl_fname_res = 'ptb_studio_ph3_close'              # simulation results name
     # tml_name_cfg = 'simulation_ptb_ph3.toml'        # toml configuration file
     # tml_name_mat = 'surface_mat_open_id.toml'    # toml material file
-    # tml_name_mat = 'surface_mat_close_id.toml'    # toml material file
-    # tml_name_mat = 'surface_mat_id_ptb_ph3_o.toml'    # toml material file
-    #tml_name_mat = 'surface_mat_id_ptb_ph3_c.toml'    # toml material file
-    # tml_name_mat = 'surface_mat_id_ptb_ph3_o_odeon.toml'    # toml material file
+    # tml_name_mat = 'surface_pathmat_close_id.toml'    # toml material file
+    # tml_name_mat = 'surface_pathmat_id_ptb_ph3_o.toml'    # toml material file
+    #tml_name_mat = 'surface_mpathat_id_ptb_ph3_c.toml'    # toml material file
+    # tml_name_mat = 'surface_pathmat_id_ptb_ph3_o_odeon.toml'    # toml material file
     # tml_name_mat = 'surface_mat_id_ptb_ph3_o_odeon_scte.toml'    # toml material file
 
     #################### Elmia ##########################################
@@ -64,20 +73,27 @@ def run(cfg_dir):
     # tml_name_mat = 'surface_mat_id_elmia_odeon.toml'    # toml material file
     # tml_name_mat = 'surface_mat_id_elmia.toml'    # toml material file
 
+    cfgs = {
+        'sim_cfg': load_cfg(pathlib.Path(cfg_dir) / tml_name_cfg),
+        'mat_cfg': load_cfg(pathlib.Path(cfg_dir) / tml_name_mat)
+    }
+    return cfgs
+
+def run(cfgs):
     ##### Setup algorithm controls ########
     # FIXME: use pathlib instead of string concatenation
-    controls = AlgControls(path+tml_name_cfg)
+    controls = AlgControls(cfgs['sim_cfg']['controls'])
 
     ##### Setup air properties ########
-    air = AirProperties(path+tml_name_cfg)
+    air = AirProperties(cfgs['sim_cfg']['air'])
     air_m = air.air_absorption(controls.freq)
 
     ##### Setup materials #############
-    alpha_list = load_matdata_from_mat(path+tml_name_cfg)
-    alpha, s = get_alpha_s(path+tml_name_cfg, path+tml_name_mat, alpha_list)
+    alpha_list = load_matdata_from_mat(cfgs['sim_cfg']['material'])
+    alpha, s = get_alpha_s(cfgs['sim_cfg']['geometry'], cfgs['mat_cfg']['material'], alpha_list)
 
     ##### Setup Geometry ###########
-    geo = GeometryMat(path+tml_name_cfg, alpha, s)
+    geo = GeometryMat(cfgs['sim_cfg']['geometry'], alpha, s)
     # geo.plot_mat_room(normals = 'on')
     # geo = Geometry('simulation.toml', alpha, s)
     # geo.plot_dae_room(normals = 'on')
@@ -100,10 +116,10 @@ def run(cfg_dir):
     # rays_i_v.vinit = mat['vin']
     rays_i_v.random_rays(controls.Nrays)
     # rays_i_v.single_ray(rays_i_v.vinit[41])
-    print("The number of rays is {}.".format(rays_i_v.Nrays))
+    log.info("The number of rays is {}.".format(rays_i_v.Nrays))
 
     ##### Setup receiver, reccross and reccrossdir ########
-    receivers, reccross, reccrossdir = setup_receivers(path+tml_name_cfg)
+    receivers, reccross, reccrossdir = setup_receivers(cfgs['sim_cfg']['receivers'])
 
     #### Allocate some memory in python for geometrical ray tracing ########################
     # Estimate max reflection order
@@ -113,7 +129,7 @@ def run(cfg_dir):
     rays = ray_initializer(rays_i_v, N_max_ref, controls.transition_order, reccross)
 
     ##### Setup sources - ray history goes inside source object ########
-    sources = setup_sources(path+tml_name_cfg, rays, reccrossdir)
+    sources = setup_sources(cfgs['sim_cfg']['sources'], rays, reccrossdir)
 
     ############# Now - the calculations ####################
     ############### direct sound ############################
@@ -150,20 +166,19 @@ def run(cfg_dir):
     # sou[0].plot_g()
     # sou[0].plot_lf()
     # sou[0].plot_lfc()
-    # print(sources[0].rays[0].refpts_hist)
+    # log.info(sources[0].rays[0].refpts_hist)
 
-    # geo.plot_raypath(sources[0].coord, sources[0].rays[0].refpts_hist,
+    # geo.plot_raypath(sources[0].coord, sources[0].rays[0].refpts_hist,  # <-- sources[0].rays[0].refpts_hist
     #     receivers)
 
-    print(sources[0].reccrossdir[0].cos_dir)
+    # log.info(sources[0].reccrossdir[0].cos_dir)
     ############# Save trial #########################
-    import pickle
-    with open(path+pkl_fname_res+'.pkl', 'wb') as output:
-        pickle.dump(res_stat, output, pickle.HIGHEST_PROTOCOL)
-        pickle.dump(sou, output, pickle.HIGHEST_PROTOCOL)
-        pickle.dump(stats, output, pickle.HIGHEST_PROTOCOL)
-        # pickle.dump(geo, output, pickle.HIGHEST_PROTOCOL)
+    # import pickle
+    # with open(path+pkl_fname_res+'.pkl', 'wb') as output:
+    #     pickle.dump(res_stat, output, pickle.HIGHEST_PROTOCOL)
+    #     pickle.dump(sou, output, pickle.HIGHEST_PROTOCOL)
+    #     pickle.dump(stats, output, pickle.HIGHEST_PROTOCOL)
+    #     # pickle.dump(geo, output, pickle.HIGHEST_PROTOCOL)
 
-
-        # pickle.dump(sources, output, pickle.HIGHEST_PROTOCOL)
+    #     # pickle.dump(sources, output, pickle.HIGHEST_PROTOCOL)
 

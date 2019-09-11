@@ -95,7 +95,6 @@ if __name__ == '__main__':
         depth=1
     )
     vertices, indices = tess.sphere
-    print('nverts: ', len(vertices))
     # vertices *= 0.5
 
     hull = sp_spatial.ConvexHull(vertices)
