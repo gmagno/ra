@@ -1,10 +1,7 @@
 #!/bin/bash
 set -e -x
 
-export PYHOME=/home
-cd ${PYHOME}
-
-/opt/python/cp37-cp37m/bin/pip install twine cmake
+/opt/python/cp37-cp37m/bin/pip install -U pip twine cmake
 ln -s /opt/python/cp37-cp37m/bin/cmake /usr/bin/cmake
 
 # Compile wheels
