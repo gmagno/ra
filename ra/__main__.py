@@ -33,7 +33,14 @@ def main():
     args = parse_args()
     signal.signal(signal.SIGINT, sigint_handler)
     cfgs = run_simu.setup(args['cfg_dir'])
-    run_simu.run(cfgs)
+    # run_simu.run(cfgs)
+
+    sim = run_simu.Simulation()
+    sim.set_configs(cfgs=cfgs)
+    sim.set_receivers(rcvrs=None)
+    sim.set_geometry(geom=None)
+    sim.set_sources(srcs=None)
+    sim.run()
 
 
 if __name__ == '__main__':

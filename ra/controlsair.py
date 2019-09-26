@@ -30,7 +30,7 @@ class AlgControls():
         self.allow_scattering = config['allow_scattering']
         self.transition_order = config['transition_order']
         self.rec_radius_init = config['rec_radius_init']
-        self.alow_growth = config['alow_growth']
+        self.alow_growth = config['allow_growth']
         self.rec_radius_final = config['rec_radius_final']
 
 class AirProperties():

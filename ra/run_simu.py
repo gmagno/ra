@@ -79,6 +79,7 @@ def setup(cfg_dir):
     }
     return cfgs
 
+
 def run(cfgs):
     ##### Setup algorithm controls ########
     # FIXME: use pathlib instead of string concatenation
@@ -182,3 +183,71 @@ def run(cfgs):
 
     #     # pickle.dump(sources, output, pickle.HIGHEST_PROTOCOL)
 
+
+class Simulation():
+    def __init__(self,):
+        self.cfgs = {}
+        self.sources = []
+        self.receivers = []
+        self.geometry = {}
+
+    def set_configs(self, cfgs):
+        self.cfgs = cfgs['sim_cfg']
+        self.mat_cfg = cfgs['mat_cfg']
+        self.controls = AlgControls(self.cfgs['controls'])
+        self.air = AirProperties(self.cfgs['air'])
+        self.air_m = self.air.air_absorption(self.controls.freq)
+
+    def set_sources(self, srcs):
+        self.rays_i_v = RayInitialDirections()
+        self.rays_i_v.random_rays(self.controls.Nrays)
+        log.info("The number of rays is {}.".format(self.rays_i_v.Nrays))
+
+        c0 = self.air.c0
+        htl = self.controls.ht_length
+        area = self.geo.total_area
+        volume = self.geo.volume
+        N_max_ref = math.ceil(1.5 * c0 * htl * area / (4 * volume))
+        rays = ray_initializer(
+            self.rays_i_v, N_max_ref, self.controls.transition_order,
+            self.reccross
+        )
+        self.sources = setup_sources(
+            self.cfgs['sources'], rays, self.reccrossdir
+        )
+
+    def set_receivers(self, rcvrs):
+        self.receivers, self.reccross, self.reccrossdir = setup_receivers(
+            self.cfgs['receivers']
+        )
+
+    def set_geometry(self, geom):
+        cfgs = self.cfgs
+        alpha_list = load_matdata_from_mat(cfgs['material'])
+        alpha, s = get_alpha_s(
+            cfgs['geometry'], self.mat_cfg['material'], alpha_list
+        )
+        self.geo = GeometryMat(cfgs['geometry'], alpha, s)
+
+    def run(self,):
+        res_stat = StatisticalMat(
+            self.geo, self.controls.freq, self.air.c0, self.air_m
+        )
+        res_stat.t60_sabine()
+        res_stat.t60_eyring()
+        srcs, rcvrs = self.sources, self.receivers
+        srcs = ra_cpp._direct_sound(
+            srcs, rcvrs, self.controls.rec_radius_init,
+            self.geo.planes, self.air.c0, self.rays_i_v.vinit
+        )
+        ctls = self.controls
+        srcs = ra_cpp._raytracer_main(
+            ctls.ht_length, ctls.allow_scattering, ctls.transition_order,
+            ctls.rec_radius_init, ctls.alow_growth, ctls.rec_radius_final, srcs,
+            rcvrs, self.geo.planes, self.air.c0, self.rays_i_v.vinit
+        )
+        srcs = ra_cpp._intensity_main(ctls.rec_radius_init,
+            srcs, self.air.c0, self.air.m, res_stat.alphas_mtx)
+        sou = process_results(ctls.Dt, ctls.ht_length,
+            ctls.freq, srcs, rcvrs)
+        stats = SRStats(sou)

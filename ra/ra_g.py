@@ -49,7 +49,7 @@ class Simulation():
     def __init__(self, cfgfile):
         self.config = self.load_cfg(cfgfile)
         self.sources = self.setup_sources(self.config)
-        
+
         self.receivers = self.setup_receivers(self.config)
         self.room = self.setup_room(self.config)
         self.bbox = self.setup_bounding_box(self.config, scale=100)
