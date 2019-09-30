@@ -199,37 +199,78 @@ class Simulation():
         self.air_m = self.air.air_absorption(self.controls.freq)
 
     def set_sources(self, srcs):
-        self.rays_i_v = RayInitialDirections()
-        self.rays_i_v.random_rays(self.controls.Nrays)
-        log.info("The number of rays is {}.".format(self.rays_i_v.Nrays))
+        '''
+        Parameters:
+        ----------
+            srcs: list of Source's
+        '''
+        # self.rays_i_v = RayInitialDirections()
+        # self.rays_i_v.random_rays(self.controls.Nrays)
+        # log.info("The number of rays is {}.".format(self.rays_i_v.Nrays))
 
-        c0 = self.air.c0
-        htl = self.controls.ht_length
-        area = self.geo.total_area
-        volume = self.geo.volume
-        N_max_ref = math.ceil(1.5 * c0 * htl * area / (4 * volume))
-        rays = ray_initializer(
-            self.rays_i_v, N_max_ref, self.controls.transition_order,
-            self.reccross
-        )
-        self.sources = setup_sources(
-            self.cfgs['sources'], rays, self.reccrossdir
-        )
+        # c0 = self.air.c0
+        # htl = self.controls.ht_length
+        # area = self.geo.total_area
+        # volume = self.geo.volume
+        # N_max_ref = math.ceil(1.5 * c0 * htl * area / (4 * volume))
+        # rays = ray_initializer(
+        #     self.rays_i_v, N_max_ref, self.controls.transition_order,
+        #     self.reccross
+        # )
+        # self.sources = setup_sources(
+        #     self.cfgs['sources'], rays, self.reccrossdir
+        # )
 
     def set_receivers(self, rcvrs):
+        '''
+        Parameters:
+        -----------
+            rcvrs: list of Receiver`s
+        '''
+        new_rcvrs = []
+        for r in rcvrs:
+            r.append({
+                'position': r.coord,
+                'orientation': r.orientation
+            })
         self.receivers, self.reccross, self.reccrossdir = setup_receivers(
-            self.cfgs['receivers']
+            new_rcvrs
         )
+
+        # self.receivers, self.reccross, self.reccrossdir = setup_receivers(
+        #     self.cfgs['receivers']
+        # )
 
     def set_geometry(self, geom):
-        cfgs = self.cfgs
-        alpha_list = load_matdata_from_mat(cfgs['material'])
-        alpha, s = get_alpha_s(
-            cfgs['geometry'], self.mat_cfg['material'], alpha_list
-        )
-        self.geo = GeometryMat(cfgs['geometry'], alpha, s)
+        '''
+        Parameters:
+        -----------
+            geom: list of dicts with the following parameters: 'name',
+            'vertices', 'normal', alpha, s.
+        '''
+        # to be populated
+        # ...
+        pass
 
-    def run(self,):
+        # cfgs = self.cfgs
+        # alpha_list = load_matdata_from_mat(cfgs['material'])
+        # alpha, s = get_alpha_s(
+        #     cfgs['geometry'], self.mat_cfg['material'], alpha_list
+        # )
+        # self.geo = GeometryMat(cfgs['geometry'], alpha, s)
+
+    def run(self, state):
+        '''
+        Parameters:
+        ----------
+        Return:
+        -------
+            dict with the following structure:
+            {
+                'rays':,
+                ''
+            }
+        '''
         res_stat = StatisticalMat(
             self.geo, self.controls.freq, self.air.c0, self.air_m
         )
@@ -251,3 +292,14 @@ class Simulation():
         sou = process_results(ctls.Dt, ctls.ht_length,
             ctls.freq, srcs, rcvrs)
         stats = SRStats(sou)
+
+    def stats(self,):
+        pass
+
+    def save(self,):
+        '''
+        Return:
+        ------
+            a dict with the state of the simulation.
+        '''
+        pass
