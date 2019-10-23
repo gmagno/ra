@@ -43,13 +43,14 @@ def setup(cfg_dir):
     # tml_name_cfg = 'simulation.toml'        # toml configuration file
     # tml_name_mat = 'surface_mat_id.toml'    # toml material file
     ############### PTB phase 2 #######################################
+    # path = '/home/eric/dev/ra/data/legacy/ptb_studio_ph2/'
     # pkl_fname_res = 'ptb_studio_ph2_open'        # simulation results name
     # pkl_fname_res = 'ptb_studio_ph2_close'        # simulation results name
     # tml_name_cfg = 'simulation.toml'        # toml configuration file
     # tml_name_cfg = 'simulation_odeon.toml'        # toml configuration file
     # tml_name_mat = 'surface_mat_open_id.toml'    # toml material file
-    # tml_name_mat = 'surface_mat_close_id.toml'    # toml material file
     # tml_name_mat = 'surface_mat_open_id_scte.toml'    # toml material file
+    # tml_name_mat = 'surface_mat_close_id.toml'    # toml material file
     # tml_name_mat = 'surface_mat_open_id_odeon_scte.toml'    # toml material file
     ############### PTB phase 3 #######################################
     # pkl_fname_res = 'ptb_studio_ph3_open'              # simulation results name
@@ -60,8 +61,8 @@ def setup(cfg_dir):
     # pkl_fname_res = 'ptb_studio_ph3_close'              # simulation results name
     # tml_name_cfg = 'simulation_ptb_ph3.toml'        # toml configuration file
     # tml_name_mat = 'surface_mat_open_id.toml'    # toml material file
-    # tml_name_mat = 'surface_pathmat_close_id.toml'    # toml material file
-    # tml_name_mat = 'surface_pathmat_id_ptb_ph3_o.toml'    # toml material file
+    # tml_name_mat = 'surface_mat_id_ptb_ph3_c.toml'    # toml material file
+    # tml_name_mat = 'surface_mat_id_ptb_ph3_o.toml'    # toml material file
     #tml_name_mat = 'surface_mpathat_id_ptb_ph3_c.toml'    # toml material file
     # tml_name_mat = 'surface_pathmat_id_ptb_ph3_o_odeon.toml'    # toml material file
     # tml_name_mat = 'surface_mat_id_ptb_ph3_o_odeon_scte.toml'    # toml material file
@@ -155,6 +156,7 @@ def run(cfgs):
     stats = SRStats(sou)
     ######## some plotting ##############################
     # sou[0].plot_single_reflecrogram(band = 4, jrec = 2)
+    # plt.show()
     # sou[0].plot_single_reflecrogram(band = 4, jrec = 1)
     # sou[0].plot_decays()
     # sou[0].plot_edt()
@@ -174,13 +176,15 @@ def run(cfgs):
     # log.info(sources[0].reccrossdir[0].cos_dir)
     ############# Save trial #########################
     # import pickle
+    # path = '/home/eric/dev/ra/data/legacy/ptb_studio_ph3/'
+    # pkl_fname_res = 'ptb_studio_ph3_open'        # simulation results name
     # with open(path+pkl_fname_res+'.pkl', 'wb') as output:
     #     pickle.dump(res_stat, output, pickle.HIGHEST_PROTOCOL)
     #     pickle.dump(sou, output, pickle.HIGHEST_PROTOCOL)
     #     pickle.dump(stats, output, pickle.HIGHEST_PROTOCOL)
-    #     # pickle.dump(geo, output, pickle.HIGHEST_PROTOCOL)
+        # pickle.dump(geo, output, pickle.HIGHEST_PROTOCOL)
 
-    #     # pickle.dump(sources, output, pickle.HIGHEST_PROTOCOL)
+        # pickle.dump(sources, output, pickle.HIGHEST_PROTOCOL)
 
 
 # class Simulation():

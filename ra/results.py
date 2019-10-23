@@ -680,7 +680,7 @@ class SouResults(object):
         plt.xlabel('Time [s]')
         plt.ylabel('Intensity [dB]')
         plt.ylim((-80, 10))
-        plt.show()
+        # plt.show()
 
     def plot_decays(self, jrec = 0):
         '''

@@ -39,7 +39,7 @@ def main():
     args = parse_args()
     signal.signal(signal.SIGINT, sigint_handler)
     cfgs = run_simu.setup(args['cfg_dir'])
-    # run_simu.run(cfgs)
+    run_simu.run(cfgs)
 
     ##### Write some input data here to test the Simulation class ####
     #### algoritm configuration
@@ -97,25 +97,25 @@ def main():
         'delay': 0.0},
     ]
 
-    sims = simulation_api.Simulation()
-    sims.set_configs(alg_configs)
-    sims.set_air(air_properties)
-    sims.set_geometry(plane_list_blender)
-    sims.set_raydir()
-    print("The number of rays is {}.".format(sims.rays_v.Nrays))
-    sims.set_receivers(recs)
-    sims.set_memory_init()
-    sims.set_sources(srcs)
-    ## Calculations
-    sims.run_statistical_reverberation() # there can be a separate buttom for this calculation and a window do display the results.
-    # sims.statistical_revtime.plot_t60()
-    sims.run_raytracing()
-    print("Finished the ray tracing.")
-    print("I'll calc intensity")
-    sims.run_intensitycalc()
-    # sims.sr_results[0].plot_edt()
-    sims.stats.plot_c80_f(plotsr = True)
-    plt.show()
+    # sims = simulation_api.Simulation()
+    # sims.set_configs(alg_configs)
+    # sims.set_air(air_properties)
+    # sims.set_geometry(plane_list_blender)
+    # sims.set_raydir()
+    # print("The number of rays is {}.".format(sims.rays_v.Nrays))
+    # sims.set_receivers(recs)
+    # sims.set_memory_init()
+    # sims.set_sources(srcs)
+    # ## Calculations
+    # sims.run_statistical_reverberation() # there can be a separate buttom for this calculation and a window do display the results.
+    # # sims.statistical_revtime.plot_t60()
+    # sims.run_raytracing()
+    # print("Finished the ray tracing.")
+    # print("I'll calc intensity")
+    # sims.run_intensitycalc()
+    # # sims.sr_results[0].plot_edt()
+    # sims.stats.plot_c80_f(plotsr = True)
+    # plt.show()
 
 
 if __name__ == '__main__':
