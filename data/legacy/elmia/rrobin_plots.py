@@ -102,7 +102,7 @@ def plot_all_vsfreq(sou, participant, softname, path):
     range_vec = [(0.0, 3.5), (0.0, 3.5), (-10, 6), (0, 100), (0, 250), (-4, 14), (0, 40), (0, 60)]
     for jpar, par in enumerate(par_vec):
         for js in np.arange(2):
-            for jrec in np.arange(3):
+            for jrec in np.arange(6):
                 plot_vs_freq(sou, participant, js, jrec, 'TREM', par, range_vec[jpar])
                 filename = par + '_S' + str(js+1)+ '_R' + str(jrec+1)
                 plt.savefig(path + 'figs/' + filename + '.png')
@@ -198,18 +198,18 @@ def plot_main_error(sou, participant, softname, par):
     plt.grid(linestyle = '--')
 
 
-# plot_all_vsfreq(sou, participant, 'TREM', path)
+plot_all_vsfreq(sou, participant, 'TREM', path)
 # plot_all_srpairs(sou, participant, 'TREM', path)
-plot_main_error(sou, participant, 'TREM', ('T30','EDT', 'G'))
-plt.savefig(path + 'figs/' + 'error_t30_edt_g' + '.png')
-plt.savefig(path + 'figs/' + 'error_t30_edt_g' + '.pdf')
-plot_main_error(sou, participant, 'TREM', ('C80','D50', 'Ts'))
-plt.savefig(path + 'figs/' + 'error_c80_d50_ts' + '.png')
-plt.savefig(path + 'figs/' + 'error_c80_d50_ts' + '.pdf')
-plot_main_error(sou, participant, 'TREM', ('LF', 'LFC'))
-plt.savefig(path + 'figs/' + 'error_lf_lfc' + '.png')
-plt.savefig(path + 'figs/' + 'error_lf_lfc' + '.pdf')
-plt.show()
+# plot_main_error(sou, participant, 'TREM', ('T30','EDT', 'G'))
+# plt.savefig(path + 'figs/' + 'error_t30_edt_g' + '.png')
+# plt.savefig(path + 'figs/' + 'error_t30_edt_g' + '.pdf')
+# plot_main_error(sou, participant, 'TREM', ('C80','D50', 'Ts'))
+# plt.savefig(path + 'figs/' + 'error_c80_d50_ts' + '.png')
+# plt.savefig(path + 'figs/' + 'error_c80_d50_ts' + '.pdf')
+# plot_main_error(sou, participant, 'TREM', ('LF', 'LFC'))
+# plt.savefig(path + 'figs/' + 'error_lf_lfc' + '.png')
+# plt.savefig(path + 'figs/' + 'error_lf_lfc' + '.pdf')
+# plt.show()
 
 # js = 0
 # jrec = 0

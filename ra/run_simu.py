@@ -158,7 +158,7 @@ def run(cfgs):
     # sou[0].plot_single_reflecrogram(band = 4, jrec = 2)
     # plt.show()
     # sou[0].plot_single_reflecrogram(band = 4, jrec = 1)
-    # sou[0].plot_decays()
+    sou[0].plot_decays()
     # sou[0].plot_edt()
     # sou[0].plot_t20()
     # sou[0].plot_t30()
