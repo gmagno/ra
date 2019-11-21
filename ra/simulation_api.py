@@ -1,6 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import math
+import xlrd, xlwt
+from xlwt import Workbook 
+import csv
 from ra.rayinidir import RayInitialDirections
 from ra.receivers import setup_receivers
 from ra.sources import setup_sources
@@ -508,60 +511,73 @@ class Simulation():
         if show:
             plt.show()
 
-    # def set_configs(self, cfgs):
-    #     self.cfgs = cfgs['sim_cfg']
-    #     self.mat_cfg = cfgs['mat_cfg']
-    #     self.controls = AlgControls(self.cfgs['controls'])
-    #     self.air = AirProperties(self.cfgs['air'])
-    #     self.air_m = self.air.air_absorption(self.controls.freq)
+    def writepar_to_xls(self, filename = 'parameters'):
+        '''
+        This function will be used to writte an excell file with all the calculated parameters for all
+        source-receiver pairs. Each sheet will be a parameter. Each column is a frequency band and
+        each line is a S-R pair.
+        '''
+        wb = Workbook() # Workbook is created
+        # we will run through each parameter
+        for par in self.par_dict.keys():
+            sheet = wb.add_sheet(par) # create parameter sheet.
+            sheet.write(0, 0, par + ' / ' + str(self.par_dict[par]))
+            # write frequency row
+            write_row(sheet, self.freq)
+            # loop sources and receivers
+            line_counter = 1
+            for source_num, s in enumerate(self.sources):
+                for rec_num, r in enumerate(self.receivers):
+                    # write column tag - which s-r pair
+                    sheet.write(line_counter, 0, 'source ' + str(source_num+1) + ' - receiver ' + str(rec_num+1))
+                    par_value = getattr(self.sr_results[source_num].rec[rec_num], par)
+                    write_row(sheet, par_value, row = line_counter)
+                    line_counter += 1
+        wb.save(filename + '.xlsx')
 
-    
+    def write_reflecto_to_txt(self, source_num = 0, rec_num = 0, reflecto = True):
+        '''
+        This function is used to write the reflectogram to a txt file. Later, one can import this to another
+        program and plot at as wished.
+        Inputs:
+            source_num: integer: index of from which source you want
+            receiver_num: integer: index of from which receiver you want
+            reflecto = True (default - for reflectogram) or False (for the decay curve)
+        All the numbers in text file are on absolute linear scale. You can convert to dB in post-processing
+        '''
+        if reflecto:
+            filename = 'reflectogram_source' + str(source_num+1) + '_receiver' + str(rec_num+1) + '.txt'
+            first_line = 'Reflectograms four source: ' + str(source_num+1) + ' and receiver: ' + str(rec_num+1)
+            data_mtx = np.transpose(self.sr_results[source_num].rec[rec_num].reflectogram)
+        else:
+            filename = 'decay_source' + str(source_num+1) + '_receiver' + str(rec_num+1) + '.txt'
+            first_line = 'Decays four source: ' + str(source_num+1) + ' and receiver: ' + str(rec_num+1)
+            data_mtx = np.transpose(self.sr_results[source_num].rec[rec_num].decay)
 
-    
+        time_array = self.sr_results[source_num].time
+        time_array = np.reshape(time_array, (len(time_array), 1))
+        # reflecto_mtx = np.transpose(self.sr_results[source_num].rec[rec_num].reflectogram)
+        np_matrix = np.concatenate((time_array, data_mtx), axis = 1)
+        file_header = first_line +\
+            '\n' + 'columns are: 1: time, 2-9: frequency bands 63, 125, 250 500, 1000, 2000, 4000, 8000 [Hz]'+\
+            '\n' + 'All the numbers in text file are on absolute linear scale. You can convert to dB in post-processing'+\
+            '\n' + 'Some info:'+\
+            '\n' + 'Number of rays: ' + str(self.Nrays) +\
+            '\n' + 'Time resolution: ' + str(self.Dt) + ' [s]' +\
+            '\n' + 'Transition order: ' + str(self.transition_order) +\
+            '\n' + 'Initial receiver radius: ' + "{:.2f}".format(self.rec_radius_init) + ' [m]' +\
+            '\n' + 'Final receiver radius: ' + "{:.2f}".format(self.rec_radius_final)  + ' [m]' +\
+            '\n' + 'Sound speed: ' + "{:.2f}".format(self.c0)  + ' [m/s]' +\
+            '\n' + 'Temperature: ' + "{:.2f}".format(self.temperature)  + ' [m]' +\
+            '\n' + 'Air humidity: ' + "{:.2f}".format(self.hr)  + ' [%]' +\
+            '\n' + 'atm pressure: ' + "{:.2f}".format(self.p_atm)  + ' [Pa]'
+        np.savetxt(filename, np_matrix, delimiter=' ', header = file_header)
 
-    
+def write_row(sheet, line_array, row = 0, start_col = 1):
+    '''
+    Small function to write a row of data to xlsx file
+    '''
+    for column, value in enumerate(line_array, start_col):
+        sheet.write(row, column, str(value))
 
-    # def run(self, state):
-    #     '''
-    #     Parameters:
-    #     ----------
-    #     Return:
-    #     -------
-    #         dict with the following structure:
-    #         {
-    #             'rays':,
-    #             ''
-    #         }
-    #     '''
-    #     res_stat = StatisticalMat(
-    #         self.geo, self.controls.freq, self.air.c0, self.air_m
-    #     )
-    #     res_stat.t60_sabine()
-    #     res_stat.t60_eyring()
-    #     srcs, rcvrs = self.sources, self.receivers
-    #     srcs = ra_cpp._direct_sound(
-    #         srcs, rcvrs, self.controls.rec_radius_init,
-    #         self.geo.planes, self.air.c0, self.rays_i_v.vinit
-    #     )
-    #     ctls = self.controls
-    #     srcs = ra_cpp._raytracer_main(
-    #         ctls.ht_length, ctls.allow_scattering, ctls.transition_order,
-    #         ctls.rec_radius_init, ctls.alow_growth, ctls.rec_radius_final, srcs,
-    #         rcvrs, self.geo.planes, self.air.c0, self.rays_i_v.vinit
-    #     )
-    #     srcs = ra_cpp._intensity_main(ctls.rec_radius_init,
-    #         srcs, self.air.c0, self.air.m, res_stat.alphas_mtx)
-    #     sou = process_results(ctls.Dt, ctls.ht_length,
-    #         ctls.freq, srcs, rcvrs)
-    #     stats = SRStats(sou)
 
-    # def stats(self,):
-    #     pass
-
-    # def save(self,):
-    #     '''
-    #     Return:
-    #     ------
-    #         a dict with the state of the simulation.
-    #     '''
-    #     pass

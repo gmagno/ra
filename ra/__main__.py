@@ -45,7 +45,7 @@ def main():
     #### algoritm configuration
     alg_configs = {
         'freq': [63.0, 125.0, 250.0, 500.0, 1000.0, 2000.0, 4000.0, 8000.0], #default - user do not access
-        'n_rays': 10000,                 # integer only
+        'n_rays': 1000,                 # integer only
         'ht_length': 3.0,
         'dt': 0.001,                    #default
         'allow_scattering': 1,          #default - True = 1
@@ -126,7 +126,9 @@ def main():
     # sims.plot_par_allsr('T30', save = True)
     # sims.plot_decays(save = True)
     # sims.plot_reflecto_srb()
-    sims.plot_reflecto_sr()
+    # sims.plot_reflecto_sr()
+    sims.writepar_to_xls()
+    sims.write_reflecto_to_txt(reflecto = False)
 
 if __name__ == '__main__':
     main()
