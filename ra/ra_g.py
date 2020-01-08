@@ -8,6 +8,7 @@ import numpy as np
 import toml
 from tqdm import tqdm
 
+from ra.log import log
 from ra import rtrace as rt
 from ra.source import (
     # CircleSource, ConicSource,
@@ -48,7 +49,7 @@ class Simulation():
     def __init__(self, cfgfile):
         self.config = self.load_cfg(cfgfile)
         self.sources = self.setup_sources(self.config)
-        
+
         self.receivers = self.setup_receivers(self.config)
         self.room = self.setup_room(self.config)
         self.bbox = self.setup_bounding_box(self.config, scale=100)
@@ -104,7 +105,7 @@ class Simulation():
         for obj in mesh.scene.objects('geometry'):
             for triset in obj.primitives():
                 if type(triset) != co.triangleset.BoundTriangleSet:
-                    print('Warning: non-supported primitive ignored!')
+                    log.info('Warning: non-supported primitive ignored!')
                     continue
                 for i, tri in enumerate(triset):
                     plane = Plane(
@@ -153,7 +154,7 @@ class Simulation():
     def start(self):
         # loop through every single ray
         for src_rays in self.rays:
-            print(src_rays.nrays)
+            log.info(src_rays.nrays)
             progress = tqdm(np.ndindex((src_rays.nrays, src_rays.niters)))
             for (rayid, rayit) in progress:
                 if src_rays.length[rayid] != src_rays.niters:
@@ -180,7 +181,7 @@ class Simulation():
                     src_rays.rds[rayid, rayit+1] = rr
 
     def dump(self):
-        print('number of escaped rays: {}/{}={}%'.format(
+        log.info('number of escaped rays: {}/{}={}%'.format(
                 self.n_escaped_rays,
                 self.rays[0].nrays,
                 np.around(
@@ -206,12 +207,12 @@ class Simulation():
 def main():
     time_start = time.time()
     sim = Simulation(cfgfile='simulation.toml')
-    print('Starting simulation...')
+    log.info('Starting simulation...')
     sim.start()
-    print('Simulation over.\nDumping data now...')
+    log.info('Simulation over.\nDumping data now...')
     sim.dump()
-    print('All data has been dumped!')
-    print('Terminated in: %.4f s' % (time.time() - time_start))
+    log.info('All data has been dumped!')
+    log.info('Terminated in: %.4f s' % (time.time() - time_start))
 
 
 if __name__ == '__main__':

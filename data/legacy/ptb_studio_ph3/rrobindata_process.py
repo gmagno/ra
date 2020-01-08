@@ -1,5 +1,5 @@
 import pickle
-import pandas as pd
+# import pandas as pd
 import xlrd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -35,7 +35,7 @@ for jpar in np.arange(2,20):
 
 
 # Save to pickle
-pkl_fname = 'data/legacy/ptb_studio_ph3/rrobin3_par_close.pkl'
+pkl_fname = 'data/legacy/ptb_studio_ph3/rrobin3_par_closed.pkl'
 with open(pkl_fname, 'wb') as output:
     pickle.dump(participant, output, pickle.HIGHEST_PROTOCOL)
 # print(participant[0])

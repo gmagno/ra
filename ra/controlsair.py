@@ -1,8 +1,7 @@
 import numpy as np
-import toml
 
 class AlgControls():
-    def __init__(self, config_file):
+    def __init__(self, config):
         '''
         Set up algorithm controls. The controls are several properties
         provided by the user. We get that from a toml file. The properties
@@ -24,19 +23,18 @@ class AlgControls():
             the rec_radius_init as its size.
         9: rec_radius_final: receivers are only allowed to grow up to this limit.
         '''
-        config = load_cfg(config_file)
-        self.freq = np.array(config['controls']['freq'], dtype = np.float32)
-        self.Nrays = config['controls']['Nrays']
-        self.ht_length = config['controls']['ht_length']
-        self.Dt = config['controls']['Dt']
-        self.allow_scattering = config['controls']['allow_scattering']
-        self.transition_order = config['controls']['transition_order']
-        self.rec_radius_init = config['controls']['rec_radius_init']
-        self.alow_growth = config['controls']['alow_growth']
-        self.rec_radius_final = config['controls']['rec_radius_final']
+        self.freq = np.array(config['freq'], dtype = np.float32)
+        self.Nrays = config['Nrays']
+        self.ht_length = config['ht_length']
+        self.Dt = config['Dt']
+        self.allow_scattering = config['allow_scattering']
+        self.transition_order = config['transition_order']
+        self.rec_radius_init = config['rec_radius_init']
+        self.alow_growth = config['allow_growth']
+        self.rec_radius_final = config['rec_radius_final']
 
 class AirProperties():
-    def __init__(self, config_file):
+    def __init__(self, config):
         '''
         Set up air properties. The inputs given by the user are:
         1: temperature - in Celsius
@@ -49,10 +47,9 @@ class AirProperties():
         6: m - air absorption coefficient
             (array of same size as controls.freq)
         '''
-        config = load_cfg(config_file)
-        self.temperature = np.array(config['air']['Temperature'])
-        self.hr = config['air']['hr']
-        self.p_atm = config['air']['p_atm']
+        self.temperature = np.array(config['Temperature'])
+        self.hr = config['hr']
+        self.p_atm = config['p_atm']
         temp_kelvin = self.temperature + 273.16 # temperature in [K]
         R = 287.031                 # gas constant
         rvp = 461.521               # gas constant for water vapor
@@ -104,13 +101,3 @@ class AirProperties():
         self.m = np.array((1/100) * a_ps_ar * patm_atm \
             / (10 * np.log10(np.exp(1))), dtype = np.float32)
         return self.m
-
-
-### Function to read the .toml file
-def load_cfg(cfgfile):
-    '''
-    Function to load and read the toml file
-    '''
-    with open(cfgfile, 'r') as f:
-        config = toml.loads(f.read())
-    return config

@@ -2,7 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import itertools
 import time
+
+from ra.log import log
 import ra_cpp
+
 
 def process_results(Dt, ht_length, freq, sources, receivers):
     '''
@@ -11,7 +14,7 @@ def process_results(Dt, ht_length, freq, sources, receivers):
     will be appended to each source to store the results of
     each source-receiver (vs. time or vs. frequency) pair.
     '''
-    print("processing results...")
+    log.info("processing results...")
     time_bins = np.arange(0.0, 1.2 * ht_length, Dt)
     sou = []
     for s in sources:
@@ -37,8 +40,8 @@ class RecResults(object):
             source.rays, source.reccrossdir[jrec].time_dir, jrec,
             source.reccrossdir[jrec].size_of_time), dtype = np.float32)
 
-        # print("time cat size: {}.".format(len(time_cat)))
-        # print("size_of_tme: {}.".format(source.reccrossdir[jrec].size_of_time))
+        # log.info("time cat size: {}.".format(len(time_cat)))
+        # log.info("size_of_tme: {}.".format(source.reccrossdir[jrec].size_of_time))
         # sort time vector
         # id_sorted_time = np.argsort(time_cat)
         # time_sorted = time_cat[id_sorted_time]
@@ -52,14 +55,14 @@ class RecResults(object):
         cos_cat = np.array(ra_cpp._cos_cat(
             source.rays, source.reccrossdir[jrec].cos_dir, jrec,
             source.reccrossdir[jrec].size_of_time), dtype = np.float32)
-        # print(" {} seconds to concatenate intensity (c++).".format(time.time() - start_time))
+        # log.info(" {} seconds to concatenate intensity (c++).".format(time.time() - start_time))
         # sort intensity
         # intensity_sorted = intensity_cat[:, id_sorted_time]
         # reflectogram
         self.reflectogram = reflectogram_hist(time_bins, time_cat, intensity_cat)
         # self.reflectogram = reflectogram_hist(time_bins, time_sorted, intensity_sorted)
         self.decay = decay_curve(self.reflectogram)
-        print(" {} seconds to calc reflectogram (c++).".format(time.time() - start_time))
+        log.info(" {} seconds to calc reflectogram (c++).".format(time.time() - start_time))
 
         # Calculate the direct sound id
         direct_sound_idarr = np.nonzero(self.reflectogram[0,:])
@@ -123,13 +126,13 @@ def edt(time, decay, id_dir, freq):
         np.seterr(divide = 'ignore')
         decdB = 10 * np.log10(dec[id_dir:]/
             np.amax(dec[id_dir:]))
-        # print(time.shape)
+        # log.info(time.shape)
         id_to_fit = np.where((decdB < 0.0) & (decdB > -10.0))
         try:
             p = np.polyfit(time[id_to_fit], decdB[id_to_fit], 1)
             EDT[jdec] = -60 / p[0]
         except:
-            print("I could not calculate EDT for the {}.".format(freq[jf])+
+            log.info("I could not calculate EDT for the {}.".format(freq[jf])+
                 "[Hz] frequency band. Try to use more rays or"+
                 "extend the length of h(t) of the simmulation.")
         jf=+1
@@ -146,13 +149,13 @@ def t20(time, decay, id_dir, freq):
         np.seterr(divide = 'ignore')
         decdB = 10 * np.log10(dec[id_dir:]/
             np.amax(dec[id_dir:]))
-        # print(time.shape)
+        # log.info(time.shape)
         id_to_fit = np.where((decdB < -5.0) & (decdB > -25.0))
         try:
             p = np.polyfit(time[id_to_fit], decdB[id_to_fit], 1)
             T20[jdec] = -60 / p[0]
         except:
-            print("I could not calculate T20 for the {}.".format(freq[jf])+
+            log.info("I could not calculate T20 for the {}.".format(freq[jf])+
                 "[Hz] frequency band. Try to use more rays or"+
                 "extend the length of h(t) of the simmulation.")
         jf=+1
@@ -169,13 +172,13 @@ def t30(time, decay, id_dir, freq):
         np.seterr(divide = 'ignore')
         decdB = 10 * np.log10(dec[id_dir:]/
             np.amax(dec[id_dir:]))
-        # print(time.shape)
+        # log.info(time.shape)
         id_to_fit = np.where((decdB < -5.0) & (decdB > -35.0))
         try:
             p = np.polyfit(time[id_to_fit], decdB[id_to_fit], 1)
             T30[jdec] = -60 / p[0]
         except:
-            print("I could not calculate T30 for the {}.".format(freq[jf])+
+            log.info("I could not calculate T30 for the {}.".format(freq[jf])+
                 "[Hz] frequency band. Try to use more rays or"+
                 "extend the length of h(t) of the simmulation.")
         jf=+1
@@ -194,7 +197,7 @@ def c80(time, reflectogram, id_dir, freq):
             id_to_sum = np.where(time <= 0.080 + time[id_dir])
             C80[jref] = 10 * np.log10(np.sum(ref[id_to_sum[0]]) / np.sum(ref[id_to_sum[0][-1]+1:]))
         except:
-            print("I could not calculate C80 for the {}.".format(freq[jf])+
+            log.info("I could not calculate C80 for the {}.".format(freq[jf])+
                 "[Hz] frequency band. Try to use more rays or"+
                 "extend the length of h(t) of the simmulation.")
         jf=+1
@@ -213,7 +216,7 @@ def d50(time, reflectogram, id_dir, freq):
             id_to_sum = np.where(time <= 0.050 + time[id_dir])
             D50[jref] = 100 * np.sum(ref[id_to_sum[0]]) / np.sum(ref)
         except:
-            print("I could not calculate D50 for the {}.".format(freq[jf])+
+            log.info("I could not calculate D50 for the {}.".format(freq[jf])+
                 "[Hz] frequency band. Try to use more rays or"+
                 "extend the length of h(t) of the simmulation.")
         jf=+1
@@ -231,7 +234,7 @@ def ts(time, reflectogram, id_dir, freq):
         try:
             Ts[jref] = 1000 * (np.sum(np.multiply(time[id_dir:], ref[id_dir:]))/np.sum(ref[id_dir:]) - time[id_dir])
         except:
-            print("I could not calculate Ts for the {}.".format(freq[jf])+
+            log.info("I could not calculate Ts for the {}.".format(freq[jf])+
                 "[Hz] frequency band. Try to use more rays or"+
                 "extend the length of h(t) of the simmulation.")
         jf=+1
@@ -250,7 +253,7 @@ def g_db(reflectogram, Wlin, freq):
             G[jref] = 10.0 * np.log10(np.sum(ref)) -\
                 10.0 * np.log10(Wlin[jref] / (4.0 * np.pi * 100.0))
         except:
-            print("I could not calculate G for the {}.".format(freq[jf])+
+            log.info("I could not calculate G for the {}.".format(freq[jf])+
                 "[Hz] frequency band. Try to use more rays or"+
                 "extend the length of h(t) of the simmulation.")
         jf=+1
@@ -262,7 +265,7 @@ def lf_lfc(time, reflectogram, id_dir, freq, time_cat, intensity_cat, cos_cat):
     '''
     # bi-directional intensityes for LF
     intensity_cos2 = np.multiply(intensity_cat, cos_cat**2)
-    # print(cos_cat**2)
+    # log.info(cos_cat**2)
     reflecto_cos2 = reflectogram_hist(time, time_cat, intensity_cos2)
     # bi-directional intensityes for LFC
     intensity_cosabs = np.multiply(intensity_cat, np.abs(cos_cat))
@@ -272,12 +275,12 @@ def lf_lfc(time, reflectogram, id_dir, freq, time_cat, intensity_cat, cos_cat):
     LF = np.zeros(freq.size, dtype = np.float32)
     LFC = np.zeros(freq.size, dtype = np.float32)
     jf = 0
-    # print("time dir: {}".format(time[id_dir]))
+    # log.info("time dir: {}".format(time[id_dir]))
     id_0to80 = np.where(time <= 0.080 + time[id_dir])
     # id_0to800 = np.where(time[id_0to80[0]] >= time[id_0to80[0]])
-    # print("time 0-80: {}".format(time[id_0to800[0]]))
+    # log.info("time 0-80: {}".format(time[id_0to800[0]]))
     id_5to80 = np.where(time[id_0to80[0]] >= 0.005 + time[id_dir])
-    # print("time 5-80: {}".format(time[id_5to80[0]]))
+    # log.info("time 5-80: {}".format(time[id_5to80[0]]))
     for jref, ref in enumerate(reflectogram):
         np.seterr(divide = 'ignore')
         try:
@@ -286,7 +289,7 @@ def lf_lfc(time, reflectogram, id_dir, freq, time_cat, intensity_cat, cos_cat):
             refcosabs = reflecto_cosabs[jf,:]
             LFC[jref] = 100 * np.sum(refcosabs[id_5to80[0]]) / np.sum(ref[id_0to80[0]])
         except:
-            print("I could not calculate LF and LFC for the {}.".format(freq[jf])+
+            log.info("I could not calculate LF and LFC for the {}.".format(freq[jf])+
                 "[Hz] frequency band. Try to use more rays or"+
                 "extend the length of h(t) of the simmulation.")
         jf=+1
@@ -306,52 +309,52 @@ class SRStats(object):
         for f in self.freq:
             self.freq_ticks.append(str(f))
         self.ci = ci
-        # print("{} sources, {} receivers, {} freq bands.".format(Ns, Nrec, Nf))
+        # log.info("{} sources, {} receivers, {} freq bands.".format(Ns, Nrec, Nf))
         # create numpy arrays for processing
         # zeroarr = np.zeros((self.Ns*self.Nrec, self.Nf), dtype = np.float32)
-        self.edt = np.zeros((self.Ns*self.Nrec, self.Nf), dtype = np.float32)
-        self.t20 = np.zeros((self.Ns*self.Nrec, self.Nf), dtype = np.float32)
-        self.t30 = np.zeros((self.Ns*self.Nrec, self.Nf), dtype = np.float32)
-        self.c80 = np.zeros((self.Ns*self.Nrec, self.Nf), dtype = np.float32)
-        self.d50 = np.zeros((self.Ns*self.Nrec, self.Nf), dtype = np.float32)
-        self.ts = np.zeros((self.Ns*self.Nrec, self.Nf), dtype = np.float32)
-        self.g_db = np.zeros((self.Ns*self.Nrec, self.Nf), dtype = np.float32)
-        self.lf = np.zeros((self.Ns*self.Nrec, self.Nf), dtype = np.float32)
-        self.lfc = np.zeros((self.Ns*self.Nrec, self.Nf), dtype = np.float32)
+        self.EDT = np.zeros((self.Ns*self.Nrec, self.Nf), dtype = np.float32)
+        self.T20 = np.zeros((self.Ns*self.Nrec, self.Nf), dtype = np.float32)
+        self.T30 = np.zeros((self.Ns*self.Nrec, self.Nf), dtype = np.float32)
+        self.C80 = np.zeros((self.Ns*self.Nrec, self.Nf), dtype = np.float32)
+        self.D50 = np.zeros((self.Ns*self.Nrec, self.Nf), dtype = np.float32)
+        self.Ts = np.zeros((self.Ns*self.Nrec, self.Nf), dtype = np.float32)
+        self.G = np.zeros((self.Ns*self.Nrec, self.Nf), dtype = np.float32)
+        self.LF = np.zeros((self.Ns*self.Nrec, self.Nf), dtype = np.float32)
+        self.LFC = np.zeros((self.Ns*self.Nrec, self.Nf), dtype = np.float32)
         # concatenate each parameter to a numpy array to calculate mean and std
         jc = 0 # counter
         for s in sou:
             for r in s.rec:
-                self.edt[jc, :] = r.EDT
-                self.t20[jc, :] = r.T20
-                self.t30[jc, :] = r.T30
-                self.c80[jc, :] = r.C80
-                self.d50[jc, :] = r.D50
-                self.ts[jc, :] = r.Ts
-                self.g_db[jc, :] = r.G
-                self.lf[jc, :] = r.LF
-                self.lfc[jc, :] = r.LFC
+                self.EDT[jc, :] = r.EDT
+                self.T20[jc, :] = r.T20
+                self.T30[jc, :] = r.T30
+                self.C80[jc, :] = r.C80
+                self.D50[jc, :] = r.D50
+                self.Ts[jc, :] = r.Ts
+                self.G[jc, :] = r.G
+                self.LF[jc, :] = r.LF
+                self.LFC[jc, :] = r.LFC
                 jc += 1
-        self.edt_mean_f = np.mean(self.edt, axis = 0)
-        self.edt_std_f = np.std(self.edt, axis = 0)
-        self.t20_mean_f = np.mean(self.t20, axis = 0)
-        self.t20_std_f = np.std(self.t20, axis = 0)
-        self.t30_mean_f = np.mean(self.t30, axis = 0)
-        self.t30_std_f = np.std(self.t30, axis = 0)
-        self.c80_mean_f = np.mean(self.c80, axis = 0)
-        self.c80_std_f = np.std(self.c80, axis = 0)
-        self.d50_mean_f = np.mean(self.d50, axis = 0)
-        self.d50_std_f = np.std(self.d50, axis = 0)
-        self.ts_mean_f = np.mean(self.ts, axis = 0)
-        self.ts_std_f = np.std(self.ts, axis = 0)
-        self.g_mean_f = np.mean(self.g_db, axis = 0)
-        self.g_std_f = np.std(self.g_db, axis = 0)
-        self.lf_mean_f = np.mean(self.lf, axis = 0)
-        self.lf_std_f = np.std(self.lf, axis = 0)
-        self.lfc_mean_f = np.mean(self.lfc, axis = 0)
-        self.lfc_std_f = np.std(self.lfc, axis = 0)
-        # print(self.g_mean_f)
-        # print(self.g_std_f)
+        self.EDT_mean_f = np.mean(self.EDT, axis = 0)
+        self.EDT_std_f = np.std(self.EDT, axis = 0)
+        self.T20_mean_f = np.mean(self.T20, axis = 0)
+        self.T20_std_f = np.std(self.T20, axis = 0)
+        self.T30_mean_f = np.mean(self.T30, axis = 0)
+        self.T30_std_f = np.std(self.T30, axis = 0)
+        self.C80_mean_f = np.mean(self.C80, axis = 0)
+        self.C80_std_f = np.std(self.C80, axis = 0)
+        self.D50_mean_f = np.mean(self.D50, axis = 0)
+        self.D50_std_f = np.std(self.D50, axis = 0)
+        self.Ts_mean_f = np.mean(self.Ts, axis = 0)
+        self.Ts_std_f = np.std(self.Ts, axis = 0)
+        self.G_mean_f = np.mean(self.G, axis = 0)
+        self.G_std_f = np.std(self.G, axis = 0)
+        self.LF_mean_f = np.mean(self.LF, axis = 0)
+        self.LF_std_f = np.std(self.LF, axis = 0)
+        self.LFC_mean_f = np.mean(self.LFC, axis = 0)
+        self.LFC_std_f = np.std(self.LFC, axis = 0)
+        # log.info(self.g_mean_f)
+        # log.info(self.g_std_f)
 
     def plot_edt_f(self, ht_max = 4.5, color = 'black', plotsr = False):
         fig = plt.figure()
@@ -677,7 +680,7 @@ class SouResults(object):
         plt.xlabel('Time [s]')
         plt.ylabel('Intensity [dB]')
         plt.ylim((-80, 10))
-        plt.show()
+        # plt.show()
 
     def plot_decays(self, jrec = 0):
         '''
@@ -891,11 +894,11 @@ class SouResults(object):
 #                 recobj = SRPairRec()
 #                 rec.append(recobj)
 #             sou.append(rec)
-#         print("Object created - testing")
+#         log.info("Object created - testing")
         
                 # recobj.reflecto_histogram(self.time,
                 #     time_sorted, intensity_sorted)
-                # print(recobj.reflectogram)
+                # log.info(recobj.reflectogram)
                 # id_sorted_time = np.argsort(time_flat)
                 # self.time = time_flat[id_sorted_time]
 
@@ -906,15 +909,15 @@ class SouResults(object):
 
     # def reflecto_histogram(self, time_bins, time_sorted, intensity_sorted):
     #     bins = np.digitize(time_sorted, time_bins)
-    #     print(intensity_sorted.size)
+    #     log.info(intensity_sorted.size)
     #     reflecto_jf = np.bincount(bins, weights = intensity_sorted[0,:])
     #     self.reflectogram = reflecto_jf
-        # print(self.reflectogram[0:3])
+        # log.info(self.reflectogram[0:3])
         # for row in intensity_sorted:
         #     i_freq = row
-        #     # print(row)
+        #     # log.info(row)
         #     reflecto_jf = np.bincount(bins, weights = intensity_sorted[0])
-        #     print(reflecto_jf)
+        #     log.info(reflecto_jf)
         #     self.reflectogram = np.hstack((self.reflectogram, reflecto_jf))
         # self.time_bins = time_bins[0:len(self.reflecto)]
 
@@ -945,7 +948,7 @@ class SouResults(object):
 #         #     intensity_flat = np.array(concatenate_iarray_matlab(intensity,jf)) # second element in input is the index of freq band loop later
 #         #     self.intensity = intensity_flat[id_sorted_time]
 
-#         print('reflectogram object created')
+#         log.info('reflectogram object created')
 
 #     def reflecto_hist(self, dt, htlength):
 #         time_bins = np.arange(0.0, 1.2*htlength, dt)
