@@ -9,6 +9,47 @@ import scipy.io as spio
 from ra.log import log
 import ra_cpp
 
+class GeometryApi():
+    def __init__(self, geom_dict):
+        '''
+        Set up the room geometry from the blender or 3D geometry modelling soft.
+        The input is a geometry dictionary.
+        Geometry consists of: Volume, Total ara and an
+        array of plane objects. Each plane object will be
+        processed in a c++ class and have the following att:
+        - name (string)
+        - bounding box (bool)
+        - list of vertices (Eigen<double> - Nvert x 3)
+        - normal (Eigen<double> - 1 x 3)
+        - vert_x - 2D polygon x coord (Eigen<double> - 1 x Nvert)
+        - vert_y - 2D polygon y coord (Eigen<double> - 1 x Nvert)
+        - nig - 2D normal components index (Eigen<int> - 1 x 2)
+        - area (double)
+        - centroid (Eigen<double> - 1 x 3)
+        - alpha - absorption coefficient (Eigen<double> - 1 x Nfreq)
+        - s - scattering coefficient (double)
+        '''
+        self.planes = []    # A list of planes (object with attributes)
+        for jp in np.arange(0, len(geom_dict)):
+            vert_x, vert_y, normal_nig = vert_2d(
+                geom_dict[jp]['normal'], geom_dict[jp]['vertices'])
+            # FIXME swap the next two lines. From matlab area comes from mat file
+            # FIXME From blender a triangle comes and we calculate the area. 
+            area = np.float64(geom_dict[jp]['area']) ### Matlab
+            # area = np.float64(triangle_area(geom_dict[jp]['vertices']))   # blender
+            ##############################################################
+            centroid = np.float32(triangle_centroid(geom_dict[jp]['vertices']))
+            # plane object
+            plane = ra_cpp.Planecpp(geom_dict[jp]['name'],
+                geom_dict[jp]['bbox'],
+                geom_dict[jp]['vertices'],
+                geom_dict[jp]['normal'],
+                vert_x, vert_y, normal_nig, area, centroid,
+                geom_dict[jp]['alpha'], geom_dict[jp]['s'])
+            self.planes.append(plane)
+        # total area and volume
+        self.total_area = total_area(self.planes)
+        self.volume = volume(self.planes)
 
 class GeometryMat():
     def __init__(self, geo_cfg, alpha, s):

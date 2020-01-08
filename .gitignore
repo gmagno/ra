@@ -9,3 +9,7 @@ ra.log
 **/*.pkl
 sim.json
 wheelhouse/
+data/legacy/ptb_studio_ph3/figs
+data/legacy/ptb_studio_ph2/figs
+data/legacy/elmia/figs
+plot_reflectograms.py

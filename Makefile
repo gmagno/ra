@@ -44,6 +44,8 @@ test:
 .PHONY: run
 run:
 	PYTHONPATH=./build/ python -W ignore -m ra --cfg-dir data/legacy/odeon_ex/
+	# PYTHONPATH=./build/ python -W ignore -m ra --cfg-dir data/legacy/ptb_studio_ph2/
+	# PYTHONPATH=./build/ python -W ignore -m ra --cfg-dir data/legacy/ptb_studio_ph3/
 
 .PHONY: docker-run-wheels
 docker-run-wheels:

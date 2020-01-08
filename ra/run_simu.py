@@ -43,13 +43,14 @@ def setup(cfg_dir):
     # tml_name_cfg = 'simulation.toml'        # toml configuration file
     # tml_name_mat = 'surface_mat_id.toml'    # toml material file
     ############### PTB phase 2 #######################################
+    # path = '/home/eric/dev/ra/data/legacy/ptb_studio_ph2/'
     # pkl_fname_res = 'ptb_studio_ph2_open'        # simulation results name
     # pkl_fname_res = 'ptb_studio_ph2_close'        # simulation results name
     # tml_name_cfg = 'simulation.toml'        # toml configuration file
     # tml_name_cfg = 'simulation_odeon.toml'        # toml configuration file
     # tml_name_mat = 'surface_mat_open_id.toml'    # toml material file
-    # tml_name_mat = 'surface_mat_close_id.toml'    # toml material file
     # tml_name_mat = 'surface_mat_open_id_scte.toml'    # toml material file
+    # tml_name_mat = 'surface_mat_close_id.toml'    # toml material file
     # tml_name_mat = 'surface_mat_open_id_odeon_scte.toml'    # toml material file
     ############### PTB phase 3 #######################################
     # pkl_fname_res = 'ptb_studio_ph3_open'              # simulation results name
@@ -60,8 +61,8 @@ def setup(cfg_dir):
     # pkl_fname_res = 'ptb_studio_ph3_close'              # simulation results name
     # tml_name_cfg = 'simulation_ptb_ph3.toml'        # toml configuration file
     # tml_name_mat = 'surface_mat_open_id.toml'    # toml material file
-    # tml_name_mat = 'surface_pathmat_close_id.toml'    # toml material file
-    # tml_name_mat = 'surface_pathmat_id_ptb_ph3_o.toml'    # toml material file
+    # tml_name_mat = 'surface_mat_id_ptb_ph3_c.toml'    # toml material file
+    # tml_name_mat = 'surface_mat_id_ptb_ph3_o.toml'    # toml material file
     #tml_name_mat = 'surface_mpathat_id_ptb_ph3_c.toml'    # toml material file
     # tml_name_mat = 'surface_pathmat_id_ptb_ph3_o_odeon.toml'    # toml material file
     # tml_name_mat = 'surface_mat_id_ptb_ph3_o_odeon_scte.toml'    # toml material file
@@ -78,6 +79,7 @@ def setup(cfg_dir):
         'mat_cfg': load_cfg(pathlib.Path(cfg_dir) / tml_name_mat)
     }
     return cfgs
+
 
 def run(cfgs):
     ##### Setup algorithm controls ########
@@ -120,7 +122,6 @@ def run(cfgs):
 
     ##### Setup receiver, reccross and reccrossdir ########
     receivers, reccross, reccrossdir = setup_receivers(cfgs['sim_cfg']['receivers'])
-
     #### Allocate some memory in python for geometrical ray tracing ########################
     # Estimate max reflection order
     N_max_ref = math.ceil(1.5 * air.c0 * controls.ht_length * \
@@ -155,8 +156,9 @@ def run(cfgs):
     stats = SRStats(sou)
     ######## some plotting ##############################
     # sou[0].plot_single_reflecrogram(band = 4, jrec = 2)
+    # plt.show()
     # sou[0].plot_single_reflecrogram(band = 4, jrec = 1)
-    # sou[0].plot_decays()
+    sou[0].plot_decays()
     # sou[0].plot_edt()
     # sou[0].plot_t20()
     # sou[0].plot_t30()
@@ -174,11 +176,133 @@ def run(cfgs):
     # log.info(sources[0].reccrossdir[0].cos_dir)
     ############# Save trial #########################
     # import pickle
+    # path = '/home/eric/dev/ra/data/legacy/ptb_studio_ph3/'
+    # pkl_fname_res = 'ptb_studio_ph3_open'        # simulation results name
     # with open(path+pkl_fname_res+'.pkl', 'wb') as output:
     #     pickle.dump(res_stat, output, pickle.HIGHEST_PROTOCOL)
     #     pickle.dump(sou, output, pickle.HIGHEST_PROTOCOL)
     #     pickle.dump(stats, output, pickle.HIGHEST_PROTOCOL)
-    #     # pickle.dump(geo, output, pickle.HIGHEST_PROTOCOL)
+        # pickle.dump(geo, output, pickle.HIGHEST_PROTOCOL)
 
-    #     # pickle.dump(sources, output, pickle.HIGHEST_PROTOCOL)
+        # pickle.dump(sources, output, pickle.HIGHEST_PROTOCOL)
 
+
+# class Simulation():
+#     def __init__(self,):
+#         self.cfgs = {}
+#         self.sources = []
+#         self.receivers = []
+#         self.geometry = {}
+
+#     def set_configs(self, cfgs):
+#         self.cfgs = cfgs['sim_cfg']
+#         self.mat_cfg = cfgs['mat_cfg']
+#         self.controls = AlgControls(self.cfgs['controls'])
+#         self.air = AirProperties(self.cfgs['air'])
+#         self.air_m = self.air.air_absorption(self.controls.freq)
+
+#     def set_sources(self, srcs):
+#         '''
+#         Parameters:
+#         ----------
+#             srcs: list of Source's
+#         '''
+#         # self.rays_i_v = RayInitialDirections()
+#         # self.rays_i_v.random_rays(self.controls.Nrays)
+#         # log.info("The number of rays is {}.".format(self.rays_i_v.Nrays))
+
+#         # c0 = self.air.c0
+#         # htl = self.controls.ht_length
+#         # area = self.geo.total_area
+#         # volume = self.geo.volume
+#         # N_max_ref = math.ceil(1.5 * c0 * htl * area / (4 * volume))
+#         # rays = ray_initializer(
+#         #     self.rays_i_v, N_max_ref, self.controls.transition_order,
+#         #     self.reccross
+#         # )
+#         # self.sources = setup_sources(
+#         #     self.cfgs['sources'], rays, self.reccrossdir
+#         # )
+
+#     def set_receivers(self, rcvrs):
+#         '''
+#         Parameters:
+#         -----------
+#             rcvrs: list of Receiver`s
+#         '''
+#         new_rcvrs = []
+#         for r in rcvrs:
+#             r.append({
+#                 'position': r.coord,
+#                 'orientation': r.orientation
+#             })
+#         self.receivers, self.reccross, self.reccrossdir = setup_receivers(
+#             new_rcvrs
+#         )
+
+#         # self.receivers, self.reccross, self.reccrossdir = setup_receivers(
+#         #     self.cfgs['receivers']
+#         # )
+
+#     def set_geometry(self, geom):
+#         '''
+#         Parameters:
+#         -----------
+#             geom: list of dicts with the following parameters: 'name',
+#             'vertices', 'normal', alpha, s.
+#         '''
+#         # to be populated
+#         # ...
+#         pass
+
+#         # cfgs = self.cfgs
+#         # alpha_list = load_matdata_from_mat(cfgs['material'])
+#         # alpha, s = get_alpha_s(
+#         #     cfgs['geometry'], self.mat_cfg['material'], alpha_list
+#         # )
+#         # self.geo = GeometryMat(cfgs['geometry'], alpha, s)
+
+#     def run(self, state):
+#         '''
+#         Parameters:
+#         ----------
+#         Return:
+#         -------
+#             dict with the following structure:
+#             {
+#                 'rays':,
+#                 ''
+#             }
+#         '''
+#         res_stat = StatisticalMat(
+#             self.geo, self.controls.freq, self.air.c0, self.air_m
+#         )
+#         res_stat.t60_sabine()
+#         res_stat.t60_eyring()
+#         srcs, rcvrs = self.sources, self.receivers
+#         srcs = ra_cpp._direct_sound(
+#             srcs, rcvrs, self.controls.rec_radius_init,
+#             self.geo.planes, self.air.c0, self.rays_i_v.vinit
+#         )
+#         ctls = self.controls
+#         srcs = ra_cpp._raytracer_main(
+#             ctls.ht_length, ctls.allow_scattering, ctls.transition_order,
+#             ctls.rec_radius_init, ctls.alow_growth, ctls.rec_radius_final, srcs,
+#             rcvrs, self.geo.planes, self.air.c0, self.rays_i_v.vinit
+#         )
+#         srcs = ra_cpp._intensity_main(ctls.rec_radius_init,
+#             srcs, self.air.c0, self.air.m, res_stat.alphas_mtx)
+#         sou = process_results(ctls.Dt, ctls.ht_length,
+#             ctls.freq, srcs, rcvrs)
+#         stats = SRStats(sou)
+
+#     def stats(self,):
+#         pass
+
+#     def save(self,):
+#         '''
+#         Return:
+#         ------
+#             a dict with the state of the simulation.
+#         '''
+#         pass
