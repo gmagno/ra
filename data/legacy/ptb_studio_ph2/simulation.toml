@@ -53,8 +53,8 @@ orientation = [1.0, 0.0, 0.0]
 
 ###################### Geometry #################################
 [geometry]
-#room = 'data/legacy/ptb_studio_ph2/studioPTB_ph2_courtain_open.mat'
-room = 'data/legacy/ptb_studio_ph2/studioPTB_ph2_courtain_closed.mat'
+room = 'data/legacy/ptb_studio_ph2/studioPTB_ph2_courtain_open.mat'
+#room = 'data/legacy/ptb_studio_ph2/studioPTB_ph2_courtain_closed.mat'
 
 ################### Material database ##########################
 [material]
