@@ -63,12 +63,12 @@ if [[ -n $1 ]]; then
     exit 1
 fi
 
-export BLENDER_PYTHON=${BLENDER_DIR}/2.80/python/bin/python3.7m
+export BLENDER_PYTHON=${BLENDER_DIR}/2.8?/python/bin/python3.7m
 export PYTHON_SOURCE=https://www.python.org/ftp/python/3.7.0/Python-3.7.0.tgz
 
 wget -qO- ${PYTHON_SOURCE} | \
     tar --strip-components=2 \
-        -C ${BLENDER_DIR}/2.80/python/include/python3.7m \
+        -C ${BLENDER_DIR}/2.8?/python/include/python3.7m \
         -zx Python-3.7.0/Include
 ${BLENDER_PYTHON} -m ensurepip
 ${BLENDER_PYTHON} -m pip install -U pip
