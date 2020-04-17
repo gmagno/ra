@@ -136,5 +136,7 @@ setup(
         'pycollada==0.6',
         'scipy==1.3.1',
         'toml==0.10.0',
+        'xlrd==1.2.0',
+        'xlwt==1.3.0',
     ],
 )
