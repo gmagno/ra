@@ -5,7 +5,7 @@ void bind_fun_intensity_main(py::module &m)
     m.def(
         "_intensity_main",
         intensity_main,
-    "The main function to compute the sound intensities of ray tracing.",
+    "Use the ray-history to compute the sound intensities at a given receiver encounter.",
     py::arg("rec_radius_init"),
     py::arg("sources"),
     py::arg("c0"),

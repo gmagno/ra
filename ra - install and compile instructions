@@ -1,0 +1,27 @@
+1) If you do not have CMake installed, compilation won't even start. Then, follow the instructions on the following link. This can take a while (enjoy a cup of coffee):
+https://vitux.com/how-to-install-cmake-on-ubuntu-18-04/
+
+2) Clone the repo recursively (use --recursive to include content on pybind11 and eigen)
+git clone --recursive  https://github.com/gmagno/ra.git
+
+3) Navigate to the folder
+cd/ra
+
+4) Create a virtual environment
+python3 -m .venv
+
+5) Activate the environment
+source .venv/bin/activate
+
+6) install dependencies in "requrements.txt" on your virtual environment. 
+If pip install requirements.txt does not work, then do it for each dependency. For example pip install matplotlib==3.1.1 
+
+7) compile the code (First compilation can take a while)
+make build
+
+8) If compilation is successful run a test case. This will run 1000 rays through a very simple room. As it is programed you won't see any results,
+but a bunch of messages will appear in the console with the progress of the calculations. The test case is a simple room with two sources.
+So, you'll see two progresses bar running as two separate ray tracings will (hopefully) occur. In order to run this test case type: "make run" on
+command line.
+
+

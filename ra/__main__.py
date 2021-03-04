@@ -45,7 +45,7 @@ def main():
     #### algoritm configuration
     alg_configs = {
         'freq': [63.0, 125.0, 250.0, 500.0, 1000.0, 2000.0, 4000.0, 8000.0], #default - user do not access
-        'n_rays': 1000,                 # integer only
+        'n_rays': 10000,                 # integer only
         'ht_length': 3.0,
         'dt': 0.001,                    #default
         'allow_scattering': 1,          #default - True = 1
@@ -113,16 +113,16 @@ def main():
     print("Finished the ray tracing.")
     # print("I'll calc intensity")
     # sims.run_intensitycalc()
-    # sims.plot_par_sr('EDT', source_num = 0, rec_num = 0, show=True ,save=True, bars=True)
+    sims.plot_par_sr('EDT', source_num = 0, rec_num = 0, show=True ,save=True, bars=True)
     # sims.plot_par_sr('C80', source_num = 0, rec_num = 0)
     # sims.plot_par_sr('C80', source_num = 0, rec_num = 1)
     # sims.plot_par_sr('C80', source_num = 0, rec_num = 2)
     # sims.plot_par_sr('C80', source_num = 0, rec_num = 3, bars=True)
     # sims.plot_par_sr('LF', source_num = 1, rec_num = 3)
     # sims.plot_par_sr('G', source_num = 0, rec_num = 3)
-    # sims.sr_results[0].plot_edt()
+    sims.sr_results[0].plot_edt()
     # sims.stats.plot_c80_f(plotsr = True)
-    # plt.show()
+    plt.show()
     # sims.plot_par_allsr('T30', save = True)
     # sims.plot_decays(save = True)
     # sims.plot_reflecto_srb()

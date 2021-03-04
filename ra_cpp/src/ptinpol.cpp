@@ -1,6 +1,8 @@
 #include "ptinpol.h"
 #include "isleft.h"
 
+//Computes the winding number to test if the reflection pt is in or out of the polygon
+
 int ptinpol(Eigen::Ref<Eigen::RowVectorXf> vert_x,
         Eigen::Ref<Eigen::RowVectorXf> vert_y,
         Eigen::Ref<Eigen::RowVector2f> ref_point2d)

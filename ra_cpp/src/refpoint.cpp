@@ -1,5 +1,5 @@
 #include "refpoint.h"
-
+//Computes the reflection point for a given plane and point of origin (prior to pt-in-polygon test)
 Eigen::RowVector3f refpoint(Eigen::Ref<Eigen::RowVector3f> ray_origin,
         Eigen::Ref<Eigen::RowVector3f> v_in,
         Eigen::Ref<Eigen::RowVector3f> normal,

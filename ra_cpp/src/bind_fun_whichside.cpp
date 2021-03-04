@@ -5,7 +5,7 @@ void bind_whichside(py::module &m)
     m.def(
         "_whichside",
         whichside,
-    "Computes the lambda of ray-plane intersection and a boolean for distance travell",
+    "Calculate if the ray goes towards the plane (whichside>0) or not",
     py::arg("ray_origin").noconvert(),
     py::arg("v_in").noconvert(),
     py::arg("ref_point").noconvert()

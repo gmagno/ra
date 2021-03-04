@@ -13,5 +13,6 @@
 namespace py = pybind11;
 
 void bind_cls_pet(py::module &m);
+void bind_cls_picleable(py::module &m);
 void bind_cls_planecpp(py::module &m);
 #endif /* BIND_CLS_GEOMETRY_H */

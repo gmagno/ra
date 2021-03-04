@@ -1,5 +1,7 @@
 #include "visibilitytest.h"
-
+/* Visibility test of the ray. Compares the distance of the next reflection point
+    with the distance to receiver. If the later is larger or equal than the former,
+    there is an obstacle between the ray and the receiver. */
 void visibility_test(int sc, int rc,
     bool pop_condition,
     std::vector<Sourcecpp> &sources,

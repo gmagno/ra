@@ -1,6 +1,7 @@
 #include <algorithm>
 #include "ray.h"
-
+/* test all planes of the room to see which one is crossed by the ray, the reflection point
+        and distance from origin - method of Geometry Class*/
 void Raycpp::plane_finder(std::vector<Planecpp> &planes,
     Eigen::RowVector3f &ray_origin,
     Eigen::Ref<Eigen::RowVector3f> v_in,

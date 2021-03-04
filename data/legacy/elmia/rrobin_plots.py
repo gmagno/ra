@@ -4,6 +4,19 @@ import matplotlib.pyplot as plt
 from ra.results import SRStats
 from data.legacy.ptb_studio_ph3.ppro_rrobin_classes import ParRoundRobin, SouRoundRobin, RecRoundRobin
 
+SMALL_SIZE = 10
+BIGGER_SIZE = 13
+#plt.rcParams.update({'font.size': 10})
+plt.rcParams.update({'font.family': 'serif'})
+plt.rc('legend', fontsize=SMALL_SIZE)
+#plt.rc('title', fontsize=SMALL_SIZE)
+plt.rc('font', size=BIGGER_SIZE)          # controls default text sizes
+plt.rc('axes', titlesize=BIGGER_SIZE)     # fontsize of the axes title
+plt.rc('axes', labelsize=BIGGER_SIZE)    # fontsize of the x and y labels
+plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+plt.rc('figure', titlesize=BIGGER_SIZE)
+
 # Load round robin data
 pkl_fname = 'data/legacy/elmia/rrobin2_elmia.pkl'
 with open(pkl_fname, 'rb') as input:
@@ -22,6 +35,9 @@ def plot_vs_freq(sou, participant, js, jrec, softname, par, y_limits):
     Function to plot parameter vs. frequency for a specified source-receiver pair.
     TREM vs measured data vs all participant.
     '''
+    par_title = {'T30': r'$T_{30}$ [s]', 'EDT': 'EDT [s]', 'C80': r'$C_{80}$ [dB]', 'D50': r'$D_{50}$ [%]',
+        'Ts': r'$T_{s}$ [ms]', 'G': r'$G$ [dB]', 'LF': 'LF [%]', 'LFC': 'LFC [%]'}
+
     trem_parameter = getattr(sou[js].rec[jrec], par)
     meas_parameter = getattr(participant[14].sou[js].rec[jrec], par)
     freq_ticks = []
@@ -40,13 +56,13 @@ def plot_vs_freq(sou, participant, js, jrec, softname, par, y_limits):
         part_parameter = getattr(participant[jp].sou[js].rec[jrec], par)
         plt.plot(participant[jp].freq,
             part_parameter, '-', color = 'grey', linewidth = 1)
-    plt.title('Source: ' + str(js+1) + ', Rreceiver: ' + str(jrec+1))
+    plt.title('Source: ' + str(js+1) + ', Receiver: ' + str(jrec+1))
     plt.grid(linestyle = '--')
     plt.legend(loc = 'best')
     plt.xscale('log')
     plt.xticks(sou[js].freq, freq_ticks)
     plt.xlabel('Frequency [Hz]')
-    plt.ylabel(par)
+    plt.ylabel(par_title[par])
     plt.ylim(y_limits)
     plt.xlim((100, 5000))
 
@@ -55,6 +71,8 @@ def plot_vs_srpairs(sou, participant, jf, softname, par, y_limits):
     Function to plot parameter vs. sr-pairs for a specified frequency band.
     TREM vs measured data vs all participant.
     '''
+    par_title = {'T30': r'$T_{30}$ [s]', 'EDT': 'EDT [s]', 'C80': r'$C_{80}$ [dB]', 'D50': r'$D_{50}$ [%]',
+        'Ts': r'$T_{s}$ [ms]', 'G': r'$G$ [dB]', 'LF': 'LF [%]', 'LFC': 'LFC [%]'}
     trem_parameter = []
     meas_parameter = []
     for js in np.arange(2):
@@ -91,19 +109,21 @@ def plot_vs_srpairs(sou, participant, jf, softname, par, y_limits):
     plt.legend(loc = 'best')
     plt.xticks(np.arange(12), x_string)
     plt.xlabel('Position')
-    plt.ylabel(par)
+    plt.ylabel(par_title[par])
     plt.ylim(y_limits)
 
 def plot_all_vsfreq(sou, participant, softname, path):
     '''
     Function to plot par vs freq for all SR pairs and save all the results.
     '''
+    # par_vec = [r'$T_{30}$', 'EDT', r'$C_{80}$', r'$D_{50}$', r'$T_{s}$', r'$G$', 'LF', 'LFC']
     par_vec = ['T30', 'EDT', 'C80', 'D50', 'Ts', 'G', 'LF', 'LFC']
+
     range_vec = [(0.0, 3.5), (0.0, 3.5), (-10, 6), (0, 100), (0, 250), (-4, 14), (0, 40), (0, 60)]
     for jpar, par in enumerate(par_vec):
         for js in np.arange(2):
             for jrec in np.arange(6):
-                plot_vs_freq(sou, participant, js, jrec, 'TREM', par, range_vec[jpar])
+                plot_vs_freq(sou, participant, js, jrec, 'Trem', par, range_vec[jpar])
                 filename = par + '_S' + str(js+1)+ '_R' + str(jrec+1)
                 plt.savefig(path + 'figs/' + filename + '.png')
                 plt.savefig(path + 'figs/' + filename + '.pdf')
@@ -116,7 +136,7 @@ def plot_all_srpairs(sou, participant, softname, path):
     range_vec = [(0.0, 3.5), (0.0, 3.5), (-10, 6), (0, 100), (0, 250), (-4, 14), (0, 40), (0, 60)]
     for jpar, par in enumerate(par_vec):
         for jf, f in enumerate(sou[0].freq[1:-1]):
-            plot_vs_srpairs(sou, participant, jf, 'TREM', par, range_vec[jpar])
+            plot_vs_srpairs(sou, participant, jf, 'Trem', par, range_vec[jpar])
             filename = par + 'freq' + str(int(f))+ '_Hz'
             plt.savefig(path + 'figs/' + filename + '.png')
             plt.savefig(path + 'figs/' + filename + '.pdf')
@@ -132,7 +152,7 @@ def plot_main_error(sou, participant, softname, par):
         width = 0.3
     # fig = plt.figure()
     # fig.canvas.set_window_title('Total ratio of RMS error by jnd of: ' + p)
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(9, 4))
     for jpart, p in enumerate(par):
         error_vector = [] # error vector for posterior plot
         part_vector = [] # name of participant for posterior plot
@@ -193,22 +213,28 @@ def plot_main_error(sou, participant, softname, par):
     ax.set_xticks(ind)
     ax.set_xticklabels(part_vector)
     plt.legend(loc = 'best')
+    plt.xlabel('participant')
+    plt.ylabel('rel. mean error')
     # plt.bar(part_vector, error_vector, width = 0.65)
     # plt.title('Total ratio of RMS error by jnd of: ' + p)
     plt.grid(linestyle = '--')
+    plt.tight_layout()
 
 
-plot_all_vsfreq(sou, participant, 'TREM', path)
-# plot_all_srpairs(sou, participant, 'TREM', path)
-# plot_main_error(sou, participant, 'TREM', ('T30','EDT', 'G'))
+plot_all_vsfreq(sou, participant, 'Trem', path)
+plot_all_srpairs(sou, participant, 'Trem', path)
+# plot_main_error(sou, participant, '(T)', ('T30','EDT', 'G'))
 # plt.savefig(path + 'figs/' + 'error_t30_edt_g' + '.png')
 # plt.savefig(path + 'figs/' + 'error_t30_edt_g' + '.pdf')
-# plot_main_error(sou, participant, 'TREM', ('C80','D50', 'Ts'))
+# plt.savefig(path + 'figs/' + 'error_t30_edt_g' + '.eps')
+# plot_main_error(sou, participant, '(T)', ('C80','D50', 'Ts'))
 # plt.savefig(path + 'figs/' + 'error_c80_d50_ts' + '.png')
 # plt.savefig(path + 'figs/' + 'error_c80_d50_ts' + '.pdf')
-# plot_main_error(sou, participant, 'TREM', ('LF', 'LFC'))
+# plt.savefig(path + 'figs/' + 'error_c80_d50_ts' + '.eps')
+plot_main_error(sou, participant, '(T)', ('LF', 'LFC'))
 # plt.savefig(path + 'figs/' + 'error_lf_lfc' + '.png')
 # plt.savefig(path + 'figs/' + 'error_lf_lfc' + '.pdf')
+# plt.savefig(path + 'figs/' + 'error_lf_lfc' + '.eps')
 # plt.show()
 
 # js = 0

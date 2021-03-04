@@ -21,9 +21,21 @@ public:
     const std::string &get_name() const { return name; }
     int get_hunger() const { return hunger; }
 
+// private:
+std::string name;
+int hunger;
+};
+
+/* The class Pickleable is used solely for instructional purposes*/
+class Pickleable {
+public:
+    Pickleable(const std::string &value) : m_value(value) { }
+    const std::string &value() const { return m_value; }
+    void setExtra(int extra) { m_extra = extra; }
+    int extra() const { return m_extra; }
 private:
-    std::string name;
-    int hunger;
+    std::string m_value;
+    int m_extra = 0;
 };
 
 /* The class Planecpp is used to construct a list of

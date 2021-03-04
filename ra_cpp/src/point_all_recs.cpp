@@ -1,5 +1,6 @@
 #include "point_all_recs.h"
 
+// point all receivers to a sound source
 void point_all_receivers(
     Eigen::RowVector3f source_coord,
     std::vector<Receivercpp> &receivers){

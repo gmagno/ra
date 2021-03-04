@@ -9,7 +9,7 @@ Dt = 0.001                  # Histogram time resolution
 allow_scattering = 1        # Allow scattering or not
 transition_order = 2        # Transition order
 rec_radius_init = 0.1       # Initial receiver radius
-alow_growth = 1             # Allow receiver growth or not
+allow_growth = 1             # Allow receiver growth or not
 rec_radius_final = 0.5      # Final receiver radius
 
 ################### Air properties ############################

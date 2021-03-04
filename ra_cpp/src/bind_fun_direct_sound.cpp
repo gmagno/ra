@@ -5,7 +5,7 @@ void bind_fun_direct_sound(py::module &m)
     m.def(
         "_direct_sound",
         direct_sound,
-    "The main function to compute the direct sound.",
+    "Computes the time of arrival, doa, and energy of the direct sound.",
     py::arg("sources"),
     py::arg("receivers"),
     py::arg("rec_radius"),

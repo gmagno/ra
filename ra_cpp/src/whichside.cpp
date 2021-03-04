@@ -1,5 +1,5 @@
 #include "whichside.h"
-
+/* Calculate if the ray goes towards the plane (whichside>0) or not */
 double whichside(Eigen::Ref<Eigen::RowVector3f> ray_origin,
         Eigen::Ref<Eigen::RowVector3f> v_in,
         Eigen::Ref<Eigen::RowVector3f> ref_point){

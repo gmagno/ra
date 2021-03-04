@@ -6,7 +6,7 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 import matplotlib.pyplot as plt
 import scipy.io as spio
 
-from ra.log import log
+from log import log
 import ra_cpp
 
 class GeometryApi():

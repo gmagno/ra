@@ -1,5 +1,7 @@
 #include "rayreflection.h"
 
+//Computes the outward direction of ray reflection. It can be either on specular or at a random direction
+
 std::random_device rd{};
 std:: mt19937 engine{ rd() };
 std::uniform_real_distribution<double> dist{ 0.0,1.0 };

@@ -1,5 +1,5 @@
 #include "raysphere.h"
-
+// Test if the ray intersect a receiver sphere and, if TRUE, compute the time instant of this intersection
 double raysphere(Eigen::Ref<Eigen::RowVector3f> ray_origin,
     Eigen::Ref<Eigen::RowVector3f> v_dir,
     Eigen::Ref<Eigen::RowVector3f> rec_coord,

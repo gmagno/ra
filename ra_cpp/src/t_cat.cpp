@@ -1,5 +1,5 @@
 #include "t_cat.h"
-// Eigen
+// Get the time vector for each encounter w/ receiver and concatenate all to a time vector
 Eigen::RowVectorXf time_cat(std::vector<Raycpp> &rays,
     float time_dir, int jrec, int time_size){
     // create the result std::vector - initialize time_dir

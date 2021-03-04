@@ -1,5 +1,5 @@
 #include "intensity_main.h"
-
+//Use the ray-history to compute the sound intensities at a given receiver encounter
 std::vector<Sourcecpp> intensity_main(
     double rec_radius_init,
     std::vector<Sourcecpp> &sources,

@@ -1,5 +1,5 @@
 #include "recgrow.h"
-
+//Computes the new receiver sphere radius based on the distance travelled by the ray.
 void recgrow(int alow_growth, int transition_order, int ref_order,
     double rec_radius_init, double rec_radius_final, double &rec_radius_current,
     double cum_dist, int N_rays)

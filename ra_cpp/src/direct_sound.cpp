@@ -1,5 +1,5 @@
 #include "direct_sound.h"
-/* This function calculates the direct sound at each receiver */
+/* Computes the time of arrival, doa, and energy of the direct sound */
 
 std::vector<Sourcecpp> direct_sound(
     std::vector<Sourcecpp> &sources,

@@ -11,6 +11,7 @@ PYBIND11_MODULE(ra_cpp, m)
     bind_isleft(m);
     bind_recgrow(m);
     bind_cls_pet(m);
+    bind_cls_picleable(m);
     bind_cls_planecpp(m);
     bind_cls_sourcecpp(m);
     bind_cls_receivercpp(m);

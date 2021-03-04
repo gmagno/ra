@@ -11,16 +11,16 @@ import numpy as np
 import scipy.io as spio
 import toml
 
-from ra.log import log
-from ra.rayinidir import RayInitialDirections
-from ra.receivers import setup_receivers
-from ra.sources import setup_sources
-from ra.controlsair import AlgControls, AirProperties
-from ra.room import Geometry, GeometryMat
-from ra.absorption_database import load_matdata_from_mat, get_alpha_s
-from ra.statistics import StatisticalMat
-from ra.ray_initializer import ray_initializer
-from ra.results import process_results, SRStats
+from log import log
+from rayinidir import RayInitialDirections
+from receivers import setup_receivers
+from sources import setup_sources
+from controlsair import AlgControls, AirProperties, save_sim
+from room import Geometry, GeometryMat
+from absorption_database import load_matdata_from_mat, get_alpha_s
+from statistics import StatisticalMat
+from ray_initializer import ray_initializer
+from results import process_results, SRStats
 import ra_cpp
 
 
@@ -62,6 +62,7 @@ def setup(cfg_dir):
     # tml_name_cfg = 'simulation_ptb_ph3.toml'        # toml configuration file
     # tml_name_mat = 'surface_mat_open_id.toml'    # toml material file
     # tml_name_mat = 'surface_mat_id_ptb_ph3_c.toml'    # toml material file
+    # tml_name_mat = 'surf_mat_ptb_ph3_o_4kHz.toml'    # toml material file
     # tml_name_mat = 'surface_mat_id_ptb_ph3_o.toml'    # toml material file
     #tml_name_mat = 'surface_mpathat_id_ptb_ph3_c.toml'    # toml material file
     # tml_name_mat = 'surface_pathmat_id_ptb_ph3_o_odeon.toml'    # toml material file
@@ -96,7 +97,7 @@ def run(cfgs):
 
     ##### Setup Geometry ###########
     geo = GeometryMat(cfgs['sim_cfg']['geometry'], alpha, s)
-    # geo.plot_mat_room(normals = 'on')
+    geo.plot_mat_room(normals = 'on')
     # geo = Geometry('simulation.toml', alpha, s)
     # geo.plot_dae_room(normals = 'on')
 
@@ -105,10 +106,10 @@ def run(cfgs):
     res_stat.t60_sabine()
     res_stat.t60_eyring()
     # res_stat.t60_kutruff(gamma=0.4)
-    # res_stat.t60_araup()
+    res_stat.t60_araup()
     # res_stat.t60_fitzroy()
     # res_stat.t60_milsette()
-    # res_stat.plot_t60()
+    res_stat.plot_t60()
 
     ##### ray's initial direction ########
     rays_i_v = RayInitialDirections()
@@ -119,6 +120,8 @@ def run(cfgs):
     rays_i_v.random_rays(controls.Nrays)
     # rays_i_v.single_ray(rays_i_v.vinit[41])
     log.info("The number of rays is {}.".format(rays_i_v.Nrays))
+    print("The number of rays is {}.".format(rays_i_v.Nrays))
+
 
     ##### Setup receiver, reccross and reccrossdir ########
     receivers, reccross, reccrossdir = setup_receivers(cfgs['sim_cfg']['receivers'])
@@ -161,32 +164,72 @@ def run(cfgs):
     sou[0].plot_decays()
     # sou[0].plot_edt()
     # sou[0].plot_t20()
-    # sou[0].plot_t30()
+    sou[1].plot_t30()
     # sou[0].plot_c80()
     # sou[0].plot_d50()
     # sou[0].plot_ts()
     # sou[0].plot_g()
     # sou[0].plot_lf()
     # sou[0].plot_lfc()
-    # log.info(sources[0].rays[0].refpts_hist)
-
+    # print(sources[0].rays[0].refpts_hist)
+    # print(sources[0].rays[0].planes_hist)
+    
     # geo.plot_raypath(sources[0].coord, sources[0].rays[0].refpts_hist,  # <-- sources[0].rays[0].refpts_hist
     #     receivers)
-
+    # plt.show()
     # log.info(sources[0].reccrossdir[0].cos_dir)
     ############# Save trial #########################
-    # import pickle
-    # path = '/home/eric/dev/ra/data/legacy/ptb_studio_ph3/'
-    # pkl_fname_res = 'ptb_studio_ph3_open'        # simulation results name
+    # flor = ra_cpp.Pet('flor', int(2))
+    # flor.go_for_a_walk()
+    # print(flor.get_name())
+    # print(flor.get_hunger())
+    # pick = ra_cpp.Pickleable("Pickable input")
+    # pick.setExtra(15)
+    import pickle
+    path = '//home/eric/dev/ra/data/legacy/odeon_ex/'
+    pkl_fname_res = 'odeon_ex_testpickle'        # simulation results name
+    save_sim(controls=controls, air=air, rays_i = rays_i_v,
+        geometry=geo, stats_theory=res_stat, sources=sources,
+        receivers=receivers, s_reflecto_par=sou, stats_analysis=stats,
+        path=path, fname=pkl_fname_res)
     # with open(path+pkl_fname_res+'.pkl', 'wb') as output:
+    #     pickle.dump(geo, output, pickle.HIGHEST_PROTOCOL)
     #     pickle.dump(res_stat, output, pickle.HIGHEST_PROTOCOL)
+    #     pickle.dump(sources, output, pickle.HIGHEST_PROTOCOL)
+    #     pickle.dump(receivers, output, pickle.HIGHEST_PROTOCOL)
     #     pickle.dump(sou, output, pickle.HIGHEST_PROTOCOL)
     #     pickle.dump(stats, output, pickle.HIGHEST_PROTOCOL)
-        # pickle.dump(geo, output, pickle.HIGHEST_PROTOCOL)
-
+        # pickle.dump(flor, output, pickle.HIGHEST_PROTOCOL)
+        # pickle.dump(pick, output, pickle.HIGHEST_PROTOCOL)
         # pickle.dump(sources, output, pickle.HIGHEST_PROTOCOL)
+    
+    # with open(path+pkl_fname_res+'.pkl', 'rb') as input:
+    #     geo2 = pickle.load(input)
+    #     res_stat = pickle.load(input)
+    #     sources1 = pickle.load(input)
+    #     # sou = pickle.load(input)
+    #     # stats = pickle.load(input)
+    #     # flor = pickle.load(input)
+    #     # pick = pickle.load(input)
 
+    # print("writting and loading done.")
+    # geo2.plot_mat_room(normals = 'on')
+    # print(sources1[0].rays[0].planes_hist)
+    # print(sources1[0].rays[10].refpts_hist)
+    # print(sources1[0].rays[1].recs[2].time_cross)
+    # print(sources1[0].reccrossdir[0].time_dir)
+    # geo.plot_raypath(sources1[0].coord, sources[0].rays[0].refpts_hist,  # <-- sources[0].rays[0].refpts_hist
+    #     receivers)
+    # print('Pickable methods are: {}, {} and {} ###.'.format(pick.value, pick.setExtra, pick.extra))
+    # print(pick.extra())
+    # flor.name = 'Florzinha'
+    # flor.hunger = 3
+    # flor.go_for_a_walk()
+    # print('{} is {} hungry'.format(flor.name, flor.hunger))
 
+cfg_dir = 'data/legacy/odeon_ex/'
+cfgs = setup(cfg_dir)
+run(cfgs)
 # class Simulation():
 #     def __init__(self,):
 #         self.cfgs = {}

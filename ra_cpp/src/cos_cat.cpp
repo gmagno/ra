@@ -1,5 +1,5 @@
 #include "cos_cat.h"
-// Eigen
+// Concatenate cossine (fig8) vector for lateral energy calculations
 Eigen::RowVectorXf cos_cat(std::vector<Raycpp> &rays,
     float cos_dir, int jrec, int time_size){
     // create the result std::vector - initialize time_dir

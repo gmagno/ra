@@ -1,4 +1,5 @@
 #include "i_cat.h"
+//Get the intensity matrix for each encounter w/ receiver and concatenate all to an intensity matrix
 
 Eigen::MatrixXf intensity_cat(std::vector<Raycpp> &rays,
     Eigen::VectorXf &i_dir, int jrec, int time_size){

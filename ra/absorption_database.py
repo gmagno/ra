@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.io as spio
 
-from ra.log import log
+from log import log
 
 def load_matdata_from_mat(mat_cfg):
     '''

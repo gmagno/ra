@@ -1,5 +1,5 @@
 #include "raytracer_main.h"
-
+// The main function to compute the ray tracing
 
 std::vector<Sourcecpp> raytracer_main(
     double ht_length,

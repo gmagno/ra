@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import itertools
 import time
 
-from ra.log import log
+from log import log
 import ra_cpp
 
 
@@ -752,6 +752,7 @@ class SouResults(object):
         plt.legend(loc = 'lower left')
         plt.title('T30')
         plt.xticks(self.freq, ['63', '125', '250', '500', '1000', '2000', '4000', '8000'])
+        plt.xticks(self.freq, ['125', '250', '500', '1000', '2000', '4000'])
         plt.xlabel('Frequency [Hz]')
         plt.ylabel('T30 [s]')
         plt.ylim((0, ht_max))

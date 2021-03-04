@@ -101,3 +101,46 @@ class AirProperties():
         self.m = np.array((1/100) * a_ps_ar * patm_atm \
             / (10 * np.log10(np.exp(1))), dtype = np.float32)
         return self.m
+
+####################### To save/load the simulation #########################
+import pickle
+def save_sim(controls = [], air = [], rays_i = [],
+    geometry = [], stats_theory = [], sources = [],
+    receivers = [], s_reflecto_par = [], stats_analysis = [],
+    path = '/home/eric/dev/ra/data/legacy/odeon_ex/',
+    fname = 'room_sim'):
+    '''
+    A function to save the simulation as a pickle file
+    '''
+    print('I am saving everything. It may take a while if the simulation is big.')
+    with open(path+fname+'.pkl', 'wb') as output:
+        pickle.dump(controls, output, pickle.HIGHEST_PROTOCOL)
+        pickle.dump(air, output, pickle.HIGHEST_PROTOCOL)
+        pickle.dump(rays_i, output, pickle.HIGHEST_PROTOCOL)
+        pickle.dump(geometry, output, pickle.HIGHEST_PROTOCOL)
+        pickle.dump(stats_theory, output, pickle.HIGHEST_PROTOCOL)
+        pickle.dump(sources, output, pickle.HIGHEST_PROTOCOL)
+        pickle.dump(receivers, output, pickle.HIGHEST_PROTOCOL)
+        pickle.dump(s_reflecto_par, output, pickle.HIGHEST_PROTOCOL)
+        pickle.dump(stats_analysis, output, pickle.HIGHEST_PROTOCOL)
+    print('Saving is done!')
+
+def load_sim(
+    path = '/home/eric/dev/ra/data/legacy/odeon_ex/',
+    fname = 'room_sim'):
+    '''
+    A function to load the simulation as a pickle file
+    '''
+    print('I am loading everything. It may take a while if the simulation is big.')
+    with open(path+fname+'.pkl', 'rb') as input:
+        controls = pickle.load(input)
+        air = pickle.load(input)
+        rays_i = pickle.load(input)
+        geometry = pickle.load(input)
+        stats_theory = pickle.load(input)
+        sources = pickle.load(input)
+        receivers = pickle.load(input)
+        s_reflecto_par = pickle.load(input)
+        stats_analysis = pickle.load(input)
+    print('Loading is done!')
+    return controls, air, rays_i, geometry, stats_theory, sources, receivers, s_reflecto_par, stats_analysis

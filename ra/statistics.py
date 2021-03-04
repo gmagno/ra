@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from ra.room import Geometry, GeometryMat
+from room import Geometry, GeometryMat
 
 class StatisticalMat():
     def __init__(self,geometry, freq, c0, air_absorption):

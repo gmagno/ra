@@ -7,7 +7,7 @@ import csv
 from ra.rayinidir import RayInitialDirections
 from ra.receivers import setup_receivers
 from ra.sources import setup_sources
-from ra.controlsair import AlgControls, AirProperties
+from ra.controlsair import AlgControls, AirProperties, save_sim
 from ra.room import Geometry, GeometryMat
 from ra.absorption_database import load_matdata_from_mat, get_alpha_s
 from ra.statistics import StatisticalMat
@@ -234,6 +234,7 @@ class Simulation():
         such as volume and surface areas. The sound absorption may be considered as an
         spatial average of some sort.
         '''
+        # print("test printing on blender")
         self.statistical_revtime = StatisticalMat(self.geometry, self.freq, self.c0, self.m)
         # Sabine eyring and arau-puchades are the default in ODEON
         self.statistical_revtime.t60_sabine()
@@ -242,6 +243,7 @@ class Simulation():
         # self.statistical_revtime.t60_kutruff(gamma=0.4)
         # self.statistical_revtime.t60_fitzroy()
         # self.statistical_revtime.t60_milsette()
+        # self.statistical_revtime.plot_t60()
 
     def run_raytracing(self,):
         '''
@@ -572,6 +574,12 @@ class Simulation():
             '\n' + 'Air humidity: ' + "{:.2f}".format(self.hr)  + ' [%]' +\
             '\n' + 'atm pressure: ' + "{:.2f}".format(self.p_atm)  + ' [Pa]'
         np.savetxt(filename, np_matrix, delimiter=' ', header = file_header)
+
+    def save_sim(self):
+        """
+        Method to save the simulation
+        """
+        pass
 
 def write_row(sheet, line_array, row = 0, start_col = 1):
     '''
