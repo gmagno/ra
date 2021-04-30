@@ -21,7 +21,8 @@ make build
 
 8) If compilation is successful run a test case. This will run 1000 rays through a very simple room. As it is programed you won't see any results,
 but a bunch of messages will appear in the console with the progress of the calculations. The test case is a simple room with two sources.
-So, you'll see two progresses bar running as two separate ray tracings will (hopefully) occur. In order to run this test case type: "make run" on
+So, you'll see two progresses bar running as two separate ray tracings will (hopefully) occur. In order to run this test case type: "make run" or 
+"python ra/run_simu.py" on
 command line.
 
 

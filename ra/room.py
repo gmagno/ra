@@ -277,6 +277,57 @@ class Geometry():
         ax.set_zlabel('Z axis')
         plt.show() # show plot
 
+    def plot_raypath(self, sourcecoord, raypath, receivers):
+        '''
+        a simple plot of the room - not redered
+        '''
+        fig = plt.figure()
+        ax = fig.gca(projection='3d')
+        # First plot the room
+        for plane in self.planes:
+            # vertexes plot
+            ax.scatter(plane.vertices[:,0], plane.vertices[:,1],
+                plane.vertices[:,2], color='black', s=5)
+            # patch plot
+            verts = [list(zip(plane.vertices[:,0],
+                plane.vertices[:,1], plane.vertices[:,2]))]
+            collection = Poly3DCollection(verts,
+                linewidths=1, alpha=0.5, edgecolor = 'gray')
+            face_color = 'silver' # alternative: matplotlib.colors.rgb2hex([0.5, 0.5, 1])
+            collection.set_facecolor(face_color)
+            ax.add_collection3d(collection)
+        # plot the sound source
+        ax.scatter(sourcecoord[0], sourcecoord[1], sourcecoord[2],
+            color='black',  marker = "*", s=500)
+        # plot receivers
+        for rec in receivers:
+            ax.scatter(rec.coord[0], rec.coord[1],
+                rec.coord[2], color='blue', s=100)
+
+        # plot the ray path
+        ray_vec = raypath[0,:]-sourcecoord
+        arrow_length = np.linalg.norm(ray_vec)
+        ax.quiver(sourcecoord[0], sourcecoord[1], sourcecoord[2],
+                ray_vec[0], ray_vec[1], ray_vec[2],
+                arrow_length_ratio = 0.006 * arrow_length)
+        N_max_ref = len(raypath)
+        for jray in np.arange(N_max_ref-1):
+            ray_origin = raypath[jray]
+            ray_vec = raypath[jray+1]-raypath[jray]
+            arrow_length = np.linalg.norm(ray_vec)
+            ax.quiver(ray_origin[0], ray_origin[1], ray_origin[2],
+                ray_vec[0], ray_vec[1], ray_vec[2],
+                arrow_length_ratio = 0.006 * arrow_length)
+
+            ax.scatter(raypath[jray,0], raypath[jray,1],
+                raypath[jray,2], color='red', marker = "+")
+        # set axis labels
+        ax.set_xlabel('X axis')
+        ax.set_ylabel('Y axis')
+        ax.set_zlabel('Z axis')
+        plt.show() # show plot
+
+
 class PyPlane():
     '''
     A class to define a single plane object with the following att:

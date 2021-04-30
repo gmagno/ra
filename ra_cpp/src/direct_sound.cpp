@@ -28,6 +28,9 @@ std::vector<Sourcecpp> direct_sound(
             double dist_plane = 0.0;
             s.rays[0].plane_finder(planes, ray_origin, v_dir,
                 plane_detected, dist_plane);
+
+            std::cout << dist_plane << std::endl;
+
             // affect time_dir only if distance to plane is bigger
             if (dist_dir < dist_plane){
                 // increase size_of

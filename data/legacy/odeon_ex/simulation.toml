@@ -56,7 +56,7 @@ orientation = [0.0, 1.0, 0.0]
 
 ###################### Geometry #################################
 [geometry]
-room = 'data/legacy/odeon_ex/ODEON_Ex_geometry.mat'
+room = '/home/eric/dev/ra/data/legacy/odeon_ex/ODEON_Ex_geometry.mat'
 #room = 'data/legacy/BostonSH_geometry.mat'
 #room = 'data/legacy/Elmia_geometry.mat'
 #room = 'data/legacy/studioPTB_ph1.mat'
@@ -75,4 +75,4 @@ room = 'data/legacy/odeon_ex/ODEON_Ex_geometry.mat'
 #room = 'data/rooms/simple/MASP_sem_cavaletes.dae'
 ################### Material database ##########################
 [material]
-mat_database = 'data/material/DataBase_Odeon.mat'
+mat_database = '/home/eric/dev/ra/data/material/DataBase_Odeon.mat'

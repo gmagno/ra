@@ -16,9 +16,11 @@ from rayinidir import RayInitialDirections
 from receivers import setup_receivers
 from sources import setup_sources
 from controlsair import AlgControls, AirProperties, save_sim
+
 from room import Geometry, GeometryMat
-from absorption_database import load_matdata_from_mat, get_alpha_s
-from statistics import StatisticalMat
+from statisticstheo import StatisticalMat
+from absorption_database import load_matdata_from_mat, get_alpha_s, get_alpha_s2
+
 from ray_initializer import ray_initializer
 from results import process_results, SRStats
 import ra_cpp
@@ -36,8 +38,10 @@ def load_cfg(cfgfile):
 def setup(cfg_dir):
     ################ ODEON EXAMPLE #####################################
     # pkl_fname_res = 'odeon_ex'              # simulation results name
-    tml_name_cfg = 'simulation.toml'        # toml configuration file
-    tml_name_mat = 'surface_mat_id.toml'    # toml material file
+    # tml_name_cfg = 'simulation.toml'        # toml configuration file
+    # tml_name_mat = 'surface_mat_id.toml'    # toml material file
+    tml_name_cfg = 'simulation_dae.toml'        # toml configuration file
+    tml_name_mat = 'surface_mat_id_dae.toml'    # toml material file
     ############# PTB phase 1 #########################################
     # pkl_fname_res = 'ptb_studio_ph1'        # simulation results name
     # tml_name_cfg = 'simulation.toml'        # toml configuration file
@@ -93,20 +97,31 @@ def run(cfgs):
 
     ##### Setup materials #############
     alpha_list = load_matdata_from_mat(cfgs['sim_cfg']['material'])
-    alpha, s = get_alpha_s(cfgs['sim_cfg']['geometry'], cfgs['mat_cfg']['material'], alpha_list)
+    alpha, s = get_alpha_s2(cfgs['sim_cfg']['geometry'], cfgs['mat_cfg']['material'], alpha_list)
 
     ##### Setup Geometry ###########
-    geo = GeometryMat(cfgs['sim_cfg']['geometry'], alpha, s)
-    geo.plot_mat_room(normals = 'on')
-    # geo = Geometry('simulation.toml', alpha, s)
-    # geo.plot_dae_room(normals = 'on')
+    # geo = GeometryMat(cfgs['sim_cfg']['geometry'], alpha, s)
+    # geo.plot_mat_room(normals = 'on')
+    geo = Geometry(cfgs['sim_cfg']['geometry'], alpha, s)
+    geo.planes[0].normal = -geo.planes[0].normal
+    geo.planes[1].normal = -geo.planes[1].normal
+    geo.planes[2].normal = -geo.planes[2].normal
+    geo.planes[3].normal = -geo.planes[3].normal
+    geo.planes[8].normal = -geo.planes[8].normal
+    geo.planes[9].normal = -geo.planes[9].normal
+    geo.planes[12].normal = -geo.planes[12].normal
+    geo.planes[13].normal = -geo.planes[13].normal
+    geo.planes[14].normal = -geo.planes[14].normal
+    geo.planes[15].normal = -geo.planes[15].normal
+
+    geo.plot_dae_room(normals = 'on')
 
     ##### Statistical theory ############
     res_stat = StatisticalMat(geo, controls.freq, air.c0, air_m)
     res_stat.t60_sabine()
     res_stat.t60_eyring()
     # res_stat.t60_kutruff(gamma=0.4)
-    res_stat.t60_araup()
+    # res_stat.t60_araup()
     # res_stat.t60_fitzroy()
     # res_stat.t60_milsette()
     res_stat.plot_t60()
@@ -114,13 +129,13 @@ def run(cfgs):
     ##### ray's initial direction ########
     rays_i_v = RayInitialDirections()
     # rays_i_v.single_ray([0.0, -1.0, 0.0])#([0.7236, -0.5257, 0.4472])
-    # rays_i_v.isotropic_rays(controls.Nrays) # 15
+    rays_i_v.isotropic_rays(controls.Nrays) # 15
     # mat = spio.loadmat('ra/vin_matlab.mat')
     # rays_i_v.vinit = mat['vin']
-    rays_i_v.random_rays(controls.Nrays)
+    #rays_i_v.random_rays(controls.Nrays)
     # rays_i_v.single_ray(rays_i_v.vinit[41])
-    log.info("The number of rays is {}.".format(rays_i_v.Nrays))
-    print("The number of rays is {}.".format(rays_i_v.Nrays))
+    # log.info("The number of rays is {}.".format(rays_i_v.Nrays))
+    # print("The number of rays is {}.".format(rays_i_v.Nrays))
 
 
     ##### Setup receiver, reccross and reccrossdir ########
@@ -152,22 +167,22 @@ def run(cfgs):
         sources,air.c0,air.m, res_stat.alphas_mtx)
 
     ########### Process reflectograms and acoustical parameters #####################
-    sou = process_results(controls.Dt, controls.ht_length,
-        controls.freq, sources, receivers)
+    # sou = process_results(controls.Dt, controls.ht_length,
+    #     controls.freq, sources, receivers)
 
     ########## Statistics ##########################################################
-    stats = SRStats(sou)
+    # stats = SRStats(sou)
     ######## some plotting ##############################
     # sou[0].plot_single_reflecrogram(band = 4, jrec = 2)
     # plt.show()
     # sou[0].plot_single_reflecrogram(band = 4, jrec = 1)
-    sou[0].plot_decays()
+    # sou[0].plot_decays()
     # sou[0].plot_edt()
     # sou[0].plot_t20()
-    sou[1].plot_t30()
+    # sou[1].plot_t30()
     # sou[0].plot_c80()
     # sou[0].plot_d50()
-    # sou[0].plot_ts()
+    #sou[0].plot_ts()
     # sou[0].plot_g()
     # sou[0].plot_lf()
     # sou[0].plot_lfc()
@@ -176,7 +191,7 @@ def run(cfgs):
     
     # geo.plot_raypath(sources[0].coord, sources[0].rays[0].refpts_hist,  # <-- sources[0].rays[0].refpts_hist
     #     receivers)
-    # plt.show()
+    plt.show()
     # log.info(sources[0].reccrossdir[0].cos_dir)
     ############# Save trial #########################
     # flor = ra_cpp.Pet('flor', int(2))
@@ -185,13 +200,14 @@ def run(cfgs):
     # print(flor.get_hunger())
     # pick = ra_cpp.Pickleable("Pickable input")
     # pick.setExtra(15)
-    import pickle
-    path = '//home/eric/dev/ra/data/legacy/odeon_ex/'
-    pkl_fname_res = 'odeon_ex_testpickle'        # simulation results name
-    save_sim(controls=controls, air=air, rays_i = rays_i_v,
-        geometry=geo, stats_theory=res_stat, sources=sources,
-        receivers=receivers, s_reflecto_par=sou, stats_analysis=stats,
-        path=path, fname=pkl_fname_res)
+    ##########################################cle
+    # import pickle
+    # path = '//home/eric/dev/ra/data/legacy/odeon_ex/'
+    # pkl_fname_res = 'odeon_ex_testpickle'        # simulation results name
+    # save_sim(controls=controls, air=air, rays_i = rays_i_v,
+    #     geometry=geo, stats_theory=res_stat, sources=sources,
+    #     receivers=receivers, s_reflecto_par=sou, stats_analysis=stats,
+    #     path=path, fname=pkl_fname_res)
     # with open(path+pkl_fname_res+'.pkl', 'wb') as output:
     #     pickle.dump(geo, output, pickle.HIGHEST_PROTOCOL)
     #     pickle.dump(res_stat, output, pickle.HIGHEST_PROTOCOL)
@@ -228,6 +244,9 @@ def run(cfgs):
     # print('{} is {} hungry'.format(flor.name, flor.hunger))
 
 cfg_dir = 'data/legacy/odeon_ex/'
+# cfg_dir = 'data/legacy/ptb_studio_ph3/'
+# cfg_dir = 'data/legacy/elmia/'
+
 cfgs = setup(cfg_dir)
 run(cfgs)
 # class Simulation():

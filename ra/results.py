@@ -801,7 +801,7 @@ class SouResults(object):
         '''
         for jrec, r in enumerate(self.rec):
             legend = 'receiver ' + str(jrec+1)
-            plt.plot(self.freq, 1000 * r.Ts, label = legend)
+            plt.plot(self.freq, r.Ts, label = legend)
         plt.grid(linestyle = '--')
         plt.xscale('log')
         plt.legend(loc = 'best')
